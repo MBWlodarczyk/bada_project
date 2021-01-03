@@ -7,17 +7,17 @@ public class Czesc {
     private BigDecimal cena;
     private String nazwa;
     private int czas_gwarancji;
-    private int nr_producenta;
+    private String producent;
 
     public Czesc() {
     }
 
-    public Czesc(int nr_czesci, BigDecimal cena, String nazwa, int czas_gwarancji, int nr_producenta) {
+    public Czesc(int nr_czesci, BigDecimal cena, String nazwa, int czas_gwarancji, String producent) {
         this.nr_czesci = nr_czesci;
         this.cena = cena;
         this.nazwa = nazwa;
         this.czas_gwarancji = czas_gwarancji;
-        this.nr_producenta = nr_producenta;
+        this.producent = producent;
     }
 
     public int getNr_czesci() {
@@ -52,11 +52,11 @@ public class Czesc {
         this.czas_gwarancji = czas_gwarancji;
     }
 
-    public int getNr_producenta() {
-        return nr_producenta;
+    public String getProducent() {
+        return producent;
     }
 
-    public void setNr_producenta(int nr_producenta) {
-        this.nr_producenta = nr_producenta;
+    public void setProducent(String producent) {
+        this.producent = producent;
     }
 }

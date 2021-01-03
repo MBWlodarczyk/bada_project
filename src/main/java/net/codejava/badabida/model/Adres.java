@@ -6,18 +6,19 @@ public class Adres {
     private String miasto;
     private String ulica;
     private String nr_lokalu;
-    private int nr_poczty;
+    private String kod_poczty;
+    private String poczta;
 
     public Adres() {
     }
 
-    public Adres(int nr_adresu, String miasto, String ulica, String nr_lokalu, int nr_poczty) {
-        super();
+    public Adres(int nr_adresu, String miasto, String ulica, String nr_lokalu, String kod_poczty, String poczta) {
         this.nr_adresu = nr_adresu;
         this.miasto = miasto;
         this.ulica = ulica;
         this.nr_lokalu = nr_lokalu;
-        this.nr_poczty = nr_poczty;
+        this.kod_poczty = kod_poczty;
+        this.poczta = poczta;
     }
 
     public int getNr_adresu() {
@@ -52,11 +53,31 @@ public class Adres {
         this.nr_lokalu = nr_lokalu;
     }
 
-    public int getNr_poczty() {
-        return nr_poczty;
+    public String getKod_poczty() {
+        return kod_poczty;
     }
 
-    public void setNr_poczty(int nr_poczty) {
-        this.nr_poczty = nr_poczty;
+    public void setKod_poczty(String kod_poczty) {
+        this.kod_poczty = kod_poczty;
+    }
+
+    public String getPoczta() {
+        return poczta;
+    }
+
+    public void setPoczta(String poczta) {
+        this.poczta = poczta;
+    }
+
+    @Override
+    public String toString() {
+        return "Adres{" +
+                "nr_adresu=" + nr_adresu +
+                ", miasto='" + miasto + '\'' +
+                ", ulica='" + ulica + '\'' +
+                ", nr_lokalu='" + nr_lokalu + '\'' +
+                ", kod_poczty='" + kod_poczty + '\'' +
+                ", poczta='" + poczta + '\'' +
+                '}';
     }
 }

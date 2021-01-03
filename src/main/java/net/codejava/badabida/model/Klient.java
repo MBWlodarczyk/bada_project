@@ -6,15 +6,13 @@ public class Klient {
     private String nazwisko;
     private String telefon;
     private int nr_adresu;
-    private int nr_firmy;
 
-    public Klient(int nr_klienta, String imie, String nazwisko, String telefon, int nr_adresu, int nr_firmy) {
+    public Klient(int nr_klienta, String imie, String nazwisko, String telefon, int nr_adresu) {
         this.nr_klienta = nr_klienta;
         this.imie = imie;
         this.nazwisko = nazwisko;
         this.telefon = telefon;
         this.nr_adresu = nr_adresu;
-        this.nr_firmy = nr_firmy;
     }
 
     public int getNr_klienta() {
@@ -55,13 +53,5 @@ public class Klient {
 
     public void setNr_adresu(int nr_adresu) {
         this.nr_adresu = nr_adresu;
-    }
-
-    public int getNr_firmy() {
-        return nr_firmy;
-    }
-
-    public void setNr_firmy(int nr_firmy) {
-        this.nr_firmy = nr_firmy;
     }
 }
