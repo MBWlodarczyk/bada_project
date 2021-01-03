@@ -1,6 +1,7 @@
 package net.codejava.badabida.model;
 
 public class Klient {
+
     private int nr_klienta;
     private String imie;
     private String nazwisko;
@@ -53,5 +54,16 @@ public class Klient {
 
     public void setNr_adresu(int nr_adresu) {
         this.nr_adresu = nr_adresu;
+    }
+
+    @Override
+    public String toString() {
+        return "Klient{" +
+                "nr_klienta=" + nr_klienta +
+                ", imie='" + imie + '\'' +
+                ", nazwisko='" + nazwisko + '\'' +
+                ", telefon='" + telefon + '\'' +
+                ", nr_adresu=" + nr_adresu +
+                '}';
     }
 }

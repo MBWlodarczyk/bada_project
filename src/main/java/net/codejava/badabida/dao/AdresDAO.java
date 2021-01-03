@@ -1,7 +1,6 @@
 package net.codejava.badabida.dao;
 
 import net.codejava.badabida.model.Adres;
-import net.codejava.badabida.util.QueryExcecutor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -48,8 +47,8 @@ public class AdresDAO {
     }
 
     public void delete(int nr_adresu) {
-        QueryExcecutor.delete(jdbcTemplate, "ADRESY", nr_adresu);
-        //jdbcTemplate.update("delete from ADRESY where nr_adresu = ?",nr_adresu);
+        //QueryExcecutor.delete(jdbcTemplate, "ADRESY", nr_adresu);
+        jdbcTemplate.update("delete from ADRESY where nr_adresu = ?", nr_adresu);
     }
 
 }

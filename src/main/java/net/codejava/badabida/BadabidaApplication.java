@@ -1,12 +1,15 @@
 package net.codejava.badabida;
 
 import net.codejava.badabida.dao.AdresDAO;
+import net.codejava.badabida.dao.KlientDAO;
 import net.codejava.badabida.model.Adres;
+import net.codejava.badabida.model.Klient;
 import net.codejava.badabida.util.Connection;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.List;
+
 
 @SpringBootApplication
 public class BadabidaApplication {
@@ -18,14 +21,16 @@ public class BadabidaApplication {
         Connection connection = new Connection("mwlodarc", "mwlodarc");
 
 
-        //q.delete(connection.getJdbcTemplate(),"ADRESY",20);
+
+        AdresDAO ad = new AdresDAO(connection.getJdbcTemplate());
 
 
-        AdresDAO a = new AdresDAO(connection.getJdbcTemplate());
-        List<Adres> xd = a.list();
-        for (Adres asd : xd) {
-            System.out.println(asd.toString());
-        }
+
+
+
+
+//        for(Klient e : xd)
+//            System.out.println(e.toString());
 
 
     }

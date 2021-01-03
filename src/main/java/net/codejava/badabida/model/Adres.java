@@ -12,6 +12,15 @@ public class Adres {
     public Adres() {
     }
 
+    public Adres(String miasto, String ulica, String nr_lokalu, String kod_poczty, String poczta) {
+        this.nr_adresu = 0;
+        this.miasto = miasto;
+        this.ulica = ulica;
+        this.nr_lokalu = nr_lokalu;
+        this.kod_poczty = kod_poczty;
+        this.poczta = poczta;
+    }
+
     public Adres(int nr_adresu, String miasto, String ulica, String nr_lokalu, String kod_poczty, String poczta) {
         this.nr_adresu = nr_adresu;
         this.miasto = miasto;
