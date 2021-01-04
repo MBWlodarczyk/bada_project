@@ -1,12 +1,11 @@
 package net.codejava.badabida.model;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "czesci")
-public class Czesc implements Serializable {
+@Table(name = "CZESCI")
+public class Czesc {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "magazyny")
+@Table(name = "Magazyny")
 public class Magazyn {
 
     @Id
@@ -22,9 +22,9 @@ public class Magazyn {
     @MapsId("NR_HURTOWNI")
     private Hurtownia hurtownia;
 
-    @OneToOne
-    //@MapsId("NR_ADRESU")
-    private Adres adres; //TODO czy tutaj ma bycć MapsID?
+    @ManyToOne
+    @MapsId("NR_ADRESU")
+    private Adres adres;
 
     public Magazyn() {
     }

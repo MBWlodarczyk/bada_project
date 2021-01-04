@@ -1,18 +1,18 @@
 package net.codejava.badabida.model;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
-@Table(name = "adresy")
-public class Adres implements Serializable {
+@Table(name = "ADRESY")
+public class Adres {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(updatable = false, nullable = false)
+    @Column(name = "NR_ADRESU", updatable = false, nullable = false)
     private Long nr_adresu;
 
     @Column(name = "MIASTO")
+    @MapsId
     private String miasto;
 
     @Column(name = "ULICA")

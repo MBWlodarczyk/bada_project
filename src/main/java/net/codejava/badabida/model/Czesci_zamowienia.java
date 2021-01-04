@@ -1,14 +1,10 @@
 package net.codejava.badabida.model;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
-@Table(name = "czesci_zamowienia")
-public class Czesci_zamowienia implements Serializable {
-
-    @EmbeddedId
-    private Czesci_zamowienia_id czesci_zamowienia_id = new Czesci_zamowienia_id();
+@Table(name = "CZESCI_ZAMOWIENIA")
+public class Czesci_zamowienia {
 
     @ManyToOne
     @MapsId("NR_CZESCI")
@@ -57,4 +53,9 @@ public class Czesci_zamowienia implements Serializable {
         this.ilosc = ilosc;
     }
 
+    public Czesci_zamowienia(Czesc czesc, Zamowienie zamowienie, int ilosc) {
+        this.czesc = czesc;
+        this.zamowienie = zamowienie;
+        this.ilosc = ilosc;
+    }
 }

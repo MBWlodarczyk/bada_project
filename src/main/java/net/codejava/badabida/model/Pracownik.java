@@ -1,11 +1,12 @@
 package net.codejava.badabida.model;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
+import javax.persistence.*;
+
 @Entity
-@Table(name = "pracownicy")
+@Table(name = "PRACOWNICY")
 public class Pracownik {
 
     @Id
