@@ -3,7 +3,7 @@ package net.codejava.badabida.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "KLIENCI")
+@Table(name = "klienci")
 public class Klient {
 
     @Id
@@ -20,8 +20,8 @@ public class Klient {
     @Column(name = "TELEFON")
     private String telefon;
 
-    @ManyToOne
-    @MapsId("NR_ADRESU")
+    @OneToOne
+    //@MapsId("NR_ADRESU") //TODO tu chyba tez nie
     private Adres adres;
 
     public Klient() {

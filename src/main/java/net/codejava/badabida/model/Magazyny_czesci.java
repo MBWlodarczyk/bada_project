@@ -1,10 +1,14 @@
 package net.codejava.badabida.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-@Table(name = "MAGAZYNY_CZESCI")
-public class Magazyny_czesci {
+@Table(name = "magazyny_czesci")
+public class Magazyny_czesci implements Serializable {
+
+    @EmbeddedId
+    private Magazyny_czesci_id magazyny_czesci_id= new Magazyny_czesci_id();
 
     @ManyToOne
     @MapsId("NR_MAGAZYNU")
@@ -20,19 +24,12 @@ public class Magazyny_czesci {
     public Magazyny_czesci() {
     }
 
-    public Magazyny_czesci(Magazyn magazyn, Czesc czesc, Long ilosc) {
-        this.magazyn = magazyn;
-        this.czesc = czesc;
-        this.ilosc = ilosc;
+    public Magazyny_czesci_id getMagazyny_czesci_id() {
+        return magazyny_czesci_id;
     }
 
-    @Override
-    public String toString() {
-        return "Magazyny_czesci{" +
-                "magazyn=" + magazyn +
-                ", czesc=" + czesc +
-                ", ilosc=" + ilosc +
-                '}';
+    public void setMagazyny_czesci_id(Magazyny_czesci_id magazyny_czesci_id) {
+        this.magazyny_czesci_id = magazyny_czesci_id;
     }
 
     public Magazyn getMagazyn() {

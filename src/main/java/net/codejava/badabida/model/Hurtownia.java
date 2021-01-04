@@ -1,10 +1,10 @@
 package net.codejava.badabida.model;
 
-import java.sql.Timestamp;
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
-@Table(name = "HURTOWNIE")
+@Table(name = "hurtownie")
 public class Hurtownia {
 
     @Id
@@ -15,11 +15,11 @@ public class Hurtownia {
     @Column(name = "NAZWA")
     private String nazwa;
 
-    @Column(name = "DATA_ZALOzENIA")
+    @Column(name = "DATA_ZALOZENIA")
     private Timestamp data_zalozenia;
 
-    @ManyToOne
-    @MapsId("NR_ADRESU")
+    @OneToOne
+    //@MapsId("NR_ADRESU") //TODO też nie
     private Adres adres;
 
     public Hurtownia() {
