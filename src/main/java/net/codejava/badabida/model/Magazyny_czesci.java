@@ -11,11 +11,11 @@ public class Magazyny_czesci implements Serializable {
     private Magazyny_czesci_id magazyny_czesci_id= new Magazyny_czesci_id();
 
     @ManyToOne
-    @MapsId("NR_MAGAZYNU")
+    //@MapsId("NR_MAGAZYNU")
     private Magazyn magazyn;
 
     @ManyToOne
-    @MapsId("NR_CZESCI")
+    //@MapsId("NR_CZESCI")
     private Czesc czesc;
 
     @Column(name = "ILOSC")

@@ -1,16 +1,17 @@
 package net.codejava.badabida.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 @Entity
 @Table(name = "pracownicy")
-public class Pracownik {
+public class Pracownik implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "NR_PRACOWNIKA",updatable=false,nullable = false)
+    @Column(updatable=false,nullable = false)
     private Long nr_pracownika;
 
     @Column(name = "IMIE")
@@ -38,11 +39,11 @@ public class Pracownik {
     private String plec;
 
     @ManyToOne
-    @MapsId("NR_HURTOWNI")
+    //@MapsId("NR_HURTOWNI")
     private Hurtownia hurtownia;
 
     @ManyToOne
-    @MapsId("NR_MAGAZYNU")
+    //@MapsId("NR_MAGAZYNU")
     private Magazyn magazyn;
 
     @ManyToOne

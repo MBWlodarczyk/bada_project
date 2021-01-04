@@ -10,7 +10,7 @@ public class Czesc implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "NR_CZESCI", updatable = false, nullable = false)
+    @Column(updatable = false, nullable = false)
     private Long nr_czesci;
 
     @Column(name = "CENA")

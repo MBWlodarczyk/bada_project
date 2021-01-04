@@ -1,16 +1,17 @@
 package net.codejava.badabida.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 
 @Entity
 @Table(name = "zamowienia")
-public class Zamowienie {
+public class Zamowienie implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "NR_ZAMOWIENIA",updatable=false,nullable = false)
+    @Column(updatable=false,nullable = false)
     private Long nr_zamowienia;
 
     @Column(name = "DATA_ZLOZENIA")

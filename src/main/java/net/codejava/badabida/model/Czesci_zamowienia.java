@@ -11,11 +11,11 @@ public class Czesci_zamowienia implements Serializable {
     private Czesci_zamowienia_id czesci_zamowienia_id = new Czesci_zamowienia_id();
 
     @ManyToOne
-    @MapsId("NR_CZESCI")
+    //@MapsId("NR_CZESCI")
     private Czesc czesc;
 
     @ManyToOne
-    @MapsId("NR_ZAMOWIENIA")
+    //@MapsId("NR_ZAMOWIENIA")
     private Zamowienie zamowienie;
 
     @Column(name = "ILOSC")

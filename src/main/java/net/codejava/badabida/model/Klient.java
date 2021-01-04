@@ -1,14 +1,15 @@
 package net.codejava.badabida.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "klienci")
-public class Klient {
+public class Klient implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "NR_KLIENTA", updatable=false,nullable = false)
+    @Column(updatable=false,nullable = false)
     private Long nr_klienta;
 
     @Column(name = "IMIE")
@@ -20,8 +21,8 @@ public class Klient {
     @Column(name = "TELEFON")
     private String telefon;
 
-    @OneToOne
-    //@MapsId("NR_ADRESU") //TODO tu chyba tez nie
+    @ManyToOne
+    @MapsId("NR_ADRESU") //TODO tu chyba tez nie
     private Adres adres;
 
     public Klient() {
