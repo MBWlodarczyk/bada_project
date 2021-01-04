@@ -1,10 +1,10 @@
 package net.codejava.badabida.model;
 
 import javax.persistence.*;
-
+import java.io.Serializable;
 @Entity
 @Table(name = "adresy")
-public class Adres {
+public class Adres implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -56,6 +56,18 @@ public class Adres {
 
     public void setNr_lokalu(String nr_lokalu) {
         this.nr_lokalu = nr_lokalu;
+    }
+
+    public Adres() {
+    }
+
+    public Adres(int nr_adresu, String miasto, String ulica, String nr_lokalu, String kod_poczty, String poczta) {
+        this.nr_adresu = nr_adresu;
+        this.miasto = miasto;
+        this.ulica = ulica;
+        this.nr_lokalu = nr_lokalu;
+        this.kod_poczty = kod_poczty;
+        this.poczta = poczta;
     }
 
     public String getKod_poczty() {
