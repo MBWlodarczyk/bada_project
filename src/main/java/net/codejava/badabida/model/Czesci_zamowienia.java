@@ -1,16 +1,21 @@
 package net.codejava.badabida.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "czesci_zamowienia")
 public class Czesci_zamowienia {
 
+    @ManyToOne
+    @MapsId("nr_czesci")
     private int nr_czesci;
-    private int nr_zamowienia;
-    private int ilosc;
 
-    public Czesci_zamowienia(int nr_czesci, int nr_zamowienia, int ilosc) {
-        this.nr_czesci = nr_czesci;
-        this.nr_zamowienia = nr_zamowienia;
-        this.ilosc = ilosc;
-    }
+    @ManyToOne
+    @MapsId("nr_zamowienia")
+    private int nr_zamowienia;
+
+    @Column(name = "ilosc")
+    private int ilosc;
 
     public int getNr_czesci() {
         return nr_czesci;
@@ -34,5 +39,14 @@ public class Czesci_zamowienia {
 
     public void setIlosc(int ilosc) {
         this.ilosc = ilosc;
+    }
+
+    @Override
+    public String toString() {
+        return "Czesci_zamowienia{" +
+                "nr_czesci=" + nr_czesci +
+                ", nr_zamowienia=" + nr_zamowienia +
+                ", ilosc=" + ilosc +
+                '}';
     }
 }

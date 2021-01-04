@@ -1,24 +1,28 @@
 package net.codejava.badabida.model;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 
+@Entity
+@Table(name = "czesci")
 public class Czesc {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(updatable = false, nullable = false)
     private int nr_czesci;
+
+    @Column(name = "cena")
     private BigDecimal cena;
+
+    @Column(name = "nazwa")
     private String nazwa;
+
+    @Column(name = "czas_gwarancji")
     private int czas_gwarancji;
+
+    @Column(name = "producent")
     private String producent;
-
-    public Czesc() {
-    }
-
-    public Czesc(int nr_czesci, BigDecimal cena, String nazwa, int czas_gwarancji, String producent) {
-        this.nr_czesci = nr_czesci;
-        this.cena = cena;
-        this.nazwa = nazwa;
-        this.czas_gwarancji = czas_gwarancji;
-        this.producent = producent;
-    }
 
     public int getNr_czesci() {
         return nr_czesci;
@@ -58,5 +62,16 @@ public class Czesc {
 
     public void setProducent(String producent) {
         this.producent = producent;
+    }
+
+    @Override
+    public String toString() {
+        return "Czesc{" +
+                "nr_czesci=" + nr_czesci +
+                ", cena=" + cena +
+                ", nazwa='" + nazwa + '\'' +
+                ", czas_gwarancji=" + czas_gwarancji +
+                ", producent='" + producent + '\'' +
+                '}';
     }
 }

@@ -1,20 +1,28 @@
 package net.codejava.badabida.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "klienci")
 public class Klient {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(updatable=false,nullable = false)
     private int nr_klienta;
+
+    @Column(name = "imie")
     private String imie;
+
+    @Column(name = "nazwisko")
     private String nazwisko;
+
+    @Column(name = "telefon")
     private String telefon;
+
+    @Column(name = "nr_adresu")
     private int nr_adresu;
 
-    public Klient(int nr_klienta, String imie, String nazwisko, String telefon, int nr_adresu) {
-        this.nr_klienta = nr_klienta;
-        this.imie = imie;
-        this.nazwisko = nazwisko;
-        this.telefon = telefon;
-        this.nr_adresu = nr_adresu;
-    }
 
     public int getNr_klienta() {
         return nr_klienta;

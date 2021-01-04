@@ -1,22 +1,26 @@
 package net.codejava.badabida.model;
 
 import java.sql.Timestamp;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "hurtownie")
 public class Hurtownia {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(updatable=false,nullable = false)
     private int nr_hurtowni;
+
+    @Column(name = "nazwa")
     private String nazwa;
-    private Timestamp data;
+
+    @Column(name = "data_zalozenia")
+    private Timestamp data_zalozenia;
+
+    @Column(name = "nr_adresu")
     private int nr_adresu;
 
-    public Hurtownia() {
-    }
-
-    public Hurtownia(int nr_hurtowni, String nazwa, Timestamp data, int nr_adresu) {
-        this.nr_hurtowni = nr_hurtowni;
-        this.nazwa = nazwa;
-        this.data = data;
-        this.nr_adresu = nr_adresu;
-    }
 
     public int getNr_hurtowni() {
         return nr_hurtowni;
@@ -34,12 +38,12 @@ public class Hurtownia {
         this.nazwa = nazwa;
     }
 
-    public Timestamp getData() {
-        return data;
+    public Timestamp getData_zalozenia() {
+        return data_zalozenia;
     }
 
-    public void setData(Timestamp data) {
-        this.data = data;
+    public void setData_zalozenia(Timestamp data_zalozenia) {
+        this.data_zalozenia = data_zalozenia;
     }
 
     public int getNr_adresu() {
