@@ -3,41 +3,79 @@ package net.codejava.badabida.model;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "PRACOWNICY")
 public class Pracownik {
 
-    private int nr_pracownika;
-    private String imie;
-    private String nazwisko;
-    private Timestamp data_urodzenia;
-    private String pesel;
-    private String telefon;
-    private BigDecimal wynagrodzenie;
-    private String stanowisko;
-    private String plec;
-    private int nr_hurtowni;
-    private int nr_magazynu;
-    private int nr_adresu;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "NR_PRACOWNIKA",updatable=false,nullable = false)
+    private Long nr_pracownika;
 
-    public Pracownik(int nr_pracownika, String imie, String nazwisko, Timestamp data_urodzenia, String pesel, String telefon, BigDecimal wynagrodzenie, String stanowisko, String plec, int nr_hurtowni, int nr_magazynu, int nr_adresu) {
-        this.nr_pracownika = nr_pracownika;
-        this.imie = imie;
-        this.nazwisko = nazwisko;
-        this.data_urodzenia = data_urodzenia;
-        this.pesel = pesel;
-        this.telefon = telefon;
-        this.wynagrodzenie = wynagrodzenie;
-        this.stanowisko = stanowisko;
-        this.plec = plec;
-        this.nr_hurtowni = nr_hurtowni;
-        this.nr_magazynu = nr_magazynu;
-        this.nr_adresu = nr_adresu;
+    @Column(name = "IMIE")
+    private String imie;
+
+    @Column(name = "NAZWISKO")
+    private String nazwisko;
+
+    @Column(name = "DATA_URODZENIA")
+    private Timestamp data_urodzenia;
+
+    @Column(name = "PESEL")
+    private String pesel;
+
+    @Column(name = "TELEFON")
+    private String telefon;
+
+    @Column(name = "WYNAGRODENIE")
+    private BigDecimal wynagrodzenie;
+
+    @Column(name = "STANOWISKO")
+    private String stanowisko;
+
+    @Column(name = "PLEC")
+    private String plec;
+
+    @ManyToOne
+    @MapsId("NR_HURTOWNI")
+    private Hurtownia hurtownia;
+
+    @ManyToOne
+    @MapsId("NR_MAGAZYNU")
+    private Magazyn magazyn;
+
+    @ManyToOne
+    @MapsId("NR_ADRESU")
+    private Adres adres;
+
+    public Pracownik() {
     }
 
-    public int getNr_pracownika() {
+    @Override
+    public String toString() {
+        return "Pracownik{" +
+                "nr_pracownika=" + nr_pracownika +
+                ", imie='" + imie + '\'' +
+                ", nazwisko='" + nazwisko + '\'' +
+                ", data_urodzenia=" + data_urodzenia +
+                ", pesel='" + pesel + '\'' +
+                ", telefon='" + telefon + '\'' +
+                ", wynagrodzenie=" + wynagrodzenie +
+                ", stanowisko='" + stanowisko + '\'' +
+                ", plec='" + plec + '\'' +
+                ", hurtownia=" + hurtownia +
+                ", magazyn=" + magazyn +
+                ", adres=" + adres +
+                '}';
+    }
+
+    public Long getNr_pracownika() {
         return nr_pracownika;
     }
 
-    public void setNr_pracownika(int nr_pracownika) {
+    public void setNr_pracownika(Long nr_pracownika) {
         this.nr_pracownika = nr_pracownika;
     }
 
@@ -105,27 +143,42 @@ public class Pracownik {
         this.plec = plec;
     }
 
-    public int getNr_hurtowni() {
-        return nr_hurtowni;
+    public Hurtownia getHurtownia() {
+        return hurtownia;
     }
 
-    public void setNr_hurtowni(int nr_hurtowni) {
-        this.nr_hurtowni = nr_hurtowni;
+    public void setHurtownia(Hurtownia hurtownia) {
+        this.hurtownia = hurtownia;
     }
 
-    public int getNr_magazynu() {
-        return nr_magazynu;
+    public Magazyn getMagazyn() {
+        return magazyn;
     }
 
-    public void setNr_magazynu(int nr_magazynu) {
-        this.nr_magazynu = nr_magazynu;
+    public void setMagazyn(Magazyn magazyn) {
+        this.magazyn = magazyn;
     }
 
-    public int getNr_adresu() {
-        return nr_adresu;
+    public Adres getAdres() {
+        return adres;
     }
 
-    public void setNr_adresu(int nr_adresu) {
-        this.nr_adresu = nr_adresu;
+    public void setAdres(Adres adres) {
+        this.adres = adres;
+    }
+
+    public Pracownik(Long nr_pracownika, String imie, String nazwisko, Timestamp data_urodzenia, String pesel, String telefon, BigDecimal wynagrodzenie, String stanowisko, String plec, Hurtownia hurtownia, Magazyn magazyn, Adres adres) {
+        this.nr_pracownika = nr_pracownika;
+        this.imie = imie;
+        this.nazwisko = nazwisko;
+        this.data_urodzenia = data_urodzenia;
+        this.pesel = pesel;
+        this.telefon = telefon;
+        this.wynagrodzenie = wynagrodzenie;
+        this.stanowisko = stanowisko;
+        this.plec = plec;
+        this.hurtownia = hurtownia;
+        this.magazyn = magazyn;
+        this.adres = adres;
     }
 }

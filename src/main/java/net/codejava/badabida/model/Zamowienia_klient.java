@@ -1,27 +1,50 @@
 package net.codejava.badabida.model;
 
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "ZAMOWIENIA_KLIENCI")
 public class Zamowienia_klient {
-    private int nr_zamowienia;
-    private int nr_klienta;
 
-    public Zamowienia_klient(int nr_zamowienia, int nr_klienta) {
-        this.nr_zamowienia = nr_zamowienia;
-        this.nr_klienta = nr_klienta;
+    @ManyToOne
+    @MapsId("NR_ZAMOWIENIA")
+    private Zamowienie zamowienie;
+
+    @ManyToOne
+    @MapsId("NR_KLIENTA")
+    private Klient klient;
+
+
+    public Zamowienia_klient() {
     }
 
-    public int getNr_zamowienia() {
-        return nr_zamowienia;
+    public Zamowienia_klient(Zamowienie zamowienie, Klient klient) {
+        this.zamowienie = zamowienie;
+        this.klient = klient;
     }
 
-    public void setNr_zamowienia(int nr_zamowienia) {
-        this.nr_zamowienia = nr_zamowienia;
+    @Override
+    public String toString() {
+        return "Zamowienia_klient{" +
+                "zamowienie=" + zamowienie +
+                ", klient=" + klient +
+                '}';
     }
 
-    public int getNr_klienta() {
-        return nr_klienta;
+    public Zamowienie getZamowienie() {
+        return zamowienie;
     }
 
-    public void setNr_klienta(int nr_klienta) {
-        this.nr_klienta = nr_klienta;
+    public void setZamowienie(Zamowienie zamowienie) {
+        this.zamowienie = zamowienie;
+    }
+
+    public Klient getKlient() {
+        return klient;
+    }
+
+    public void setKlient(Klient klient) {
+        this.klient = klient;
     }
 }

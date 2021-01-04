@@ -1,37 +1,61 @@
 package net.codejava.badabida.model;
 
-public class Magazyny_czesci {
-    private int nr_magazynu;
-    private int nr_czesci;
-    private int ilosc;
+import javax.persistence.*;
 
-    public Magazyny_czesci(int nr_magazynu, int nr_czesci, int ilosc) {
-        this.nr_magazynu = nr_magazynu;
-        this.nr_czesci = nr_czesci;
+@Entity
+@Table(name = "MAGAZYNY_CZESCI")
+public class Magazyny_czesci {
+
+    @ManyToOne
+    @MapsId("NR_MAGAZYNU")
+    private Magazyn magazyn;
+
+    @ManyToOne
+    @MapsId("NR_CZESCI")
+    private Czesc czesc;
+
+    @Column(name = "ILOSC")
+    private Long ilosc;
+
+    public Magazyny_czesci() {
+    }
+
+    public Magazyny_czesci(Magazyn magazyn, Czesc czesc, Long ilosc) {
+        this.magazyn = magazyn;
+        this.czesc = czesc;
         this.ilosc = ilosc;
     }
 
-    public int getNr_magazynu() {
-        return nr_magazynu;
+    @Override
+    public String toString() {
+        return "Magazyny_czesci{" +
+                "magazyn=" + magazyn +
+                ", czesc=" + czesc +
+                ", ilosc=" + ilosc +
+                '}';
     }
 
-    public void setNr_magazynu(int nr_magazynu) {
-        this.nr_magazynu = nr_magazynu;
+    public Magazyn getMagazyn() {
+        return magazyn;
     }
 
-    public int getNr_czesci() {
-        return nr_czesci;
+    public void setMagazyn(Magazyn magazyn) {
+        this.magazyn = magazyn;
     }
 
-    public void setNr_czesci(int nr_czesci) {
-        this.nr_czesci = nr_czesci;
+    public Czesc getCzesc() {
+        return czesc;
     }
 
-    public int getIlosc() {
+    public void setCzesc(Czesc czesc) {
+        this.czesc = czesc;
+    }
+
+    public Long getIlosc() {
         return ilosc;
     }
 
-    public void setIlosc(int ilosc) {
+    public void setIlosc(Long ilosc) {
         this.ilosc = ilosc;
     }
 }

@@ -4,29 +4,49 @@ import java.sql.Timestamp;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "hurtownie")
+@Table(name = "HURTOWNIE")
 public class Hurtownia {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(updatable=false,nullable = false)
-    private int nr_hurtowni;
+    @Column(name = "NR_HURTOWNI",updatable=false,nullable = false)
+    private Long nr_hurtowni;
 
-    @Column(name = "nazwa")
+    @Column(name = "NAZWA")
     private String nazwa;
 
-    @Column(name = "data_zalozenia")
+    @Column(name = "DATA_ZALOzENIA")
     private Timestamp data_zalozenia;
 
-    @Column(name = "nr_adresu")
-    private int nr_adresu;
+    @ManyToOne
+    @MapsId("NR_ADRESU")
+    private Adres adres;
 
+    public Hurtownia() {
+    }
 
-    public int getNr_hurtowni() {
+    public Hurtownia(Long nr_hurtowni, String nazwa, Timestamp data_zalozenia, Adres adres) {
+        this.nr_hurtowni = nr_hurtowni;
+        this.nazwa = nazwa;
+        this.data_zalozenia = data_zalozenia;
+        this.adres = adres;
+    }
+
+    @Override
+    public String toString() {
+        return "Hurtownia{" +
+                "nr_hurtowni=" + nr_hurtowni +
+                ", nazwa='" + nazwa + '\'' +
+                ", data_zalozenia=" + data_zalozenia +
+                ", adres=" + adres +
+                '}';
+    }
+
+    public Long getNr_hurtowni() {
         return nr_hurtowni;
     }
 
-    public void setNr_hurtowni(int nr_hurtowni) {
+    public void setNr_hurtowni(Long nr_hurtowni) {
         this.nr_hurtowni = nr_hurtowni;
     }
 
@@ -46,11 +66,13 @@ public class Hurtownia {
         this.data_zalozenia = data_zalozenia;
     }
 
-    public int getNr_adresu() {
-        return nr_adresu;
+    public Adres getAdres() {
+        return adres;
     }
 
-    public void setNr_adresu(int nr_adresu) {
-        this.nr_adresu = nr_adresu;
+    public void setAdres(Adres adres) {
+        this.adres = adres;
     }
 }
+
+

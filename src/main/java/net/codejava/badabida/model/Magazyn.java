@@ -1,28 +1,50 @@
 package net.codejava.badabida.model;
 
+import javax.persistence.*;
 import java.sql.Timestamp;
 
+@Entity
+@Table(name = "Magazyny")
 public class Magazyn {
 
-    private int nr_magazynu;
-    private String nazwa;
-    private Timestamp data_zalozenia;
-    private int nr_hurtowni;
-    private int nr_adresu;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "NR_MAGAZYNU", updatable = false, nullable = false)
+    private Long nr_magazynu;
 
-    public Magazyn(int nr_magazynu, String nazwa, Timestamp data_zalozenia, int nr_hurtowni, int nr_adresu) {
-        this.nr_magazynu = nr_magazynu;
-        this.nazwa = nazwa;
-        this.data_zalozenia = data_zalozenia;
-        this.nr_hurtowni = nr_hurtowni;
-        this.nr_adresu = nr_adresu;
+    @Column(name = "NAZWA")
+    private String nazwa;
+
+    @Column(name = "DATA_ZALOZENIA")
+    private Timestamp data_zalozenia;
+
+    @ManyToOne
+    @MapsId("NR_HURTOWNI")
+    private Hurtownia hurtownia;
+
+    @ManyToOne
+    @MapsId("NR_ADRESU")
+    private Adres adres;
+
+    public Magazyn() {
     }
 
-    public int getNr_magazynu() {
+    @Override
+    public String toString() {
+        return "Magazyn{" +
+                "nr_magazynu=" + nr_magazynu +
+                ", nazwa='" + nazwa + '\'' +
+                ", data_zalozenia=" + data_zalozenia +
+                ", hurtownia=" + hurtownia +
+                ", adres=" + adres +
+                '}';
+    }
+
+    public Long getNr_magazynu() {
         return nr_magazynu;
     }
 
-    public void setNr_magazynu(int nr_magazynu) {
+    public void setNr_magazynu(Long nr_magazynu) {
         this.nr_magazynu = nr_magazynu;
     }
 
@@ -42,19 +64,27 @@ public class Magazyn {
         this.data_zalozenia = data_zalozenia;
     }
 
-    public int getNr_hurtowni() {
-        return nr_hurtowni;
+    public Hurtownia getHurtownia() {
+        return hurtownia;
     }
 
-    public void setNr_hurtowni(int nr_hurtowni) {
-        this.nr_hurtowni = nr_hurtowni;
+    public void setHurtownia(Hurtownia hurtownia) {
+        this.hurtownia = hurtownia;
     }
 
-    public int getNr_adresu() {
-        return nr_adresu;
+    public Adres getAdres() {
+        return adres;
     }
 
-    public void setNr_adresu(int nr_adresu) {
-        this.nr_adresu = nr_adresu;
+    public void setAdres(Adres adres) {
+        this.adres = adres;
+    }
+
+    public Magazyn(Long nr_magazynu, String nazwa, Timestamp data_zalozenia, Hurtownia hurtownia, Adres adres) {
+        this.nr_magazynu = nr_magazynu;
+        this.nazwa = nazwa;
+        this.data_zalozenia = data_zalozenia;
+        this.hurtownia = hurtownia;
+        this.adres = adres;
     }
 }

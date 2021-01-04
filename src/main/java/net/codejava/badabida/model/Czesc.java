@@ -4,31 +4,42 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "czesci")
+@Table(name = "CZESCI")
 public class Czesc {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(updatable = false, nullable = false)
-    private int nr_czesci;
+    @Column(name = "NR_CZESCI", updatable = false, nullable = false)
+    private Long nr_czesci;
 
-    @Column(name = "cena")
+    @Column(name = "CENA")
     private BigDecimal cena;
 
-    @Column(name = "nazwa")
+    @Column(name = "NAZWA")
     private String nazwa;
 
-    @Column(name = "czas_gwarancji")
+    @Column(name = "CZAS_GWARANCJI")
     private int czas_gwarancji;
 
-    @Column(name = "producent")
+    @Column(name = "PRODUCENT")
     private String producent;
 
-    public int getNr_czesci() {
+    public Czesc() {
+    }
+
+    public Czesc(Long nr_czesci, BigDecimal cena, String nazwa, int czas_gwarancji, String producent) {
+        this.nr_czesci = nr_czesci;
+        this.cena = cena;
+        this.nazwa = nazwa;
+        this.czas_gwarancji = czas_gwarancji;
+        this.producent = producent;
+    }
+
+    public Long getNr_czesci() {
         return nr_czesci;
     }
 
-    public void setNr_czesci(int nr_czesci) {
+    public void setNr_czesci(Long nr_czesci) {
         this.nr_czesci = nr_czesci;
     }
 

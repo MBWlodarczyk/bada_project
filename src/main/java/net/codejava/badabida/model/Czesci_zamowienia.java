@@ -3,34 +3,46 @@ package net.codejava.badabida.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "czesci_zamowienia")
+@Table(name = "CZESCI_ZAMOWIENIA")
 public class Czesci_zamowienia {
 
     @ManyToOne
-    @MapsId("nr_czesci")
-    private int nr_czesci;
+    @MapsId("NR_CZESCI")
+    private Czesc czesc;
 
     @ManyToOne
-    @MapsId("nr_zamowienia")
-    private int nr_zamowienia;
+    @MapsId("NR_ZAMOWIENIA")
+    private Zamowienie zamowienie;
 
-    @Column(name = "ilosc")
+    @Column(name = "ILOSC")
     private int ilosc;
 
-    public int getNr_czesci() {
-        return nr_czesci;
+    public Czesci_zamowienia() {
     }
 
-    public void setNr_czesci(int nr_czesci) {
-        this.nr_czesci = nr_czesci;
+    @Override
+    public String toString() {
+        return "Czesci_zamowienia{" +
+                "czesc=" + czesc +
+                ", zamowienie=" + zamowienie +
+                ", ilosc=" + ilosc +
+                '}';
     }
 
-    public int getNr_zamowienia() {
-        return nr_zamowienia;
+    public Czesc getCzesc() {
+        return czesc;
     }
 
-    public void setNr_zamowienia(int nr_zamowienia) {
-        this.nr_zamowienia = nr_zamowienia;
+    public void setCzesc(Czesc czesc) {
+        this.czesc = czesc;
+    }
+
+    public Zamowienie getZamowienie() {
+        return zamowienie;
+    }
+
+    public void setZamowienie(Zamowienie zamowienie) {
+        this.zamowienie = zamowienie;
     }
 
     public int getIlosc() {
@@ -41,12 +53,9 @@ public class Czesci_zamowienia {
         this.ilosc = ilosc;
     }
 
-    @Override
-    public String toString() {
-        return "Czesci_zamowienia{" +
-                "nr_czesci=" + nr_czesci +
-                ", nr_zamowienia=" + nr_zamowienia +
-                ", ilosc=" + ilosc +
-                '}';
+    public Czesci_zamowienia(Czesc czesc, Zamowienie zamowienie, int ilosc) {
+        this.czesc = czesc;
+        this.zamowienie = zamowienie;
+        this.ilosc = ilosc;
     }
 }

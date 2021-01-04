@@ -3,34 +3,48 @@ package net.codejava.badabida.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "adresy")
+@Table(name = "ADRESY")
 public class Adres {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(updatable=false,nullable = false)
-    private int nr_adresu;
+    @Column(name = "NR_ADRESU", updatable = false, nullable = false)
+    private Long nr_adresu;
 
-    @Column(name = "miasto")
+    @Column(name = "MIASTO")
+    @MapsId
     private String miasto;
 
-    @Column(name = "ulica")
+    @Column(name = "ULICA")
     private String ulica;
 
-    @Column(name = "nr_lokalu")
+    @Column(name = "NR_LOKALU")
     private String nr_lokalu;
 
-    @Column(name = "kod_poczty")
+    @Column(name = "KOD_POCZTY")
     private String kod_poczty;
 
-    @Column(name = "poczta")
+    @Column(name = "POCZTA")
     private String poczta;
 
-    public int getNr_adresu() {
+
+    public Adres() {
+    }
+
+    public Adres(Long nr_adresu, String miasto, String ulica, String nr_lokalu, String kod_poczty, String poczta) {
+        this.nr_adresu = nr_adresu;
+        this.miasto = miasto;
+        this.ulica = ulica;
+        this.nr_lokalu = nr_lokalu;
+        this.kod_poczty = kod_poczty;
+        this.poczta = poczta;
+    }
+
+    public Long getNr_adresu() {
         return nr_adresu;
     }
 
-    public void setNr_adresu(int nr_adresu) {
+    public void setNr_adresu(Long nr_adresu) {
         this.nr_adresu = nr_adresu;
     }
 

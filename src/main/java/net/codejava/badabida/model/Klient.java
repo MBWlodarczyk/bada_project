@@ -3,32 +3,46 @@ package net.codejava.badabida.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "klienci")
+@Table(name = "KLIENCI")
 public class Klient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(updatable=false,nullable = false)
-    private int nr_klienta;
+    @Column(name = "NR_KLIENTA", updatable=false,nullable = false)
+    private Long nr_klienta;
 
-    @Column(name = "imie")
+    @Column(name = "IMIE")
     private String imie;
 
-    @Column(name = "nazwisko")
+    @Column(name = "NAZWISKO")
     private String nazwisko;
 
-    @Column(name = "telefon")
+    @Column(name = "TELEFON")
     private String telefon;
 
-    @Column(name = "nr_adresu")
-    private int nr_adresu;
+    @ManyToOne
+    @MapsId("NR_ADRESU")
+    private Adres adres;
 
+    public Klient() {
+    }
 
-    public int getNr_klienta() {
+    @Override
+    public String toString() {
+        return "Klient{" +
+                "nr_klienta=" + nr_klienta +
+                ", imie='" + imie + '\'' +
+                ", nazwisko='" + nazwisko + '\'' +
+                ", telefon='" + telefon + '\'' +
+                ", adres=" + adres +
+                '}';
+    }
+
+    public Long getNr_klienta() {
         return nr_klienta;
     }
 
-    public void setNr_klienta(int nr_klienta) {
+    public void setNr_klienta(Long nr_klienta) {
         this.nr_klienta = nr_klienta;
     }
 
@@ -56,22 +70,19 @@ public class Klient {
         this.telefon = telefon;
     }
 
-    public int getNr_adresu() {
-        return nr_adresu;
+    public Adres getAdres() {
+        return adres;
     }
 
-    public void setNr_adresu(int nr_adresu) {
-        this.nr_adresu = nr_adresu;
+    public void setAdres(Adres adres) {
+        this.adres = adres;
     }
 
-    @Override
-    public String toString() {
-        return "Klient{" +
-                "nr_klienta=" + nr_klienta +
-                ", imie='" + imie + '\'' +
-                ", nazwisko='" + nazwisko + '\'' +
-                ", telefon='" + telefon + '\'' +
-                ", nr_adresu=" + nr_adresu +
-                '}';
+    public Klient(Long nr_klienta, String imie, String nazwisko, String telefon, Adres adres) {
+        this.nr_klienta = nr_klienta;
+        this.imie = imie;
+        this.nazwisko = nazwisko;
+        this.telefon = telefon;
+        this.adres = adres;
     }
 }
