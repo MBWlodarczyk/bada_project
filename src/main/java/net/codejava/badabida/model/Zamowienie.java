@@ -2,6 +2,7 @@ package net.codejava.badabida.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Date;
 import java.sql.Timestamp;
 
 
@@ -14,16 +15,16 @@ public class Zamowienie implements Serializable {
     @Column(updatable=false,nullable = false)
     private Long nr_zamowienia;
 
-    @Column(name = "DATA_ZLOZENIA")
-    private Timestamp data_zlozenia;
+    @Column(name = "data_zlozenia")
+    private Date data_zlozenia;
 
-    @Column(name = "STATUS_ZLOZENIA")
+    @Column(name = "status_zamowienia")
     private String status_zamowienia;
 
     public Zamowienie() {
     }
 
-    public Zamowienie(Long nr_zamowienia, Timestamp data_zlozenia, String status_zamowienia) {
+    public Zamowienie(Long nr_zamowienia, Date data_zlozenia, String status_zamowienia) {
         this.nr_zamowienia = nr_zamowienia;
         this.data_zlozenia = data_zlozenia;
         this.status_zamowienia = status_zamowienia;
@@ -37,11 +38,11 @@ public class Zamowienie implements Serializable {
         this.nr_zamowienia = nr_zamowienia;
     }
 
-    public Timestamp getData_zlozenia() {
+    public Date getData_zlozenia() {
         return data_zlozenia;
     }
 
-    public void setData_zlozenia(Timestamp data_zlozenia) {
+    public void setData_zlozenia(Date data_zlozenia) {
         this.data_zlozenia = data_zlozenia;
     }
 
