@@ -19,7 +19,7 @@ public class ZamowienieController {
         this.zamowieniaRepository = zamowieniaRepository;
     }
 
-    @GetMapping("/zamowienia")
+    @GetMapping("zamowienia")
     public String getAllZamowienia(Model model) {
         model.addAttribute("zamowienia", new ArrayList<Zamowienie>(zamowieniaRepository.findAll()));
         return "zamowienia.html";

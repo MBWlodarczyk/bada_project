@@ -45,15 +45,12 @@ public class Pracownik implements Serializable, UserDetails {
     private String plec;
 
     @ManyToOne
-    //@MapsId("NR_HURTOWNI")
     private Hurtownia hurtownia;
 
     @ManyToOne
-    //@MapsId("NR_MAGAZYNU")
     private Magazyn magazyn;
 
     @ManyToOne
-    //@MapsId("NR_ADRESU")
     private Adres adres;
 
     @Column(name = "username")

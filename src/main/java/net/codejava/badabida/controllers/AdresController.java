@@ -19,7 +19,7 @@ public class AdresController {
         this.adresRepository = adresRepository;
     }
 
-    @GetMapping("/adresy")
+    @GetMapping("adresy")
     public String getAllAdresy(Model model) {
         model.addAttribute("adresy", new ArrayList<Adres>(adresRepository.findAll()));
         return "adresy";
