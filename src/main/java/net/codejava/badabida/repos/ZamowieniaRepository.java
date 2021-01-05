@@ -8,5 +8,5 @@ import java.util.Set;
 
 @Repository
 public interface ZamowieniaRepository extends CrudRepository<Zamowienie, Long> {
-    public Set<Zamowienie> findAll();
+    Set<Zamowienie> findAll();
 }

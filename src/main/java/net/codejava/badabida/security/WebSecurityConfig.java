@@ -18,9 +18,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    private UserDetailsServiceImpl userDetailsService;
+    private final KlientDetailsServiceImpl userDetailsService;
 
-    public WebSecurityConfig(UserDetailsServiceImpl userDetailsService) {
+    public WebSecurityConfig(KlientDetailsServiceImpl userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
@@ -34,7 +34,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/zamowienia").hasRole("ADMIN")
                 .and()
-                .formLogin().defaultSuccessUrl("/adresy");
+                .formLogin().defaultSuccessUrl("/adresy")
+                .and()
+                .logout();
     }
 
 

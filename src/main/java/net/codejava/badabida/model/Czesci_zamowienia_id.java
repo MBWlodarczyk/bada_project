@@ -7,7 +7,7 @@ import java.util.Objects;
 
 
 @Embeddable
-public class Czesci_zamowienia_id implements Serializable{
+public class Czesci_zamowienia_id implements Serializable {
 
     @Column(name = "nr_czesci")
     private Long nr_czesci;

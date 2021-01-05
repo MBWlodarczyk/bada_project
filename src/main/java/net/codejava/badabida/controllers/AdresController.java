@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class AdresController {
@@ -22,7 +21,7 @@ public class AdresController {
 
     @GetMapping("/adresy")
     public String getAllAdresy(Model model) {
-        model.addAttribute("adresy",new ArrayList<Adres>(adresRepository.findAll()));
+        model.addAttribute("adresy", new ArrayList<Adres>(adresRepository.findAll()));
         return "adresy";
     }
 }

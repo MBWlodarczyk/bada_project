@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class Magazyny_czesci_id implements Serializable{
+public class Magazyny_czesci_id implements Serializable {
 
     @Column(name = "nr_magazynu")
     private Long nr_magazynu;

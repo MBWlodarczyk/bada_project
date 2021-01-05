@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class Czesci_zamowienia implements Serializable {
 
     @EmbeddedId
-    private Czesci_zamowienia_id czesci_zamowienia_id = new Czesci_zamowienia_id();
+    private final Czesci_zamowienia_id czesci_zamowienia_id = new Czesci_zamowienia_id();
 
     @ManyToOne
     //@MapsId("NR_CZESCI")

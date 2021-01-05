@@ -1,17 +1,23 @@
 package net.codejava.badabida.model;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Collection;
+import java.util.Collections;
 
 @Entity
 @Table(name = "pracownicy")
-public class Pracownik implements Serializable {
+public class Pracownik implements Serializable, UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(updatable=false,nullable = false)
+    @Column(updatable = false, nullable = false)
     private Long nr_pracownika;
 
     @Column(name = "IMIE")
@@ -29,7 +35,7 @@ public class Pracownik implements Serializable {
     @Column(name = "TELEFON")
     private String telefon;
 
-    @Column(name = "WYNAGRODENIE")
+    @Column(name = "wynagrodzenie")
     private BigDecimal wynagrodzenie;
 
     @Column(name = "STANOWISKO")
@@ -47,28 +53,55 @@ public class Pracownik implements Serializable {
     private Magazyn magazyn;
 
     @ManyToOne
-    @MapsId("NR_ADRESU")
+    //@MapsId("NR_ADRESU")
     private Adres adres;
+
+    @Column(name = "username")
+    private String username;
+
+    @Column(name = "password")
+    private String password;
+
+    @Column(name = "role")
+    private String role;
 
     public Pracownik() {
     }
 
+
     @Override
-    public String toString() {
-        return "Pracownik{" +
-                "nr_pracownika=" + nr_pracownika +
-                ", imie='" + imie + '\'' +
-                ", nazwisko='" + nazwisko + '\'' +
-                ", data_urodzenia=" + data_urodzenia +
-                ", pesel='" + pesel + '\'' +
-                ", telefon='" + telefon + '\'' +
-                ", wynagrodzenie=" + wynagrodzenie +
-                ", stanowisko='" + stanowisko + '\'' +
-                ", plec='" + plec + '\'' +
-                ", hurtownia=" + hurtownia +
-                ", magazyn=" + magazyn +
-                ", adres=" + adres +
-                '}';
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singleton(new SimpleGrantedAuthority(role));
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     public Long getNr_pracownika() {
@@ -167,7 +200,23 @@ public class Pracownik implements Serializable {
         this.adres = adres;
     }
 
-    public Pracownik(Long nr_pracownika, String imie, String nazwisko, Timestamp data_urodzenia, String pesel, String telefon, BigDecimal wynagrodzenie, String stanowisko, String plec, Hurtownia hurtownia, Magazyn magazyn, Adres adres) {
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public Pracownik(Long nr_pracownika, String imie, String nazwisko, Timestamp data_urodzenia, String pesel, String telefon, BigDecimal wynagrodzenie, String stanowisko, String plec, Hurtownia hurtownia, Magazyn magazyn, Adres adres, String username, String password, String role) {
         this.nr_pracownika = nr_pracownika;
         this.imie = imie;
         this.nazwisko = nazwisko;
@@ -180,5 +229,8 @@ public class Pracownik implements Serializable {
         this.hurtownia = hurtownia;
         this.magazyn = magazyn;
         this.adres = adres;
+        this.username = username;
+        this.password = password;
+        this.role = role;
     }
 }

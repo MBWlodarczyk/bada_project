@@ -5,8 +5,8 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 public class Connection {
 
-    private DriverManagerDataSource dataSource;
-    private JdbcTemplate jdbcTemplate;
+    private final DriverManagerDataSource dataSource;
+    private final JdbcTemplate jdbcTemplate;
 
     public Connection(String username, String password) {
         dataSource = new DriverManagerDataSource();

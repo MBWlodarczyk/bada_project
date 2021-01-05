@@ -10,7 +10,7 @@ public class Hurtownia implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(updatable=false,nullable = false)
+    @Column(updatable = false, nullable = false)
     private Long nr_hurtowni;
 
     @Column(name = "NAZWA")
