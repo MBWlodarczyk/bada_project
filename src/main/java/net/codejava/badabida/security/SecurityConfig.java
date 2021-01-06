@@ -6,8 +6,10 @@ import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Configuration
 public class SecurityConfig {
@@ -104,18 +106,27 @@ public class SecurityConfig {
             //@formatter:off
             http
                     .authorizeRequests()
-                    .antMatchers("/css/**").permitAll()
+                    .antMatchers("/", "/client/**", "/js/**", "/css/**").hasRole("USER") //,"/static/css/**"
                     .anyRequest().authenticated()
                     .and()
                     .formLogin()
                     .loginPage("/client/login")
-                    .defaultSuccessUrl("/client/home")
+                    //.loginProcessingUrl("/login")
+                    .defaultSuccessUrl("/client/home", true)
                     .permitAll()
                     .and()
                     .logout()
                     .logoutUrl("/client/logout")
-                    .permitAll();
+                    .permitAll()
+                    .and()
+                    .rememberMe().key("uniqueAndSecret");
             //@formatter:on
+
+        }
+
+        @GetMapping("/username")
+        public String currentUserName(Authentication authentication) {
+            return authentication.getName();
         }
     }
 
