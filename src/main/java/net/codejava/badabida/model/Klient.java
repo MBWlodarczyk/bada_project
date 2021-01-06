@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "klienci")
@@ -43,7 +44,7 @@ public class Klient implements Serializable, UserDetails {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "zamowienia_klienci", joinColumns = { @JoinColumn(name = "nr_klienta") }, inverseJoinColumns = { @JoinColumn(name = "nr_zamowienia") })
-    private List<Zamowienie> zamowienia;
+    private Set<Zamowienie> zamowienia;
 
     public Klient() {
     }
@@ -84,7 +85,7 @@ public class Klient implements Serializable, UserDetails {
         return true;
     }
 
-    public Klient(Long nr_klienta, String imie, String nazwisko, String telefon, Adres adres, String username, String password, String role, List<Zamowienie> zamowienia) {
+    public Klient(Long nr_klienta, String imie, String nazwisko, String telefon, Adres adres, String username, String password, String role, Set<Zamowienie> zamowienia) {
         this.nr_klienta = nr_klienta;
         this.imie = imie;
         this.nazwisko = nazwisko;
@@ -166,11 +167,11 @@ public class Klient implements Serializable, UserDetails {
         this.role = role;
     }
 
-    public List<Zamowienie> getZamowienia() {
+    public Set<Zamowienie> getZamowienia() {
         return zamowienia;
     }
 
-    public void setZamowienia(List<Zamowienie> zamowienia) {
+    public void setZamowienia(Set<Zamowienie> zamowienia) {
         this.zamowienia = zamowienia;
     }
 }

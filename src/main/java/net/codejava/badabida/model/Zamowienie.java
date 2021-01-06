@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -22,7 +23,7 @@ public class Zamowienie implements Serializable {
     private String status_zamowienia;
 
     @ManyToMany(fetch = FetchType.EAGER,mappedBy = "zamowienia")
-    private List<Klient> klienci;
+    private Set<Klient> klienci;
 
     public Zamowienie() {
     }
