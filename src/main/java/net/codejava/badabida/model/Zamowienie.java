@@ -3,7 +3,6 @@ package net.codejava.badabida.model;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.List;
 import java.util.Set;
 
 
@@ -22,16 +21,17 @@ public class Zamowienie implements Serializable {
     @Column(name = "status_zamowienia")
     private String status_zamowienia;
 
-    @ManyToMany(fetch = FetchType.EAGER,mappedBy = "zamowienia")
+    @ManyToMany(fetch = FetchType.LAZY,mappedBy = "zamowienia")
     private Set<Klient> klienci;
 
     public Zamowienie() {
     }
 
-    public Zamowienie(Long nr_zamowienia, Date data_zlozenia, String status_zamowienia) {
+    public Zamowienie(Long nr_zamowienia, Date data_zlozenia, String status_zamowienia, Set<Klient> klienci) {
         this.nr_zamowienia = nr_zamowienia;
         this.data_zlozenia = data_zlozenia;
         this.status_zamowienia = status_zamowienia;
+        this.klienci = klienci;
     }
 
     public Long getNr_zamowienia() {
@@ -56,5 +56,13 @@ public class Zamowienie implements Serializable {
 
     public void setStatus_zamowienia(String status_zamowienia) {
         this.status_zamowienia = status_zamowienia;
+    }
+
+    public Set<Klient> getKlienci() {
+        return klienci;
+    }
+
+    public void setKlienci(Set<Klient> klienci) {
+        this.klienci = klienci;
     }
 }

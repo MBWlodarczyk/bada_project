@@ -8,7 +8,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -29,8 +28,8 @@ public class Klient implements Serializable, UserDetails {
     @Column(name = "TELEFON")
     private String telefon;
 
-    @ManyToOne
-    //@MapsId("NR_ADRESU") //TODO tu chyba tez nie
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "nr_adresu")
     private Adres adres;
 
     @Column(name = "username")
@@ -42,13 +41,16 @@ public class Klient implements Serializable, UserDetails {
     @Column(name = "role")
     private String role;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "zamowienia_klienci", joinColumns = { @JoinColumn(name = "nr_klienta") }, inverseJoinColumns = { @JoinColumn(name = "nr_zamowienia") })
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "zamowienia_klienci",
+            joinColumns = { @JoinColumn(name = "nr_klienta") },
+            inverseJoinColumns = { @JoinColumn(name = "nr_zamowienia") }
+    )
     private Set<Zamowienie> zamowienia;
 
     public Klient() {
     }
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
