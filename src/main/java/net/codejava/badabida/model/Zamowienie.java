@@ -3,6 +3,7 @@ package net.codejava.badabida.model;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
 
 
 @Entity
@@ -19,6 +20,9 @@ public class Zamowienie implements Serializable {
 
     @Column(name = "status_zamowienia")
     private String status_zamowienia;
+
+    @ManyToMany(fetch = FetchType.EAGER,mappedBy = "zamowienia")
+    private List<Klient> klienci;
 
     public Zamowienie() {
     }

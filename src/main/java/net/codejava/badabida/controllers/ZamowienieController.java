@@ -1,6 +1,7 @@
 package net.codejava.badabida.controllers;
 
 import net.codejava.badabida.model.Zamowienie;
+import net.codejava.badabida.repos.KlientRepository;
 import net.codejava.badabida.repos.ZamowieniaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,9 +17,11 @@ public class ZamowienieController {
 
     @Autowired
     private final ZamowieniaRepository zamowieniaRepository;
+    private final KlientRepository klientRepository;
 
-    public ZamowienieController(ZamowieniaRepository zamowieniaRepository) {
+    public ZamowienieController(ZamowieniaRepository zamowieniaRepository, KlientRepository klientRepository) {
         this.zamowieniaRepository = zamowieniaRepository;
+        this.klientRepository = klientRepository;
     }
 
     @GetMapping("client/zamowienia")
@@ -26,22 +29,20 @@ public class ZamowienieController {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (principal instanceof UserDetails) {
-            String username1 = ((UserDetails)principal).getUsername();
+            String username = ((UserDetails)principal).getUsername();
             String username2 = ((UserDetails)principal).getPassword();
             String username3 = ((UserDetails)principal).getAuthorities().toString();
-            System.out.println(username1);
+            System.out.println(username);
             System.out.println(username2);
             System.out.println(username3);
+            model.addAttribute("zamowienia", klientRepository.findByUsername(username).get().getZamowienia());
         } else {
             String username = principal.toString();
             System.out.println(username);
 
         }
 
-
-
-
-        model.addAttribute("zamowienia", new ArrayList<Zamowienie>(zamowieniaRepository.findAll()));
+        //model.addAttribute("zamowienia", new ArrayList<Zamowienie>(zamowieniaRepository.findAll()));
         return "client/zamowienia.html";
     }
 }

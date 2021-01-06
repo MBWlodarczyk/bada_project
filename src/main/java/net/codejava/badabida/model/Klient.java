@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Entity
 @Table(name = "klienci")
@@ -40,6 +41,9 @@ public class Klient implements Serializable, UserDetails {
     @Column(name = "role")
     private String role;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "zamowienia_klienci", joinColumns = { @JoinColumn(name = "nr_klienta") }, inverseJoinColumns = { @JoinColumn(name = "nr_zamowienia") })
+    private List<Zamowienie> zamowienia;
 
     public Klient() {
     }
@@ -80,7 +84,7 @@ public class Klient implements Serializable, UserDetails {
         return true;
     }
 
-    public Klient(Long nr_klienta, String imie, String nazwisko, String telefon, Adres adres, String username, String password, String role) {
+    public Klient(Long nr_klienta, String imie, String nazwisko, String telefon, Adres adres, String username, String password, String role, List<Zamowienie> zamowienia) {
         this.nr_klienta = nr_klienta;
         this.imie = imie;
         this.nazwisko = nazwisko;
@@ -89,6 +93,7 @@ public class Klient implements Serializable, UserDetails {
         this.username = username;
         this.password = password;
         this.role = role;
+        this.zamowienia = zamowienia;
     }
 
     @Override
@@ -159,5 +164,13 @@ public class Klient implements Serializable, UserDetails {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public List<Zamowienie> getZamowienia() {
+        return zamowienia;
+    }
+
+    public void setZamowienia(List<Zamowienie> zamowienia) {
+        this.zamowienia = zamowienia;
     }
 }
