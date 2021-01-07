@@ -29,7 +29,7 @@ public class Zamowienie implements Serializable {
     private Set<Klient> pracownicy;
 
     @OneToMany(mappedBy = "zamowienie",cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<czesciZamowienia> czesci;
+    private List<CzesciZamowienia> czesci;
 
     public Zamowienie() {
     }
@@ -43,11 +43,12 @@ public class Zamowienie implements Serializable {
                 '}';
     }
 
-    public Zamowienie(Long nrZamowienia, Date data_zlozenia, String status_zamowienia, Set<Klient> klienci, List<czesciZamowienia> czesci) {
+    public Zamowienie(Long nrZamowienia, Date data_zlozenia, String status_zamowienia, Set<Klient> klienci, Set<Klient> pracownicy, List<CzesciZamowienia> czesci) {
         this.nrZamowienia = nrZamowienia;
         this.dataZlozenia = data_zlozenia;
         this.statusZamowienia = status_zamowienia;
         this.klienci = klienci;
+        this.pracownicy = pracownicy;
         this.czesci = czesci;
     }
 
@@ -83,11 +84,11 @@ public class Zamowienie implements Serializable {
         this.klienci = klienci;
     }
 
-    public List<czesciZamowienia> getCzesci() {
+    public List<CzesciZamowienia> getCzesci() {
         return czesci;
     }
 
-    public void setCzesci(List<czesciZamowienia> czesci) {
+    public void setCzesci(List<CzesciZamowienia> czesci) {
         this.czesci = czesci;
     }
 }

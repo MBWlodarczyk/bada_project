@@ -28,7 +28,7 @@ public class Klient implements Serializable, UserDetails {
     @Column(name = "TELEFON")
     private String telefon;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.REFRESH)
     @JoinColumn(name = "nr_adresu")
     private Adres adres;
 

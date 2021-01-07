@@ -8,17 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class LoginApplicationController {
 
-    @GetMapping("/")
-    public String getHome(){
-        return "client/home";
-    }
-
-    @GetMapping("/client/home")
-    public String getClientHome(){
-        return "client/home";
-    }
-
-
 
     @GetMapping("/employee/home")
     public String getEmployeeHome(){
@@ -30,12 +19,6 @@ public class LoginApplicationController {
         return "admin/home";
     }
 
-
-
-    @GetMapping("/client/login")
-    public String getClientLogin(){
-        return "client/login";
-    }
 
     @GetMapping("/employee/login")
     public String getEmployeeLogin(){

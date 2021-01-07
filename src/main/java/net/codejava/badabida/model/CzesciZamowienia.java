@@ -4,10 +4,10 @@ import javax.persistence.*;
 import java.io.Serializable;
 @Entity
 @Table(name = "czesci_zamowienia")
-public class czesciZamowienia implements Serializable {
+public class CzesciZamowienia implements Serializable {
 
     @EmbeddedId
-    private czesciZamowieniaId id;
+    private CzesciZamowieniaId id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("nrCzesci")
@@ -22,13 +22,13 @@ public class czesciZamowienia implements Serializable {
     @Column(name = "ILOSC")
     private int ilosc;
 
-    public czesciZamowienia() {
+    public CzesciZamowienia() {
     }
 
-    public czesciZamowienia(Czesc czesc, Zamowienie zamowienie){
+    public CzesciZamowienia(Czesc czesc, Zamowienie zamowienie){
         this.czesc = czesc;
         this. zamowienie = zamowienie;
-        this.id = new czesciZamowieniaId(czesc.getNrCzesci(), zamowienie.getNrZamowienia());
+        this.id = new CzesciZamowieniaId(czesc.getNrCzesci(), zamowienie.getNrZamowienia());
     }
 
     @Override
@@ -64,11 +64,11 @@ public class czesciZamowienia implements Serializable {
         this.ilosc = ilosc;
     }
 
-    public czesciZamowieniaId getId() {
+    public CzesciZamowieniaId getId() {
         return id;
     }
 
-    public void setId(czesciZamowieniaId id) {
+    public void setId(CzesciZamowieniaId id) {
         this.id = id;
     }
 }

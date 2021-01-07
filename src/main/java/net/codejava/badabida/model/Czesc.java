@@ -27,7 +27,7 @@ public class Czesc implements Serializable {
     private String producent;
 
     @OneToMany(mappedBy = "czesc",cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<czesciZamowienia> zamowienia;
+    private List<CzesciZamowienia> zamowienia;
 
     public Czesc() {
     }

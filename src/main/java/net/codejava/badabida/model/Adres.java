@@ -2,13 +2,15 @@ package net.codejava.badabida.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table(name = "adresy")
+@SequenceGenerator(name="nr_adresu_ai", sequenceName="nr_adresu_ai",allocationSize=0)
 public class Adres implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "nr_adresu_ai")
     @Column(updatable = false, nullable = false)
     private Long nrAdresu;
 
@@ -26,6 +28,9 @@ public class Adres implements Serializable {
 
     @Column(name = "POCZTA")
     private String poczta;
+
+    @OneToMany(mappedBy="adres")
+    private Set<Klient> klienci;
 
 
     public Adres() {
