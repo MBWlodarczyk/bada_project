@@ -4,54 +4,95 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Client home page</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <link rel = "stylesheet" href = "/css/clientHome.css" th:href="@{/css/clientHome.css}">
 
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+    <style type="text/css">
+        body { background: 	#696969 !important; }
+    </style>
 
 </head>
 
 <body>
 
-<div id="container">
 
-    <div id="logo">
-        <h1>Super baza dancyh</h1>
-    </div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">SuperBazaDanych</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="home">Strona główna</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="dane">Twoje dane</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="zamowienia">Twoje zamówienia</a>
+                </li>
+                <li class="nav-item">
+                    <form th:action="@{/client/logout}" method="post">
+                        <input type="hidden" value="Sign Out"/>
+                        <a href = "#" onclick="this.parentNode.submit()" class = "nav-link">Wyloguj</a>
+                    </form>
+                </li>
 
 
-    <div id="nav">
-        <a href = "home" class = "navlink">Strona główna</a>
-        <br />
-        <br />
-        <a href = "dane" target = "_blank" class = "navlink">Dane</a>
-        <br />
-        <br />
-        <a href = "" target = "_blank" class = "navlink">Zamówienia</a>
-        <br />
-        <br />
-        <form th:action="@{/client/logout}" method="post">
-            <input type="hidden" value="Sign Out"/>
-            <a href = "#" onclick="this.parentNode.submit()" class = "navlink">Wyloguj</a>
-        </form>
-    </div>
-
-    <div id="content">
-
-        <div th:each="zamowienie : ${zamowienia}">
-            <td><h1 th:text="${zamowienie.nrZamowienia}"></h1></td>
-            <span th:text="${zamowienie.dataZlozenia}">Data zlozenia</span>
-            <span th:text="${zamowienie.statusZamowienia}">Status</span>
+            </ul>
         </div>
-
-
-
     </div>
+</nav>
 
 
-    <div id="footer">
-        Made by Dadurex &copy; Wszelkie prawa zastrzeżone
+<div class = "container">
+    <div vlass = "jumborton">
+        <div class="card">
+
+            <div class="card-body">
+                <h5 class="card-title">Zamówienia</h5>
+                <table class="table table-dark">
+                    <thead>
+                    <tr>
+                        <th scope="col">Nr zamowienia</th>
+                        <th scope="col">Data zlozenia</th>
+                        <th scope="col">Staus zamowienia</th>
+                        <th scope="col" style="text-align:center;">ACTIONS</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+
+                    <div th:each="zamowienie : ${zamowienia}">
+                        <tr>
+                            <th th:text="${zamowienie.nrZamowienia}"></th>
+                            <td th:text="${zamowienie.dataZlozenia}"></td>
+                            <td th:text="${zamowienie.statusZamowienia}"></td>
+                            <th style="text-align:center;">
+                                <button type="button" class="btn btn-primary">
+                                    Edit
+                                </button>
+                                <button type="button" class="btn btn-danger">
+                                    Delete
+                                </button>
+                            </th>
+                        </tr>
+                    </div>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
     </div>
-
 </div>
 
 </body>
+
 </html>
