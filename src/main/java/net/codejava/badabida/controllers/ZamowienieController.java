@@ -35,8 +35,6 @@ public class ZamowienieController {
             model.addAttribute("zamowienia", klientRepository.findByUsername(username).get().getZamowienia());
             pracownikRepository.findByUsername("emp1").get().getZamowienia().forEach(System.out::println);
         }
-
-
         return "client/zamowienia.html";
     }
 

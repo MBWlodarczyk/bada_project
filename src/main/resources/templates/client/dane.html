@@ -13,7 +13,7 @@
 
 
     <style type="text/css">
-        body { background: 	#696969 !important; }
+        body { background: 	#ffffff !important; }
     </style>
 
 </head>
@@ -52,10 +52,138 @@
 </nav>
 
 
-<td><h1 th:text="${klient.imie}"></h1></td>
-<td><h1 th:text="${klient.nazwisko}"></h1></td>
-<span th:text="${klient.adres.ulica}"></span>
+
+<div class = "container">
+    <div vlass = "jumborton">
+        <div class="card">
+            <div class="card-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="well well-sm">
+                                <div class="row">
+                                    <div class="col-sm-6 col-md-4">
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/User_font_awesome.svg/1200px-User_font_awesome.svg.png" width="150" height="150" alt="" class="img-rounded img-responsive" />
+                                    </div>
+                                    <div class="col-sm-6 col-md-8">
+                                        <h4>
+                                            <td th:text="${klient.imie}"></td>
+                                            <td th:text="${klient.nazwisko}"></td>
+                                        </h4>
+
+                                        <small><cite title="Adres">
+                                            <td th:text="${klient.adres.ulica}"></td>
+                                            <td th:text="${klient.adres.nrLokalu}"></td>
+                                            <br>
+                                            <td th:text="${klient.adres.miasto}"></td>
+                                            <br>
+                                            <td th:text="${klient.adres.kodPoczty}"></td>
+                                            <td th:text="${klient.adres.poczta}"></td>
+
+                                            <i class="glyphicon glyphicon-map-marker"></i>
+                                        </cite></small>
+
+                                        <p>
+                                            <i class="glyphicon glyphicon-envelope"></i> <td th:text="${klient.telefon}"></td>
+                                            <br />
+
+                                        </p>
+
+                                        <!-- Split button -->
+                                        <div class="btn-group">
+
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Edytuj</button>
+
+                                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">
+                                                                Edytuj swoje dane
+                                                            </h5>
+
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form th:action="@{/client/dane/update/{nrKlienta}(nrKlienta=${klient.nrKlienta})}"
+                                                                  th:object="${klient}" method="post">
+                                                                <div class="form-group">
+                                                                    <label for="imie" class="col-form-label">Imie</label>
+                                                                    <input type="text" class="form-control" id="imie" th:value="${klient.imie}" th:field="*{imie}">
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label for="nazwisko" class="col-form-label">Nazwisko</label>
+                                                                    <input type="text" class="form-control" id="nazwisko" th:value="${klient.nazwisko}" th:field="*{nazwisko}">
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label for="telefon" class="col-form-label">Telefon</label>
+                                                                    <input type="text" class="form-control" id="telefon" th:value="${klient.telefon}" th:field="*{telefon}">
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label for="miasto" class="col-form-label">Miasto</label>
+                                                                    <input type="text" class="form-control" id="miasto" th:value="${klient.adres.miasto}" th:field="*{adres.miasto}">
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label for="ulica" class="col-form-label">Ulica</label>
+                                                                    <input type="text" class="form-control" id="ulica" th:value="${klient.adres.ulica}" th:field="*{adres.ulica}">
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label for="nrLokalu" class="col-form-label">Numer lokalu</label>
+                                                                    <input type="text" class="form-control" id="nrLokalu" th:value="${klient.adres.nrLokalu}" th:field="*{adres.nrLokalu}">
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label for="kodPoczty" class="col-form-label">Kod poczty</label>
+                                                                    <input type="text" class="form-control" id="kodPoczty" th:value="${klient.adres.kodPoczty}" th:field="*{adres.kodPoczty}">
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label for="poczta" class="col-form-label">Poczta</label>
+                                                                    <input type="text" class="form-control" id="poczta" th:value="${klient.adres.poczta}" th:field="*{adres.poczta}">
+                                                                </div>
+
+                                                                <br></br>
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                                                                <input type="submit" class="btn btn-primary" >Zatwierdź</input>
+
+
+
+                                                            </form>
+                                                        </div>
+
+                                                        <!--
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                                                            <button type="button" class="btn btn-primary" >Zatwierdź
+
+
+                                                            </button>
+                                                        </div>
+                                                        -->
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+
 
 </body>
 

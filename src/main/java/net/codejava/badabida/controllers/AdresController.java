@@ -19,6 +19,9 @@ public class AdresController {
         this.adresRepository = adresRepository;
     }
 
+
+    //TODO WYWALIC TO XD
+
     @GetMapping("adresy")
     public String getAllAdresy(Model model) {
         model.addAttribute("adresy", new ArrayList<Adres>(adresRepository.findAll()));
