@@ -9,4 +9,5 @@ import java.util.Set;
 @Repository
 public interface ZamowieniaRepository extends CrudRepository<Zamowienie, Long> {
     Set<Zamowienie> findAll();
+    Zamowienie findZamowienieByNrZamowienia(Long id);
 }

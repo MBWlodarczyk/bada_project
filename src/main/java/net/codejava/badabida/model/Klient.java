@@ -17,7 +17,7 @@ public class Klient implements Serializable, UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(updatable = false, nullable = false)
-    private Long nr_klienta;
+    private Long nrKlienta;
 
     @Column(name = "IMIE")
     private String imie;
@@ -88,7 +88,7 @@ public class Klient implements Serializable, UserDetails {
     }
 
     public Klient(Long nr_klienta, String imie, String nazwisko, String telefon, Adres adres, String username, String password, String role, Set<Zamowienie> zamowienia) {
-        this.nr_klienta = nr_klienta;
+        this.nrKlienta = nr_klienta;
         this.imie = imie;
         this.nazwisko = nazwisko;
         this.telefon = telefon;
@@ -102,7 +102,7 @@ public class Klient implements Serializable, UserDetails {
     @Override
     public String toString() {
         return "Klient{" +
-                "nr_klienta=" + nr_klienta +
+                "nr_klienta=" + nrKlienta +
                 ", imie='" + imie + '\'' +
                 ", nazwisko='" + nazwisko + '\'' +
                 ", telefon='" + telefon + '\'' +
@@ -113,12 +113,12 @@ public class Klient implements Serializable, UserDetails {
                 '}';
     }
 
-    public Long getNr_klienta() {
-        return nr_klienta;
+    public Long getNrKlienta() {
+        return nrKlienta;
     }
 
-    public void setNr_klienta(Long nr_klienta) {
-        this.nr_klienta = nr_klienta;
+    public void setNrKlienta(Long nr_klienta) {
+        this.nrKlienta = nr_klienta;
     }
 
     public String getImie() {

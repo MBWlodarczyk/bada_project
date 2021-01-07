@@ -3,6 +3,7 @@ package net.codejava.badabida.model;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
 import java.util.Set;
 
 
@@ -13,49 +14,65 @@ public class Zamowienie implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(updatable = false, nullable = false)
-    private Long nr_zamowienia;
+    private Long nrZamowienia;
 
     @Column(name = "data_zlozenia")
-    private Date data_zlozenia;
+    private Date dataZlozenia;
 
     @Column(name = "status_zamowienia")
-    private String status_zamowienia;
+    private String statusZamowienia;
 
     @ManyToMany(fetch = FetchType.LAZY,mappedBy = "zamowienia")
     private Set<Klient> klienci;
 
+    @ManyToMany(fetch = FetchType.LAZY,mappedBy = "zamowienia")
+    private Set<Klient> pracownicy;
+
+    @OneToMany(mappedBy = "zamowienie",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<czesciZamowienia> czesci;
+
     public Zamowienie() {
     }
 
-    public Zamowienie(Long nr_zamowienia, Date data_zlozenia, String status_zamowienia, Set<Klient> klienci) {
-        this.nr_zamowienia = nr_zamowienia;
-        this.data_zlozenia = data_zlozenia;
-        this.status_zamowienia = status_zamowienia;
+    @Override
+    public String toString() {
+        return "Zamowienie{" +
+                "nrZamowienia=" + nrZamowienia +
+                ", dataZlozenia=" + dataZlozenia +
+                ", statusZamowienia='" + statusZamowienia + '\'' +
+                '}';
+    }
+
+    public Zamowienie(Long nrZamowienia, Date data_zlozenia, String status_zamowienia, Set<Klient> klienci, List<czesciZamowienia> czesci) {
+        this.nrZamowienia = nrZamowienia;
+        this.dataZlozenia = data_zlozenia;
+        this.statusZamowienia = status_zamowienia;
         this.klienci = klienci;
+        this.czesci = czesci;
     }
 
-    public Long getNr_zamowienia() {
-        return nr_zamowienia;
+    public Long getNrZamowienia() {
+        return nrZamowienia;
     }
 
-    public void setNr_zamowienia(Long nr_zamowienia) {
-        this.nr_zamowienia = nr_zamowienia;
+    public void setNrZamowienia(Long nr_zamowienia) {
+        this.nrZamowienia = nr_zamowienia;
     }
 
-    public Date getData_zlozenia() {
-        return data_zlozenia;
+    public Date getDataZlozenia() {
+        return dataZlozenia;
     }
 
-    public void setData_zlozenia(Date data_zlozenia) {
-        this.data_zlozenia = data_zlozenia;
+    public void setDataZlozenia(Date data_zlozenia) {
+        this.dataZlozenia = data_zlozenia;
     }
 
-    public String getStatus_zamowienia() {
-        return status_zamowienia;
+    public String getStatusZamowienia() {
+        return statusZamowienia;
     }
 
-    public void setStatus_zamowienia(String status_zamowienia) {
-        this.status_zamowienia = status_zamowienia;
+    public void setStatusZamowienia(String status_zamowienia) {
+        this.statusZamowienia = status_zamowienia;
     }
 
     public Set<Klient> getKlienci() {
@@ -64,5 +81,13 @@ public class Zamowienie implements Serializable {
 
     public void setKlienci(Set<Klient> klienci) {
         this.klienci = klienci;
+    }
+
+    public List<czesciZamowienia> getCzesci() {
+        return czesci;
+    }
+
+    public void setCzesci(List<czesciZamowienia> czesci) {
+        this.czesci = czesci;
     }
 }

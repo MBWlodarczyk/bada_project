@@ -11,13 +11,13 @@ public class Magazyn implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(updatable = false, nullable = false)
-    private Long nr_magazynu;
+    private Long nrMagazynu;
 
     @Column(name = "NAZWA")
     private String nazwa;
 
     @Column(name = "DATA_ZALOZENIA")
-    private Timestamp data_zalozenia;
+    private Timestamp dataZalozenia;
 
     @ManyToOne
     //@MapsId("NR_HURTOWNI")
@@ -33,20 +33,20 @@ public class Magazyn implements Serializable {
     @Override
     public String toString() {
         return "Magazyn{" +
-                "nr_magazynu=" + nr_magazynu +
+                "nr_magazynu=" + nrMagazynu +
                 ", nazwa='" + nazwa + '\'' +
-                ", data_zalozenia=" + data_zalozenia +
+                ", data_zalozenia=" + dataZalozenia +
                 ", hurtownia=" + hurtownia +
                 ", adres=" + adres +
                 '}';
     }
 
-    public Long getNr_magazynu() {
-        return nr_magazynu;
+    public Long getNrMagazynu() {
+        return nrMagazynu;
     }
 
-    public void setNr_magazynu(Long nr_magazynu) {
-        this.nr_magazynu = nr_magazynu;
+    public void setNrMagazynu(Long nr_magazynu) {
+        this.nrMagazynu = nr_magazynu;
     }
 
     public String getNazwa() {
@@ -57,12 +57,12 @@ public class Magazyn implements Serializable {
         this.nazwa = nazwa;
     }
 
-    public Timestamp getData_zalozenia() {
-        return data_zalozenia;
+    public Timestamp getDataZalozenia() {
+        return dataZalozenia;
     }
 
-    public void setData_zalozenia(Timestamp data_zalozenia) {
-        this.data_zalozenia = data_zalozenia;
+    public void setDataZalozenia(Timestamp data_zalozenia) {
+        this.dataZalozenia = data_zalozenia;
     }
 
     public Hurtownia getHurtownia() {
@@ -82,9 +82,9 @@ public class Magazyn implements Serializable {
     }
 
     public Magazyn(Long nr_magazynu, String nazwa, Timestamp data_zalozenia, Hurtownia hurtownia, Adres adres) {
-        this.nr_magazynu = nr_magazynu;
+        this.nrMagazynu = nr_magazynu;
         this.nazwa = nazwa;
-        this.data_zalozenia = data_zalozenia;
+        this.dataZalozenia = data_zalozenia;
         this.hurtownia = hurtownia;
         this.adres = adres;
     }

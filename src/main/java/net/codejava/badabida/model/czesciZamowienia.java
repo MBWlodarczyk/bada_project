@@ -2,26 +2,33 @@ package net.codejava.badabida.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-
 @Entity
 @Table(name = "czesci_zamowienia")
-public class Czesci_zamowienia implements Serializable {
+public class czesciZamowienia implements Serializable {
 
     @EmbeddedId
-    private final Czesci_zamowienia_id czesci_zamowienia_id = new Czesci_zamowienia_id();
+    private czesciZamowieniaId id;
 
-    @ManyToOne
-    //@MapsId("NR_CZESCI")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("nrCzesci")
+    @JoinColumn(name ="nr_czesci")
     private Czesc czesc;
 
-    @ManyToOne
-    //@MapsId("NR_ZAMOWIENIA")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("nrZamowienia")
+    @JoinColumn(name ="nr_zamowienia")
     private Zamowienie zamowienie;
 
     @Column(name = "ILOSC")
     private int ilosc;
 
-    public Czesci_zamowienia() {
+    public czesciZamowienia() {
+    }
+
+    public czesciZamowienia(Czesc czesc, Zamowienie zamowienie){
+        this.czesc = czesc;
+        this. zamowienie = zamowienie;
+        this.id = new czesciZamowieniaId(czesc.getNrCzesci(), zamowienie.getNrZamowienia());
     }
 
     @Override
@@ -57,4 +64,11 @@ public class Czesci_zamowienia implements Serializable {
         this.ilosc = ilosc;
     }
 
+    public czesciZamowieniaId getId() {
+        return id;
+    }
+
+    public void setId(czesciZamowieniaId id) {
+        this.id = id;
+    }
 }

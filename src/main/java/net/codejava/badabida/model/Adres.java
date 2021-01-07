@@ -10,7 +10,7 @@ public class Adres implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(updatable = false, nullable = false)
-    private Long nr_adresu;
+    private Long nrAdresu;
 
     @Column(name = "MIASTO")
     private String miasto;
@@ -19,10 +19,10 @@ public class Adres implements Serializable {
     private String ulica;
 
     @Column(name = "NR_LOKALU")
-    private String nr_lokalu;
+    private String nrLokalu;
 
     @Column(name = "KOD_POCZTY")
-    private String kod_poczty;
+    private String kodPoczty;
 
     @Column(name = "POCZTA")
     private String poczta;
@@ -32,20 +32,20 @@ public class Adres implements Serializable {
     }
 
     public Adres(Long nr_adresu, String miasto, String ulica, String nr_lokalu, String kod_poczty, String poczta) {
-        this.nr_adresu = nr_adresu;
+        this.nrAdresu = nr_adresu;
         this.miasto = miasto;
         this.ulica = ulica;
-        this.nr_lokalu = nr_lokalu;
-        this.kod_poczty = kod_poczty;
+        this.nrLokalu = nr_lokalu;
+        this.kodPoczty = kod_poczty;
         this.poczta = poczta;
     }
 
-    public Long getNr_adresu() {
-        return nr_adresu;
+    public Long getNrAdresu() {
+        return nrAdresu;
     }
 
-    public void setNr_adresu(Long nr_adresu) {
-        this.nr_adresu = nr_adresu;
+    public void setNrAdresu(Long nr_adresu) {
+        this.nrAdresu = nr_adresu;
     }
 
     public String getMiasto() {
@@ -64,20 +64,20 @@ public class Adres implements Serializable {
         this.ulica = ulica;
     }
 
-    public String getNr_lokalu() {
-        return nr_lokalu;
+    public String getNrLokalu() {
+        return nrLokalu;
     }
 
-    public void setNr_lokalu(String nr_lokalu) {
-        this.nr_lokalu = nr_lokalu;
+    public void setNrLokalu(String nr_lokalu) {
+        this.nrLokalu = nr_lokalu;
     }
 
-    public String getKod_poczty() {
-        return kod_poczty;
+    public String getKodPoczty() {
+        return kodPoczty;
     }
 
-    public void setKod_poczty(String kod_poczty) {
-        this.kod_poczty = kod_poczty;
+    public void setKodPoczty(String kod_poczty) {
+        this.kodPoczty = kod_poczty;
     }
 
     public String getPoczta() {
@@ -91,11 +91,11 @@ public class Adres implements Serializable {
     @Override
     public String toString() {
         return "Adres{" +
-                "nr_adresu=" + nr_adresu +
+                "nr_adresu=" + nrAdresu +
                 ", miasto='" + miasto + '\'' +
                 ", ulica='" + ulica + '\'' +
-                ", nr_lokalu='" + nr_lokalu + '\'' +
-                ", kod_poczty='" + kod_poczty + '\'' +
+                ", nr_lokalu='" + nrLokalu + '\'' +
+                ", kod_poczty='" + kodPoczty + '\'' +
                 ", poczta='" + poczta + '\'' +
                 '}';
     }

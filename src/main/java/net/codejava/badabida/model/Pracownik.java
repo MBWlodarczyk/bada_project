@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Set;
 
 @Entity
 @Table(name = "pracownicy")
@@ -18,7 +19,7 @@ public class Pracownik implements Serializable, UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(updatable = false, nullable = false)
-    private Long nr_pracownika;
+    private Long nrPracownika;
 
     @Column(name = "IMIE")
     private String imie;
@@ -27,7 +28,7 @@ public class Pracownik implements Serializable, UserDetails {
     private String nazwisko;
 
     @Column(name = "DATA_URODZENIA")
-    private Timestamp data_urodzenia;
+    private Timestamp dataUrodzenia;
 
     @Column(name = "PESEL")
     private String pesel;
@@ -52,6 +53,14 @@ public class Pracownik implements Serializable, UserDetails {
 
     @ManyToOne
     private Adres adres;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "pracownicy_zamowienia",
+            joinColumns = { @JoinColumn(name = "nr_pracownika") },
+            inverseJoinColumns = { @JoinColumn(name = "nr_zamowienia") }
+    )
+    private Set<Zamowienie> zamowienia;
 
     @Column(name = "username")
     private String username;
@@ -101,12 +110,12 @@ public class Pracownik implements Serializable, UserDetails {
         return true;
     }
 
-    public Long getNr_pracownika() {
-        return nr_pracownika;
+    public Long getNrPracownika() {
+        return nrPracownika;
     }
 
-    public void setNr_pracownika(Long nr_pracownika) {
-        this.nr_pracownika = nr_pracownika;
+    public void setNrPracownika(Long nr_pracownika) {
+        this.nrPracownika = nr_pracownika;
     }
 
     public String getImie() {
@@ -125,12 +134,12 @@ public class Pracownik implements Serializable, UserDetails {
         this.nazwisko = nazwisko;
     }
 
-    public Timestamp getData_urodzenia() {
-        return data_urodzenia;
+    public Timestamp getDataUrodzenia() {
+        return dataUrodzenia;
     }
 
-    public void setData_urodzenia(Timestamp data_urodzenia) {
-        this.data_urodzenia = data_urodzenia;
+    public void setDataUrodzenia(Timestamp data_urodzenia) {
+        this.dataUrodzenia = data_urodzenia;
     }
 
     public String getPesel() {
@@ -213,11 +222,11 @@ public class Pracownik implements Serializable, UserDetails {
         this.role = role;
     }
 
-    public Pracownik(Long nr_pracownika, String imie, String nazwisko, Timestamp data_urodzenia, String pesel, String telefon, BigDecimal wynagrodzenie, String stanowisko, String plec, Hurtownia hurtownia, Magazyn magazyn, Adres adres, String username, String password, String role) {
-        this.nr_pracownika = nr_pracownika;
+    public Pracownik(Long nr_pracownika, String imie, String nazwisko, Timestamp data_urodzenia, String pesel, String telefon, BigDecimal wynagrodzenie, String stanowisko, String plec, Hurtownia hurtownia, Magazyn magazyn, Adres adres, Set<Zamowienie> zamowienia, String username, String password, String role) {
+        this.nrPracownika = nr_pracownika;
         this.imie = imie;
         this.nazwisko = nazwisko;
-        this.data_urodzenia = data_urodzenia;
+        this.dataUrodzenia = data_urodzenia;
         this.pesel = pesel;
         this.telefon = telefon;
         this.wynagrodzenie = wynagrodzenie;
@@ -226,8 +235,17 @@ public class Pracownik implements Serializable, UserDetails {
         this.hurtownia = hurtownia;
         this.magazyn = magazyn;
         this.adres = adres;
+        this.zamowienia = zamowienia;
         this.username = username;
         this.password = password;
         this.role = role;
+    }
+
+    public Set<Zamowienie> getZamowienia() {
+        return zamowienia;
+    }
+
+    public void setZamowienia(Set<Zamowienie> zamowienia) {
+        this.zamowienia = zamowienia;
     }
 }

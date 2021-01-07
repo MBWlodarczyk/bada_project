@@ -3,6 +3,7 @@ package net.codejava.badabida.model;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "czesci")
@@ -11,7 +12,7 @@ public class Czesc implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(updatable = false, nullable = false)
-    private Long nr_czesci;
+    private Long nrCzesci;
 
     @Column(name = "CENA")
     private BigDecimal cena;
@@ -20,28 +21,31 @@ public class Czesc implements Serializable {
     private String nazwa;
 
     @Column(name = "CZAS_GWARANCJI")
-    private int czas_gwarancji;
+    private int czasGwarancji;
 
     @Column(name = "PRODUCENT")
     private String producent;
+
+    @OneToMany(mappedBy = "czesc",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<czesciZamowienia> zamowienia;
 
     public Czesc() {
     }
 
     public Czesc(Long nr_czesci, BigDecimal cena, String nazwa, int czas_gwarancji, String producent) {
-        this.nr_czesci = nr_czesci;
+        this.nrCzesci = nr_czesci;
         this.cena = cena;
         this.nazwa = nazwa;
-        this.czas_gwarancji = czas_gwarancji;
+        this.czasGwarancji = czas_gwarancji;
         this.producent = producent;
     }
 
-    public Long getNr_czesci() {
-        return nr_czesci;
+    public Long getNrCzesci() {
+        return nrCzesci;
     }
 
-    public void setNr_czesci(Long nr_czesci) {
-        this.nr_czesci = nr_czesci;
+    public void setNrCzesci(Long nr_czesci) {
+        this.nrCzesci = nr_czesci;
     }
 
     public BigDecimal getCena() {
@@ -60,12 +64,12 @@ public class Czesc implements Serializable {
         this.nazwa = nazwa;
     }
 
-    public int getCzas_gwarancji() {
-        return czas_gwarancji;
+    public int getCzasGwarancji() {
+        return czasGwarancji;
     }
 
-    public void setCzas_gwarancji(int czas_gwarancji) {
-        this.czas_gwarancji = czas_gwarancji;
+    public void setCzasGwarancji(int czas_gwarancji) {
+        this.czasGwarancji = czas_gwarancji;
     }
 
     public String getProducent() {
@@ -79,10 +83,10 @@ public class Czesc implements Serializable {
     @Override
     public String toString() {
         return "Czesc{" +
-                "nr_czesci=" + nr_czesci +
+                "nr_czesci=" + nrCzesci +
                 ", cena=" + cena +
                 ", nazwa='" + nazwa + '\'' +
-                ", czas_gwarancji=" + czas_gwarancji +
+                ", czas_gwarancji=" + czasGwarancji +
                 ", producent='" + producent + '\'' +
                 '}';
     }

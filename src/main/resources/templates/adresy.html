@@ -6,11 +6,11 @@
 </head>
 <body>
 <div th:each="adres : ${adresy}">
-    <td><h1 th:text="${adres.nr_adresu}"></h1></td>
+    <td><h1 th:text="${adres.nrAdresu}"></h1></td>
     <span th:text="${adres.ulica}">Ulica</span>
     <span th:text="${adres.miasto}">Miasto</span>
-    <span th:text="${adres.nr_lokalu}">Miasto</span>
-    <span th:text="${adres.kod_poczty}">Miasto</span>
+    <span th:text="${adres.nrLokalu}">Miasto</span>
+    <span th:text="${adres.kodPoczty}">Miasto</span>
     <span th:text="${adres.poczta}">Miasto</span>
 </div>
 </body>

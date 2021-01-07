@@ -37,9 +37,9 @@
     <div id="content">
 
         <div th:each="zamowienie : ${zamowienia}">
-            <td><h1 th:text="${zamowienie.nr_zamowienia}"></h1></td>
-            <span th:text="${zamowienie.data_zlozenia}">Data zlozenia</span>
-            <span th:text="${zamowienie.status_zamowienia}">Status</span>
+            <td><h1 th:text="${zamowienie.nrZamowienia}"></h1></td>
+            <span th:text="${zamowienie.dataZlozenia}">Data zlozenia</span>
+            <span th:text="${zamowienie.statusZamowienia}">Status</span>
         </div>
 
 
