@@ -4,6 +4,7 @@ import net.codejava.badabida.model.Klient;
 import net.codejava.badabida.repos.AdresRepository;
 import net.codejava.badabida.repos.CzescRepository;
 import net.codejava.badabida.repos.KlientRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,17 +13,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.security.Principal;
 
 
 @Controller
 public class KlientController {
 
-    private final AdresRepository adresRepository;
     private final KlientRepository klientRepository;
     private final CzescRepository czescRepository;
 
-    public KlientController(AdresRepository adresRepository, KlientRepository klientRepository, CzescRepository czescRepository) {
-        this.adresRepository = adresRepository;
+    public KlientController(KlientRepository klientRepository, CzescRepository czescRepository) {
         this.klientRepository = klientRepository;
         this.czescRepository = czescRepository;
     }
@@ -45,13 +47,10 @@ public class KlientController {
 
 
     @GetMapping("client/zamowienia")
-    public String getUserZamowienia(Model model) {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        if (principal instanceof UserDetails) {
-            String username = ((UserDetails) principal).getUsername();
-            model.addAttribute("zamowienia", klientRepository.findByUsername(username).get().getZamowienia());
-        }
+    public String getUserZamowienia(Model model,Authentication auth) {
+        Object principal = auth.getPrincipal();
+        String username = ((UserDetails) principal).getUsername();
+        model.addAttribute("zamowienia", klientRepository.findByUsername(username).get().getZamowienia());
         return "client/zamowienia";
     }
 
@@ -79,18 +78,22 @@ public class KlientController {
         UserDetails principal = (UserDetails) auth.getPrincipal();
         Klient oldKlient = klientRepository.findByUsername(principal.getUsername()).get();
 
-        oldKlient.setImie(newKlient.getImie());
-        oldKlient.setNazwisko(newKlient.getNazwisko());
-        oldKlient.setTelefon(newKlient.getTelefon());
+        if(oldKlient.getNrKlienta()==nrKlienta) {
 
-        oldKlient.getAdres().setKodPoczty(newKlient.getAdres().getKodPoczty());
-        oldKlient.getAdres().setMiasto(newKlient.getAdres().getMiasto());
-        oldKlient.getAdres().setNrLokalu(newKlient.getAdres().getNrLokalu());
-        oldKlient.getAdres().setPoczta(newKlient.getAdres().getPoczta());
-        oldKlient.getAdres().setUlica(newKlient.getAdres().getUlica());
+            oldKlient.setImie(newKlient.getImie());
+            oldKlient.setNazwisko(newKlient.getNazwisko());
+            oldKlient.setTelefon(newKlient.getTelefon());
+
+            oldKlient.getAdres().setKodPoczty(newKlient.getAdres().getKodPoczty());
+            oldKlient.getAdres().setMiasto(newKlient.getAdres().getMiasto());
+            oldKlient.getAdres().setNrLokalu(newKlient.getAdres().getNrLokalu());
+            oldKlient.getAdres().setPoczta(newKlient.getAdres().getPoczta());
+            oldKlient.getAdres().setUlica(newKlient.getAdres().getUlica());
 
 
-        klientRepository.saveAndFlush(oldKlient);
+            klientRepository.saveAndFlush(oldKlient);
+        } else
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
         return "redirect:/client/dane";
     }
 }

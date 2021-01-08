@@ -2,6 +2,7 @@ package net.codejava.badabida.controllers;
 
 import net.codejava.badabida.model.Czesc;
 import net.codejava.badabida.repos.CzescRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
