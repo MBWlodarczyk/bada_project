@@ -25,7 +25,7 @@ public class AdminController {
         return "admin/login";
     }
 
-    @GetMapping("/client/admin/item/{nrCzesci}")
+    @GetMapping("/admin/item/{nrCzesci}")
     public String getItemInfo(@PathVariable("nrCzesci") Long nrCzesci , Model model) {
         model.addAttribute("czesc",czescRepository.findCzescByNrCzesci(nrCzesci));
         return "admin/item";
@@ -49,7 +49,7 @@ public class AdminController {
 
         return "admin/item";
     }
-    @PostMapping("/client/admin/item/add")
+    @PostMapping("/admin/item/add")
     public String addItem(Model model, Czesc newCzesc) {
         Czesc czesc = czescRepository.saveAndFlush(newCzesc);
         System.out.println(czesc.getNrCzesci());
