@@ -14,10 +14,6 @@ public class LoginApplicationController {
         return "employee/home";
     }
 
-    @GetMapping("/admin/home")
-    public String getAdminHome(){
-        return "admin/home";
-    }
 
 
     @GetMapping("/employee/login")
@@ -25,8 +21,5 @@ public class LoginApplicationController {
         return "employee/login";
     }
 
-    @GetMapping("/admin/login")
-    public String getAdminLogin(){
-        return "admin/login";
-    }
+
 }
