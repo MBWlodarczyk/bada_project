@@ -38,16 +38,13 @@
                 <li class="nav-item">
                     <a class="nav-link" href="zamowienia">Twoje zamówienia</a>
                 </li>
-                <li class="nav-item">
-                    <form th:action="@{/client/logout}" method="post">
-                        <input type="hidden" value="Sign Out"/>
-                        <a href = "#" onclick="this.parentNode.submit()" class = "nav-link">Wyloguj</a>
-                    </form>
-                </li>
-
 
             </ul>
         </div>
+            <form th:action="@{/client/logout}" method="post">
+                <input type="hidden" value="Sign Out"/>
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Wyloguj</button>
+            </form>
     </div>
 </nav>
 
