@@ -78,7 +78,7 @@ public class KlientController {
         UserDetails principal = (UserDetails) auth.getPrincipal();
         Klient oldKlient = klientRepository.findByUsername(principal.getUsername()).get();
 
-        if(oldKlient.getNrKlienta()==nrKlienta) {
+        if(oldKlient.getNrKlienta().equals(nrKlienta)) {
 
             oldKlient.setImie(newKlient.getImie());
             oldKlient.setNazwisko(newKlient.getNazwisko());
@@ -92,8 +92,9 @@ public class KlientController {
 
 
             klientRepository.saveAndFlush(oldKlient);
-        } else
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+        } else {
+            return "redirect:/403";
+        }
         return "redirect:/client/dane";
     }
 }
