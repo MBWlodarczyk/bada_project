@@ -37,6 +37,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="zamowienia">Twoje zamówienia</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="store">Sklep</a>
+                </li>
 
             </ul>
         </div>
@@ -78,79 +81,13 @@
 
                                             <i class="glyphicon glyphicon-map-marker"></i>
                                         </cite></small>
-
                                         <p>
                                             <i class="glyphicon glyphicon-envelope"></i> <td th:text="${klient.telefon}"></td>
                                             <br />
-
                                         </p>
 
-                                        <!-- Split button -->
-                                        <div class="btn-group">
+                                        <button href = "#editModal"type="button" class="btn btn-primary" data-toggle="modal">Edytuj</button>
 
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Edytuj</button>
-
-                                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">
-                                                                Edytuj swoje dane
-                                                            </h5>
-
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <form th:action="@{/client/dane/update/{nrKlienta}(nrKlienta=${klient.nrKlienta})}"
-                                                                  th:object="${klient}" method="post">
-                                                                <div class="form-group">
-                                                                    <label for="imie" class="col-form-label">Imie</label>
-                                                                    <input type="text" class="form-control" id="imie" th:value="${klient.imie}" th:field="*{imie}">
-                                                                </div>
-
-                                                                <div class="form-group">
-                                                                    <label for="nazwisko" class="col-form-label">Nazwisko</label>
-                                                                    <input type="text" class="form-control" id="nazwisko" th:value="${klient.nazwisko}" th:field="*{nazwisko}">
-                                                                </div>
-
-                                                                <div class="form-group">
-                                                                    <label for="telefon" class="col-form-label">Telefon</label>
-                                                                    <input type="text" class="form-control" id="telefon" th:value="${klient.telefon}" th:field="*{telefon}">
-                                                                </div>
-
-                                                                <div class="form-group">
-                                                                    <label for="miasto" class="col-form-label">Miasto</label>
-                                                                    <input type="text" class="form-control" id="miasto" th:value="${klient.adres.miasto}" th:field="*{adres.miasto}">
-                                                                </div>
-
-                                                                <div class="form-group">
-                                                                    <label for="ulica" class="col-form-label">Ulica</label>
-                                                                    <input type="text" class="form-control" id="ulica" th:value="${klient.adres.ulica}" th:field="*{adres.ulica}">
-                                                                </div>
-
-                                                                <div class="form-group">
-                                                                    <label for="nrLokalu" class="col-form-label">Numer lokalu</label>
-                                                                    <input type="text" class="form-control" id="nrLokalu" th:value="${klient.adres.nrLokalu}" th:field="*{adres.nrLokalu}">
-                                                                </div>
-
-                                                                <div class="form-group">
-                                                                    <label for="kodPoczty" class="col-form-label">Kod poczty</label>
-                                                                    <input type="text" class="form-control" id="kodPoczty" th:value="${klient.adres.kodPoczty}" th:field="*{adres.kodPoczty}">
-                                                                </div>
-
-                                                                <div class="form-group">
-                                                                    <label for="poczta" class="col-form-label">Poczta</label>
-                                                                    <input type="text" class="form-control" id="poczta" th:value="${klient.adres.poczta}" th:field="*{adres.poczta}">
-                                                                </div>
-
-                                                                <br></br>
-                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-                                                                <input type="submit" class="btn btn-primary" ></input>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -160,6 +97,68 @@
             </div>
         </div>
     </div>
+</div>
+
+<div id = "editModal" class="modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        Edytuj swoje dane
+                    </h5>
+
+                </div>
+
+                <div class="modal-body">
+                    <form th:action="@{/client/dane/update/{nrKlienta}(nrKlienta=${klient.nrKlienta})}"
+                          th:object="${klient}" method="post">
+                        <div class="form-group">
+                            <label for="imie" class="col-form-label">Imie</label>
+                            <input type="text" class="form-control" id="imie" th:value="${klient.imie}" th:field="*{imie}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="nazwisko" class="col-form-label">Nazwisko</label>
+                            <input type="text" class="form-control" id="nazwisko" th:value="${klient.nazwisko}" th:field="*{nazwisko}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="telefon" class="col-form-label">Telefon</label>
+                            <input type="text" class="form-control" id="telefon" th:value="${klient.telefon}" th:field="*{telefon}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="miasto" class="col-form-label">Miasto</label>
+                            <input type="text" class="form-control" id="miasto" th:value="${klient.adres.miasto}" th:field="*{adres.miasto}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ulica" class="col-form-label">Ulica</label>
+                            <input type="text" class="form-control" id="ulica" th:value="${klient.adres.ulica}" th:field="*{adres.ulica}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="nrLokalu" class="col-form-label">Numer lokalu</label>
+                            <input type="text" class="form-control" id="nrLokalu" th:value="${klient.adres.nrLokalu}" th:field="*{adres.nrLokalu}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="kodPoczty" class="col-form-label">Kod poczty</label>
+                            <input type="text" class="form-control" id="kodPoczty" th:value="${klient.adres.kodPoczty}" th:field="*{adres.kodPoczty}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="poczta" class="col-form-label">Poczta</label>
+                            <input type="text" class="form-control" id="poczta" th:value="${klient.adres.poczta}" th:field="*{adres.poczta}">
+                        </div>
+
+                        <br></br>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                        <input type="submit" class="btn btn-primary" ></input>
+                    </form>
+                </div>
+            </div>
+        </div>
 </div>
 
 
