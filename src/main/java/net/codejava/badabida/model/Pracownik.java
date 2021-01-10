@@ -45,13 +45,16 @@ public class Pracownik implements Serializable, UserDetails {
     @Column(name = "PLEC")
     private String plec;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "nr_hurtowni")
     private Hurtownia hurtownia;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "nr_magazynu")
     private Magazyn magazyn;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "nr_adresu")
     private Adres adres;
 
     @ManyToMany(fetch = FetchType.LAZY)
