@@ -30,11 +30,6 @@ public class KlientController {
     }
 
 
-    @GetMapping("/")
-    public String getHome(){
-        return "client/home";
-    }
-
      @GetMapping("/client/home")
     public String getClientHome(){
         return "client/home";

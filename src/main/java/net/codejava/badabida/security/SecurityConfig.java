@@ -32,7 +32,6 @@ public class SecurityConfig {
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-            //@formatter:off
             http
                     .antMatcher("/admin/**")
                     .authorizeRequests()
@@ -45,8 +44,9 @@ public class SecurityConfig {
                     .and()
                     .logout()
                     .logoutUrl("/admin/logout")
-                    .permitAll();
-            //@formatter:on
+                    .permitAll()
+                    .and()
+                    .csrf().disable();
         }
     }
 
@@ -68,7 +68,6 @@ public class SecurityConfig {
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-            //@formatter:off
             http
                     .antMatcher("/employee/**")
                     .authorizeRequests()
@@ -81,54 +80,53 @@ public class SecurityConfig {
                     .and()
                     .logout()
                     .logoutUrl("/employee/logout")
-                    .permitAll();
-            //@formatter:on
+                    .permitAll()
+                    .and()
+                    .csrf().disable();
         }
     }
 
-//    @Configuration
-//    public static class ClientSecurityConfig extends WebSecurityConfigurerAdapter {
-//
-//        private final KlientDetailsServiceImp userDetailsService;
-//
-//        public ClientSecurityConfig(KlientDetailsServiceImp userDetailsService) {
-//            this.userDetailsService = userDetailsService;
-//        }
-//
-//        @Override
-//        protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//            auth.userDetailsService(userDetailsService);
-//        }
-//
-//
-//        @Override
-//        protected void configure(HttpSecurity http) throws Exception {
-//            //@formatter:off
-//            http
-//                    .authorizeRequests()
-//                    .antMatchers("/", "/client/**", "/js/**", "/css/**").hasRole("USER") //,"/static/css/**"
-//                    .anyRequest().authenticated()
-//                    .and()
-//                    .formLogin()
-//                    .loginPage("/client/login")
-//                    //.loginProcessingUrl("/login")
-//                    .defaultSuccessUrl("/client/home", true)
-//                    .permitAll()
-//                    .and()
-//                    .logout()
-//                    .logoutUrl("/client/logout")
-//                    .permitAll()
-//                    .and()
-//                    .rememberMe().key("uniqueAndSecret");
-//            //@formatter:on
-//
-//        }
-//
-//        @GetMapping("/username")
-//        public String currentUserName(Authentication authentication) {
-//            return authentication.getName();
-//        }
-//    }
+    @Configuration
+    public static class ClientSecurityConfig extends WebSecurityConfigurerAdapter {
+
+        private final KlientDetailsServiceImp userDetailsService;
+
+        public ClientSecurityConfig(KlientDetailsServiceImp userDetailsService) {
+            this.userDetailsService = userDetailsService;
+        }
+
+        @Override
+        protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+            auth.userDetailsService(userDetailsService);
+        }
+
+
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http
+                    .authorizeRequests()
+                    .antMatchers("/").permitAll()
+                    .antMatchers("/", "/client/**", "/js/**", "/css/**").hasRole("USER") //,"/static/css/**"
+                    .anyRequest().authenticated()
+                    .and()
+                    .formLogin()
+                    .loginPage("/client/login")
+                    //.loginProcessingUrl("/login")
+                    .defaultSuccessUrl("/client/home", true)
+                    .permitAll()
+                    .and()
+                    .logout()
+                    .logoutUrl("/client/logout")
+                    .permitAll()
+                    .and()
+                    .csrf().disable();
+        }
+
+        @GetMapping("/username")
+        public String currentUserName(Authentication authentication) {
+            return authentication.getName();
+        }
+    }
 
     @Bean
     public PasswordEncoder getPasswordEncoder() {

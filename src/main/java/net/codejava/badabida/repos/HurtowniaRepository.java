@@ -9,6 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface HurtowniaRepository extends JpaRepository<Hurtownia, Long> {
-    List<Hurtownia> findAll();
-    Optional<Hurtownia> findByNrHurtowniEquals(Long nrHurtowni);
+    Optional<Hurtownia> findByNrHurtowni(Long nrHurtowni);
+
 }

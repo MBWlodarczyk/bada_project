@@ -9,6 +9,7 @@ import net.codejava.badabida.repos.MagazynRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -51,15 +52,20 @@ public class AdminController {
 
     @GetMapping("/admin/warehouse")
     public String getWarehouse(Model model) {
-        model.addAttribute("hurtownie", hurtowniaRepository.findAll());
+        model.addAttribute("hurtownia", hurtowniaRepository.findByNrHurtowni((long)1).get());
         return "admin/warehouse";
     }
 
-    @PostMapping("/admin/warehouse/update/{nrHurtowni}")
-    public String updateWarehouse(@PathVariable("nrHurtowni") Long nrHurtowni, Hurtownia newHurtownia) {
-        Hurtownia oldHurtownia = hurtowniaRepository.findByNrHurtowniEquals(nrHurtowni).get();
+    @ModelAttribute()
+    public Hurtownia newHurtownia(){
+        return new Hurtownia();
+    }
+
+    @PostMapping("/admin/warehouse/update")
+    public String updateWarehouse(Hurtownia newHurtownia)  {
+        System.out.println(newHurtownia.toString());
+        Hurtownia oldHurtownia = hurtowniaRepository.findByNrHurtowni((long) 1).get();
         oldHurtownia.setNazwa(newHurtownia.getNazwa());
-        oldHurtownia.setDataZalozenia(newHurtownia.getDataZalozenia());
         Adres hurtowniaAdres = oldHurtownia.getAdres();
         hurtowniaAdres.setKodPoczty(newHurtownia.getAdres().getKodPoczty());
         hurtowniaAdres.setMiasto(newHurtownia.getAdres().getMiasto());
@@ -67,7 +73,7 @@ public class AdminController {
         hurtowniaAdres.setPoczta(newHurtownia.getAdres().getPoczta());
         hurtowniaAdres.setUlica(newHurtownia.getAdres().getUlica());
         hurtowniaRepository.saveAndFlush(oldHurtownia);
-        return "admin/warehouse";
+        return "redirect:/admin/warehouse";
     }
 
     @GetMapping("/admin/stockroom")

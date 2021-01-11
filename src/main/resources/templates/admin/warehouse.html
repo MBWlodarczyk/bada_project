@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html><!DOCTYPE HTML>
+<!DOCTYPE HTML>
 <html lang="pl" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -75,17 +66,17 @@
         <div class="card">
             <div class="card-body">
 
-                    <h4 th:text="${hurtownie[0].nazwa}"></h4>
-                    <h4 th:text="${hurtownie[0].dataZalozenia}"></h4>
+                    <h4 th:text="${hurtownia.nazwa}"></h4>
+                    <h4 th:text="${hurtownia.dataZalozenia}"></h4>
 
                     <small><cite title="Adres">
-                        <td th:text="${hurtownie[0].adres.ulica}"></td>
-                        <td th:text="${hurtownie[0].adres.nrLokalu}"></td>
+                        <td th:text="${hurtownia.adres.ulica}"></td>
+                        <td th:text="${hurtownia.adres.nrLokalu}"></td>
                         <br>
-                        <td th:text="${hurtownie[0].adres.miasto}"></td>
+                        <td th:text="${hurtownia.adres.miasto}"></td>
                         <br>
-                        <td th:text="${hurtownie[0].adres.kodPoczty}"></td>
-                        <td th:text="${hurtownie[0].adres.poczta}"></td>
+                        <td th:text="${hurtownia.adres.kodPoczty}"></td>
+                        <td th:text="${hurtownia.adres.poczta}"></td>
                     </cite></small>
                     <br>
                     <button href = "#editModal"type="button" class="btn btn-primary" data-toggle="modal">Edytuj</button>
@@ -95,55 +86,50 @@
     </div>
 </div>
 
+
 <div id="editModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form>
-                <div class="modal-header">
+            <div class="modal-header">
                     <h4 class="modal-title">Edytuj hurtownie</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <form th:action="@{/admin/warehouse/update/{nrHurtowni}(nrHurtowni=${hurtownie[0].nrHurtowni})}"
-                          th:object="${hurtownie}" method="post">
-                        <<div class="form-group">
+                    <form th:action="@{/admin/warehouse/update}"
+                          th:object="${hurtownia}" method="post">
+                        <div class="form-group">
                             <label for="nazwa" class="col-form-label">Nazwa:</label>
-                            <input type="text" class="form-control" id="nazwa" th:value="${hurtownie[0].nazwa}" th:field="*{nazwa}">
+                            <input type="text" class="form-control" id="nazwa" th:value="${hurtownia.nazwa}" th:field="*{nazwa}">
                         </div>
                         <div class="form-group">
-                            <label for="data" class="col-form-label">Nazwa:</label>
-                            <input type="text" class="form-control" id="data" th:value="${hurtownie[0].dataZalozenia}" th:field="*{dataZalozenia}">
+                            <label for="miasto" class="col-form-label">Miasto</label>
+                            <input type="text" class="form-control" id="miasto" th:value="${hurtownia.adres.miasto}" th:field="*{adres.miasto}">
                         </div>
                         <div class="form-group">
-                            <label for="ulica" class="col-form-label">Ulica</label>
-                            <input type="text" class="form-control" id="ulica" th:value="${hurtownie[0].adres.ulica}" th:field="*{adres.ulica}" >
+                            <label for="ulica" class="col-form-label">Ulica:</label>
+                            <input type="text" class="form-control" id="ulica" th:value="${hurtownia.adres.ulica}" th:field="*{adres.ulica}" >
                         </div>
                         <div class="form-group">
-                            <label for="nrLokalu" class="col-form-label">Numer lokalu</label>
-                            <input type="text" class="form-control" id="nrLokalu" th:value="${hurtownie[0].adres.nrLokalu}" th:field="*{adres.nrLokalu}">
+                            <label for="nrLokalu" class="col-form-label">Numer lokalu:</label>
+                            <input type="text" class="form-control" id="nrLokalu" th:value="${hurtownia.adres.nrLokalu}" th:field="*{adres.nrLokalu}">
                         </div>
 
                         <div class="form-group">
-                            <label for="kodPoczty" class="col-form-label">Kod poczty</label>
-                            <input type="text" class="form-control" id="kodPoczty" th:value="${hurtownie[0].adres.kodPoczty}" th:field="*{adres.kodPoczty}">
+                            <label for="kodPoczty" class="col-form-label">Kod poczty:</label>
+                            <input type="text" class="form-control" id="kodPoczty" th:value="${hurtownia.adres.kodPoczty}" th:field="*{adres.kodPoczty}">
                         </div>
 
                         <div class="form-group">
-                            <label for="poczta" class="col-form-label">Poczta</label>
-                            <input type="text" class="form-control" id="poczta" th:value="${hurtownie[0].adres.poczta}" th:field="*{adres.poczta}">
+                            <label for="poczta" class="col-form-label">Poczta:</label>
+                            <input type="text" class="form-control" id="poczta" th:value="${hurtownia.adres.poczta}" th:field="*{adres.poczta}">
                         </div>
-
                         <br/>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-                        <input type="submit" class="btn btn-primary" >
+                        <input type="submit" class="btn btn-primary"/>
                     </form>
                 </div>
-            </form>
         </div>
     </div>
 </div>
-
-
 
 
 
