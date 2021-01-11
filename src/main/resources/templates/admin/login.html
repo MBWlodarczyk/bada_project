@@ -238,9 +238,9 @@
             -moz-animation-fill-mode:forwards;
             animation-fill-mode:forwards;
 
-            -webkit-animation-duration:1s;
-            -moz-animation-duration:1s;
-            animation-duration:1s;
+            -webkit-animation-duration:0.2s;
+            -moz-animation-duration:0.2s;
+            animation-duration:0.2s;
         }
 
 
@@ -301,14 +301,11 @@
 
 <div class="wrapper fadeInDown">
     <div id="formContent">
-
         <form th:action="@{/admin/login}" method="post">
             <input type="text" id="username" class="fadeIn second" name="username" placeholder="username">
             <input type="password" id="password" class="fadeIn third" name="password" placeholder="password">
             <input type="submit" class="fadeIn fourth" value="Sign in">
         </form>
-
-
     </div>
 </div>
 

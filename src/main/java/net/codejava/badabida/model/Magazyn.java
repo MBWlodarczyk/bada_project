@@ -20,12 +20,12 @@ public class Magazyn implements Serializable {
     private Timestamp dataZalozenia;
 
     @ManyToOne
-    //@MapsId("NR_HURTOWNI")
+    @JoinColumn(name = "nr_hurtowni")
     private Hurtownia hurtownia;
 
     @OneToOne
-    //@MapsId("NR_ADRESU")
-    private Adres adres; //TODO czy tutaj ma bycć MapsID?
+    @JoinColumn(name = "nr_adresu")
+    private Adres adres;
 
     public Magazyn() {
     }

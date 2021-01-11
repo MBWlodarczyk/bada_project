@@ -35,7 +35,7 @@ public class KlientController {
         return "client/home";
     }
 
-    @GetMapping("/client/home")
+     @GetMapping("/client/home")
     public String getClientHome(){
         return "client/home";
     }
@@ -74,7 +74,7 @@ public class KlientController {
     }
 
     @PostMapping("/client/dane/update/{nrKlienta}")
-    public String updateUser(@PathVariable("nrKlienta") Long nrKlienta, Klient newKlient, Model model, Authentication auth) {
+    public String updateUser(@PathVariable("nrKlienta") Long nrKlienta, Klient newKlient, Authentication auth) {
         UserDetails principal = (UserDetails) auth.getPrincipal();
         Klient oldKlient = klientRepository.findByUsername(principal.getUsername()).get();
 

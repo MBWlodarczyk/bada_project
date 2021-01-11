@@ -1,4 +1,13 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html><!DOCTYPE HTML>
 <html lang="pl" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -33,18 +42,27 @@
                     <a class="nav-link" aria-current="page" href="home">Strona główna</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="dane">Twoje dane</a>
+                    <a class="nav-link" href="warehouse">Hurtownia</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="zamowienia">Twoje zamówienia</a>
+                    <a class="nav-link active" href="stockroom">Magazyny</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="store">Sklep</a>
+                    <a class="nav-link" href="pracownicy">Pracownicy</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="adresy">Adresy</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="czesci">Części</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="zamowienia">Zamówienia</a>
                 </li>
 
             </ul>
         </div>
-        <form th:action="@{/client/logout}" method="post">
+        <form th:action="@{/admin/logout}" method="post">
             <input type="hidden" value="Sign Out"/>
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Wyloguj</button>
         </form>
@@ -55,29 +73,9 @@
 <div class = "container">
     <div class = "jumborton">
         <div class="card">
-
             <div class="card-body">
-                <h5 class="card-title">Zamówienia</h5>
-                <table class="table table-dark">
-                    <thead>
-                    <tr>
-                        <th scope="col">Nr zamowienia</th>
-                        <th scope="col">Data zlozenia</th>
-                        <th scope="col">Staus zamowienia</th>
-                    </tr>
-                    </thead>
-                    <tbody>
 
 
-                    <div th:each="zamowienie : ${zamowienia}">
-                        <tr>
-                            <th th:text="${zamowienie.nrZamowienia}"></th>
-                            <td th:text="${zamowienie.dataZlozenia}"></td>
-                            <td th:text="${zamowienie.statusZamowienia}"></td>
-                        </tr>
-                    </div>
-                    </tbody>
-                </table>
 
             </div>
         </div>

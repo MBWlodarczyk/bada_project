@@ -11,6 +11,6 @@ import java.util.Set;
 
 @Repository
 public interface CzescRepository extends JpaRepository<Czesc, Long> {
-    Czesc findCzescByNrCzesci(long NrCzesci);
+    Czesc findCzescByNrCzesci(Long nrCzesci);
 
 }

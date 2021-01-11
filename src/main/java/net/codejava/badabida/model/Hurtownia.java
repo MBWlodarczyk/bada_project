@@ -2,7 +2,7 @@ package net.codejava.badabida.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.util.Date;
 
 @Entity
 @Table(name = "hurtownie")
@@ -17,16 +17,17 @@ public class Hurtownia implements Serializable {
     private String nazwa;
 
     @Column(name = "DATA_ZALOZENIA")
-    private Timestamp dataZalozenia;
+    @Temporal(TemporalType.DATE)
+    private Date dataZalozenia;
 
     @OneToOne
-    //@MapsId("NR_ADRESU") //TODO też nie
+    @JoinColumn(name = "nr_adresu")
     private Adres adres;
 
     public Hurtownia() {
     }
 
-    public Hurtownia(Long nr_hurtowni, String nazwa, Timestamp data_zalozenia, Adres adres) {
+    public Hurtownia(Long nr_hurtowni, String nazwa, Date data_zalozenia, Adres adres) {
         this.nrHurtowni = nr_hurtowni;
         this.nazwa = nazwa;
         this.dataZalozenia = data_zalozenia;
@@ -59,11 +60,11 @@ public class Hurtownia implements Serializable {
         this.nazwa = nazwa;
     }
 
-    public Timestamp getDataZalozenia() {
+    public Date getDataZalozenia() {
         return dataZalozenia;
     }
 
-    public void setDataZalozenia(Timestamp data_zalozenia) {
+    public void setDataZalozenia(Date data_zalozenia) {
         this.dataZalozenia = data_zalozenia;
     }
 

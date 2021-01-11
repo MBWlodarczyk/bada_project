@@ -1,8 +1,11 @@
 package net.codejava.badabida.controllers;
 
+import net.codejava.badabida.model.Adres;
 import net.codejava.badabida.model.Czesc;
+import net.codejava.badabida.model.Hurtownia;
 import net.codejava.badabida.repos.CzescRepository;
-import org.springframework.security.access.prepost.PreAuthorize;
+import net.codejava.badabida.repos.HurtowniaRepository;
+import net.codejava.badabida.repos.MagazynRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,31 +17,63 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class AdminController {
 
     private final CzescRepository czescRepository;
+    private final HurtowniaRepository hurtowniaRepository;
+    private MagazynRepository magazynRepository;
 
-    public AdminController(CzescRepository czescRepository) {
+    public AdminController(CzescRepository czescRepository, HurtowniaRepository hurtowniaRepository, MagazynRepository magazynRepository) {
         this.czescRepository = czescRepository;
-    }
-
-    @GetMapping("/admin/home")
-    public String getAdminHome(){
-        return "admin/home";
+        this.hurtowniaRepository = hurtowniaRepository;
+        this.magazynRepository = magazynRepository;
     }
 
     @GetMapping("/admin/login")
-    public String getAdminLogin(){
+    public String getAdminLogin() {
         return "admin/login";
     }
 
+    @GetMapping("/admin/home")
+    public String getAdminHome() {
+        return "admin/home";
+    }
+
+
     @GetMapping("/admin/item/{nrCzesci}")
-    public String getItemInfo(@PathVariable("nrCzesci") Long nrCzesci , Model model) {
-        model.addAttribute("czesc",czescRepository.findCzescByNrCzesci(nrCzesci));
+    public String getItemInfo(@PathVariable("nrCzesci") Long nrCzesci, Model model) {
+        model.addAttribute("czesc", czescRepository.findCzescByNrCzesci(nrCzesci));
         return "admin/item";
     }
 
     @GetMapping("/admin/store")
     public String getStore(Model model) {
-        model.addAttribute("czesci",czescRepository.findAll());
+        model.addAttribute("czesci", czescRepository.findAll());
         return "admin/store";
+    }
+
+    @GetMapping("/admin/warehouse")
+    public String getWarehouse(Model model) {
+        model.addAttribute("hurtownie", hurtowniaRepository.findAll());
+        return "admin/warehouse";
+    }
+
+    @PostMapping("/admin/warehouse/update/{nrHurtowni}")
+    public String updateWarehouse(@PathVariable("nrHurtowni") Long nrHurtowni, Hurtownia newHurtownia) {
+        Hurtownia oldHurtownia = hurtowniaRepository.findByNrHurtowniEquals(nrHurtowni).get();
+        oldHurtownia.setNazwa(newHurtownia.getNazwa());
+        oldHurtownia.setDataZalozenia(newHurtownia.getDataZalozenia());
+        Adres hurtowniaAdres = oldHurtownia.getAdres();
+        hurtowniaAdres.setKodPoczty(newHurtownia.getAdres().getKodPoczty());
+        hurtowniaAdres.setMiasto(newHurtownia.getAdres().getMiasto());
+        hurtowniaAdres.setNrLokalu(newHurtownia.getAdres().getNrLokalu());
+        hurtowniaAdres.setPoczta(newHurtownia.getAdres().getPoczta());
+        hurtowniaAdres.setUlica(newHurtownia.getAdres().getUlica());
+        hurtowniaRepository.saveAndFlush(oldHurtownia);
+        return "admin/warehouse";
+    }
+
+    @GetMapping("/admin/stockroom")
+    public String getStockroom(Model model) {
+        model.addAttribute("magazyny", hurtowniaRepository.findAll());
+        return "admin/stockroom";
     }
 
     @PostMapping("/admin/item/update/{nrCzesci}")
@@ -53,6 +88,7 @@ public class AdminController {
 
         return "admin/item";
     }
+
     @PostMapping("/admin/item/add")
     public String addItem(Model model, Czesc newCzesc) {
         Czesc czesc = czescRepository.saveAndFlush(newCzesc);
