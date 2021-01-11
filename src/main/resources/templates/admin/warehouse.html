@@ -146,7 +146,7 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <p>Czy na pewno chcesz usunać?</p>
-                                                    <form>
+                                                    <form form th:action="@{/admin/warehouse/remove{nrMagazynu}(nrMagazynu=${mag.nrMagazynu})}" method="post">
                                                         <br/>
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
                                                         <input type="submit" class="btn btn-primary" />
@@ -182,9 +182,6 @@
                                     <div class="form-group">
                                         <label for="dataNew" class="col-form-label">Data założenia:</label>
                                         <input type="date" class="form-control" id="dataNew" th:name="dataZalozenia"/>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="hurtNew" th:name="nrHurtowni" th:value="${hurtownia.nrHurtowni}" style="display:none;"/>
                                     </div>
                                     <div class="form-group">
                                         <label for="miastoNew" class="col-form-label">Miasto</label>

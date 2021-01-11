@@ -4,6 +4,7 @@ import net.codejava.badabida.model.Adres;
 import net.codejava.badabida.model.Czesc;
 import net.codejava.badabida.model.Hurtownia;
 import net.codejava.badabida.model.Magazyn;
+import net.codejava.badabida.repos.AdresRepository;
 import net.codejava.badabida.repos.CzescRepository;
 import net.codejava.badabida.repos.HurtowniaRepository;
 import net.codejava.badabida.repos.MagazynRepository;
@@ -21,11 +22,14 @@ public class AdminController {
     private final CzescRepository czescRepository;
     private final HurtowniaRepository hurtowniaRepository;
     private final MagazynRepository magazynRepository;
+    private final AdresRepository adresRepository;
 
-    public AdminController(CzescRepository czescRepository, HurtowniaRepository hurtowniaRepository, MagazynRepository magazynRepository) {
+
+    public AdminController(CzescRepository czescRepository, HurtowniaRepository hurtowniaRepository, MagazynRepository magazynRepository, AdresRepository adresRepository) {
         this.czescRepository = czescRepository;
         this.hurtowniaRepository = hurtowniaRepository;
         this.magazynRepository = magazynRepository;
+        this.adresRepository = adresRepository;
     }
 
     @GetMapping("/admin/login")
@@ -103,13 +107,24 @@ public class AdminController {
 
     @PostMapping("/admin/warehouse/new")
     public String addWarehouse(Magazyn magazyn) {
-        System.out.println(magazyn.toString());
+        magazyn.setHurtownia(hurtowniaRepository.findByNrHurtowni((long) 1).get());
+        Adres a = new Adres();
+        a.setMiasto(magazyn.getAdres().getMiasto());
+        a.setKodPoczty(magazyn.getAdres().getKodPoczty());
+        a.setNrLokalu(magazyn.getAdres().getNrLokalu());
+        a.setPoczta(magazyn.getAdres().getPoczta());
+        a.setUlica(magazyn.getAdres().getUlica());
+        Adres a2 = adresRepository.save(a);
+        magazyn.setAdres(a2);
         magazynRepository.saveAndFlush(magazyn);
-        //model.addAttribute("magazyn",magazyn);
-
         return "redirect:/admin/warehouse";
     }
 
+    @PostMapping("/admin/warehouse/remove{nrMagazynu}")
+    public String removeWarehouse(@PathVariable("nrMagazynu") Long nrMagazynu) {
+        magazynRepository.deleteById(nrMagazynu);
+        return "redirect:/admin/warehouse";
+    }
 
 
     @PostMapping("/admin/item/update/{nrCzesci}")
