@@ -3,13 +3,15 @@ package net.codejava.badabida.model;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Date;
 
 @Entity
 @Table(name = "magazyny")
+@SequenceGenerator(name="nr_magazynu_ai", sequenceName="nr_magazynu_ai",allocationSize=0)
 public class Magazyn implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "nr_magazynu_ai")
     @Column(updatable = false, nullable = false)
     private Long nrMagazynu;
 
@@ -17,7 +19,8 @@ public class Magazyn implements Serializable {
     private String nazwa;
 
     @Column(name = "DATA_ZALOZENIA")
-    private Timestamp dataZalozenia;
+    @Temporal(TemporalType.DATE)
+    private Date dataZalozenia;
 
     @ManyToOne
     @JoinColumn(name = "nr_hurtowni")
@@ -27,15 +30,24 @@ public class Magazyn implements Serializable {
     @JoinColumn(name = "nr_adresu")
     private Adres adres;
 
+
     public Magazyn() {
+    }
+
+    public Magazyn(Long nrMagazynu, String nazwa, Date dataZalozenia, Hurtownia hurtownia, Adres adres) {
+        this.nrMagazynu = nrMagazynu;
+        this.nazwa = nazwa;
+        this.dataZalozenia = dataZalozenia;
+        this.hurtownia = hurtownia;
+        this.adres = adres;
     }
 
     @Override
     public String toString() {
         return "Magazyn{" +
-                "nr_magazynu=" + nrMagazynu +
+                "nrMagazynu=" + nrMagazynu +
                 ", nazwa='" + nazwa + '\'' +
-                ", data_zalozenia=" + dataZalozenia +
+                ", dataZalozenia=" + dataZalozenia +
                 ", hurtownia=" + hurtownia +
                 ", adres=" + adres +
                 '}';
@@ -45,8 +57,8 @@ public class Magazyn implements Serializable {
         return nrMagazynu;
     }
 
-    public void setNrMagazynu(Long nr_magazynu) {
-        this.nrMagazynu = nr_magazynu;
+    public void setNrMagazynu(Long nrMagazynu) {
+        this.nrMagazynu = nrMagazynu;
     }
 
     public String getNazwa() {
@@ -57,12 +69,12 @@ public class Magazyn implements Serializable {
         this.nazwa = nazwa;
     }
 
-    public Timestamp getDataZalozenia() {
+    public Date getDataZalozenia() {
         return dataZalozenia;
     }
 
-    public void setDataZalozenia(Timestamp data_zalozenia) {
-        this.dataZalozenia = data_zalozenia;
+    public void setDataZalozenia(Date dataZalozenia) {
+        this.dataZalozenia = dataZalozenia;
     }
 
     public Hurtownia getHurtownia() {
@@ -78,14 +90,6 @@ public class Magazyn implements Serializable {
     }
 
     public void setAdres(Adres adres) {
-        this.adres = adres;
-    }
-
-    public Magazyn(Long nr_magazynu, String nazwa, Timestamp data_zalozenia, Hurtownia hurtownia, Adres adres) {
-        this.nrMagazynu = nr_magazynu;
-        this.nazwa = nazwa;
-        this.dataZalozenia = data_zalozenia;
-        this.hurtownia = hurtownia;
         this.adres = adres;
     }
 }

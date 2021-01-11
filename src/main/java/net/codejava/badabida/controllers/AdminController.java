@@ -19,7 +19,7 @@ public class AdminController {
 
     private final CzescRepository czescRepository;
     private final HurtowniaRepository hurtowniaRepository;
-    private MagazynRepository magazynRepository;
+    private final MagazynRepository magazynRepository;
 
     public AdminController(CzescRepository czescRepository, HurtowniaRepository hurtowniaRepository, MagazynRepository magazynRepository) {
         this.czescRepository = czescRepository;
@@ -50,10 +50,10 @@ public class AdminController {
         return "admin/store";
     }
 
-    @GetMapping("/admin/warehouse")
-    public String getWarehouse(Model model) {
+    @GetMapping("/admin/wholesaler")
+    public String getWholesaler(Model model) {
         model.addAttribute("hurtownia", hurtowniaRepository.findByNrHurtowni((long)1).get());
-        return "admin/warehouse";
+        return "admin/wholesaler";
     }
 
     @ModelAttribute()
@@ -61,8 +61,8 @@ public class AdminController {
         return new Hurtownia();
     }
 
-    @PostMapping("/admin/warehouse/update")
-    public String updateWarehouse(Hurtownia newHurtownia)  {
+    @PostMapping("/admin/wholesaler/update")
+    public String updateWholesaler(Hurtownia newHurtownia)  {
         System.out.println(newHurtownia.toString());
         Hurtownia oldHurtownia = hurtowniaRepository.findByNrHurtowni((long) 1).get();
         oldHurtownia.setNazwa(newHurtownia.getNazwa());
@@ -73,13 +73,13 @@ public class AdminController {
         hurtowniaAdres.setPoczta(newHurtownia.getAdres().getPoczta());
         hurtowniaAdres.setUlica(newHurtownia.getAdres().getUlica());
         hurtowniaRepository.saveAndFlush(oldHurtownia);
-        return "redirect:/admin/warehouse";
+        return "redirect:/admin/wholesaler";
     }
 
-    @GetMapping("/admin/stockroom")
-    public String getStockroom(Model model) {
-        model.addAttribute("magazyny", hurtowniaRepository.findAll());
-        return "admin/stockroom";
+    @GetMapping("/admin/warehouse")
+    public String getWarehouse(Model model) {
+        model.addAttribute("magazyny", magazynRepository.findAll());
+        return "admin/warehouse";
     }
 
     @PostMapping("/admin/item/update/{nrCzesci}")

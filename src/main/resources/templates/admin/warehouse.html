@@ -33,10 +33,10 @@
                     <a class="nav-link" aria-current="page" href="home">Strona główna</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="warehouse">Hurtownia</a>
+                    <a class="nav-link" href="wholesaler">Hurtownia</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="stockroom">Magazyny</a>
+                    <a class="nav-link active" href="warehouse">Magazyny</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="pracownicy">Pracownicy</a>
@@ -65,72 +65,92 @@
     <div class = "jumborton">
         <div class="card">
             <div class="card-body">
+                <h5 class="card-title">Magazyny</h5>
+                <table class="table table-dark">
+                    <thead>
+                    <tr>
+                        <th scope="col">Nr magazynu</th>
+                        <th scope="col">Nazwa</th>
+                        <th scope="col">Data założenia</th>
+                        <th scope="col">Miasto</th>
+                        <th scope="col">Ulica</th>
+                        <th scope="col">Nr lokalu</th>
+                        <th scope="col">Kod poczty</th>
+                        <th scope="col">Poczta</th>
+                        <th scope="col">ACTIONS</th>
+                    </tr>
+                    </thead>
+                    <tbody>
 
-                    <h4 th:text="${hurtownia.nazwa}"></h4>
-                    <h4 th:text="${hurtownia.dataZalozenia}"></h4>
 
-                    <small><cite title="Adres">
-                        <td th:text="${hurtownia.adres.ulica}"></td>
-                        <td th:text="${hurtownia.adres.nrLokalu}"></td>
-                        <br>
-                        <td th:text="${hurtownia.adres.miasto}"></td>
-                        <br>
-                        <td th:text="${hurtownia.adres.kodPoczty}"></td>
-                        <td th:text="${hurtownia.adres.poczta}"></td>
-                    </cite></small>
-                    <br>
-                    <button href = "#editModal"type="button" class="btn btn-primary" data-toggle="modal">Edytuj</button>
+                    <div th:each="magazyn : ${magazyny}">
+                        <tr>
+                            <th th:text="${magazyn.nrMagazynu}"></th>
+                            <td th:text="${magazyn.nazwa}"></td>
+                            <td th:text="${magazyn.dataZalozenia}"></td>
+                            <td th:text="${magazyn.adres.miasto}"></td>
+                            <td th:text="${magazyn.adres.ulica}"></td>
+                            <td th:text="${magazyn.adres.nrLokalu}"></td>
+                            <td th:text="${magazyn.adres.kodPoczty}"></td>
+                            <td th:text="${magazyn.adres.poczta}"></td>
+                            <td>
 
+                                <button th:with="mag=(${magazyn})" href = "#editModal" type="button" class="btn btn-primary" data-toggle="modal">Edytuj</button>
+                                <button href = "#deleteModal" type="button" class="btn btn-danger" data-toggle="modal">Usuń</button>
+
+
+                            </td>
+                        </tr>
+                    </div>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 </div>
 
 
-<div id="editModal" class="modal fade">
-    <div class="modal-dialog">
+<div id = "editModal" class="modal">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                    <h4 class="modal-title">Edytuj hurtownie</h4>
-                </div>
-                <div class="modal-body">
-                    <form th:action="@{/admin/warehouse/update}"
-                          th:object="${hurtownia}" method="post">
-                        <div class="form-group">
-                            <label for="nazwa" class="col-form-label">Nazwa:</label>
-                            <input type="text" class="form-control" id="nazwa" th:value="${hurtownia.nazwa}" th:field="*{nazwa}">
-                        </div>
-                        <div class="form-group">
-                            <label for="miasto" class="col-form-label">Miasto</label>
-                            <input type="text" class="form-control" id="miasto" th:value="${hurtownia.adres.miasto}" th:field="*{adres.miasto}">
-                        </div>
-                        <div class="form-group">
-                            <label for="ulica" class="col-form-label">Ulica:</label>
-                            <input type="text" class="form-control" id="ulica" th:value="${hurtownia.adres.ulica}" th:field="*{adres.ulica}" >
-                        </div>
-                        <div class="form-group">
-                            <label for="nrLokalu" class="col-form-label">Numer lokalu:</label>
-                            <input type="text" class="form-control" id="nrLokalu" th:value="${hurtownia.adres.nrLokalu}" th:field="*{adres.nrLokalu}">
-                        </div>
+                <h5 class="modal-title" id="exampleModalLabel">Edytuj magazyn</h5>
+            </div>
+            <div class="modal-body">
+                <form>
 
-                        <div class="form-group">
-                            <label for="kodPoczty" class="col-form-label">Kod poczty:</label>
-                            <input type="text" class="form-control" id="kodPoczty" th:value="${hurtownia.adres.kodPoczty}" th:field="*{adres.kodPoczty}">
-                        </div>
+                    <div class="form-group">
+                        <label for="nazwa" class="col-form-label">Nazwa</label>
+                        <input type="text" class="form-control" id="nazwa" th:value="${}">
+                    </div>
 
-                        <div class="form-group">
-                            <label for="poczta" class="col-form-label">Poczta:</label>
-                            <input type="text" class="form-control" id="poczta" th:value="${hurtownia.adres.poczta}" th:field="*{adres.poczta}">
-                        </div>
-                        <br/>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-                        <input type="submit" class="btn btn-primary"/>
-                    </form>
-                </div>
+                    <br/>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                    <input type="submit" class="btn btn-primary" ></input>
+                </form>
+            </div>
         </div>
     </div>
 </div>
 
+
+<div id = "deleteModal" class="modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Usuń magazyn</h5>
+            </div>
+            <div class="modal-body">
+                <p>Czy na pewno chcesz usunać?</p>
+                <form>
+                    <br/>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                    <input type="submit" class="btn btn-primary" ></input>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 </body>
