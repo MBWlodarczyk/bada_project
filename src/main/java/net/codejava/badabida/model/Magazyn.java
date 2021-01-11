@@ -2,16 +2,15 @@ package net.codejava.badabida.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
 @Table(name = "magazyny")
-@SequenceGenerator(name="nr_magazynu_ai", sequenceName="nr_magazynu_ai",allocationSize=0)
+@SequenceGenerator(name = "nr_magazynu_ai", sequenceName = "nr_magazynu_ai", allocationSize = 0)
 public class Magazyn implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "nr_magazynu_ai")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "nr_magazynu_ai")
     @Column(updatable = false, nullable = false)
     private Long nrMagazynu;
 

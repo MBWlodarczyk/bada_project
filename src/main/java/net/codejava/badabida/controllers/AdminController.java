@@ -3,6 +3,7 @@ package net.codejava.badabida.controllers;
 import net.codejava.badabida.model.Adres;
 import net.codejava.badabida.model.Czesc;
 import net.codejava.badabida.model.Hurtownia;
+import net.codejava.badabida.model.Magazyn;
 import net.codejava.badabida.repos.CzescRepository;
 import net.codejava.badabida.repos.HurtowniaRepository;
 import net.codejava.badabida.repos.MagazynRepository;
@@ -52,18 +53,17 @@ public class AdminController {
 
     @GetMapping("/admin/wholesaler")
     public String getWholesaler(Model model) {
-        model.addAttribute("hurtownia", hurtowniaRepository.findByNrHurtowni((long)1).get());
+        model.addAttribute("hurtownia", hurtowniaRepository.findByNrHurtowni((long) 1).get());
         return "admin/wholesaler";
     }
 
     @ModelAttribute()
-    public Hurtownia newHurtownia(){
+    public Hurtownia newHurtownia() {
         return new Hurtownia();
     }
 
     @PostMapping("/admin/wholesaler/update")
-    public String updateWholesaler(Hurtownia newHurtownia)  {
-        System.out.println(newHurtownia.toString());
+    public String updateWholesaler(Hurtownia newHurtownia) {
         Hurtownia oldHurtownia = hurtowniaRepository.findByNrHurtowni((long) 1).get();
         oldHurtownia.setNazwa(newHurtownia.getNazwa());
         Adres hurtowniaAdres = oldHurtownia.getAdres();
@@ -81,6 +81,26 @@ public class AdminController {
         model.addAttribute("magazyny", magazynRepository.findAll());
         return "admin/warehouse";
     }
+
+    @ModelAttribute()
+    public Magazyn newMagazyn() {
+        return new Magazyn();
+    }
+
+    @PostMapping("/admin/warehouse/update/{nrMagazynu}")
+    public String updateUser(@PathVariable("nrMagazynu") Long nrMagazynu, Magazyn newMagazyn) {
+        Magazyn oldMagazyn = magazynRepository.findByNrMagazynu(nrMagazynu).get();
+        oldMagazyn.setNazwa(newMagazyn.getNazwa());
+        Adres magazynAdres = oldMagazyn.getAdres();
+        magazynAdres.setKodPoczty(newMagazyn.getAdres().getKodPoczty());
+        magazynAdres.setMiasto(newMagazyn.getAdres().getMiasto());
+        magazynAdres.setNrLokalu(newMagazyn.getAdres().getNrLokalu());
+        magazynAdres.setPoczta(newMagazyn.getAdres().getPoczta());
+        magazynAdres.setUlica(newMagazyn.getAdres().getUlica());
+        magazynRepository.saveAndFlush(oldMagazyn);
+        return "redirect:/admin/warehouse";
+    }
+
 
     @PostMapping("/admin/item/update/{nrCzesci}")
     public String updateItem(@PathVariable("nrCzesci") Long nrCzesci, Czesc newCzesc) {

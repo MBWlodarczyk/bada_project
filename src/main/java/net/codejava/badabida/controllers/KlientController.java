@@ -1,10 +1,8 @@
 package net.codejava.badabida.controllers;
 
 import net.codejava.badabida.model.Klient;
-import net.codejava.badabida.repos.AdresRepository;
 import net.codejava.badabida.repos.CzescRepository;
 import net.codejava.badabida.repos.KlientRepository;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,9 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.server.ResponseStatusException;
-
-import java.security.Principal;
 
 
 @Controller
@@ -30,19 +25,19 @@ public class KlientController {
     }
 
 
-     @GetMapping("/client/home")
-    public String getClientHome(){
+    @GetMapping("/client/home")
+    public String getClientHome() {
         return "client/home";
     }
 
     @GetMapping("/client/login")
-    public String getClientLogin(){
+    public String getClientLogin() {
         return "client/login";
     }
 
 
     @GetMapping("client/zamowienia")
-    public String getUserZamowienia(Model model,Authentication auth) {
+    public String getUserZamowienia(Model model, Authentication auth) {
         Object principal = auth.getPrincipal();
         String username = ((UserDetails) principal).getUsername();
         model.addAttribute("zamowienia", klientRepository.findByUsername(username).get().getZamowienia());
@@ -57,14 +52,14 @@ public class KlientController {
     }
 
     @GetMapping("/client/store/item/{nrCzesci}")
-    public String getItemInfo(@PathVariable("nrCzesci") Long nrCzesci ,Model model) {
-        model.addAttribute("czesc",czescRepository.findCzescByNrCzesci(nrCzesci));
+    public String getItemInfo(@PathVariable("nrCzesci") Long nrCzesci, Model model) {
+        model.addAttribute("czesc", czescRepository.findCzescByNrCzesci(nrCzesci));
         return "client/item";
     }
 
     @GetMapping("/client/store")
     public String getItemInfo(Model model) {
-        model.addAttribute("czesci",czescRepository.findAll());
+        model.addAttribute("czesci", czescRepository.findAll());
         return "client/store";
     }
 
@@ -73,7 +68,7 @@ public class KlientController {
         UserDetails principal = (UserDetails) auth.getPrincipal();
         Klient oldKlient = klientRepository.findByUsername(principal.getUsername()).get();
 
-        if(oldKlient.getNrKlienta().equals(nrKlienta)) {
+        if (oldKlient.getNrKlienta().equals(nrKlienta)) {
 
             oldKlient.setImie(newKlient.getImie());
             oldKlient.setNazwisko(newKlient.getNazwisko());

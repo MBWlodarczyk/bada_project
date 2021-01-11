@@ -11,15 +11,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-
-    <style type="text/css">
-        body { background: 	#ffffff !important; }
-    </style>
-
 </head>
-
 <body>
-
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
@@ -83,70 +76,141 @@
                     <tbody>
 
 
-                    <div th:each="magazyn : ${magazyny}">
+                    <div th:each="mag : ${magazyny}">
                         <tr>
-                            <th th:text="${magazyn.nrMagazynu}"></th>
-                            <td th:text="${magazyn.nazwa}"></td>
-                            <td th:text="${magazyn.dataZalozenia}"></td>
-                            <td th:text="${magazyn.adres.miasto}"></td>
-                            <td th:text="${magazyn.adres.ulica}"></td>
-                            <td th:text="${magazyn.adres.nrLokalu}"></td>
-                            <td th:text="${magazyn.adres.kodPoczty}"></td>
-                            <td th:text="${magazyn.adres.poczta}"></td>
+                            <th th:text="${mag.nrMagazynu}"></th>
+                            <td th:text="${mag.nazwa}"></td>
+                            <td th:text="${mag.dataZalozenia}"></td>
+                            <td th:text="${mag.adres.miasto}"></td>
+                            <td th:text="${mag.adres.ulica}"></td>
+                            <td th:text="${mag.adres.nrLokalu}"></td>
+                            <td th:text="${mag.adres.kodPoczty}"></td>
+                            <td th:text="${mag.adres.poczta}"></td>
                             <td>
+                                <div style="color:black">
+                                    <button th:href = "'#editModal'+${mag.nrMagazynu}" type="button" class="btn btn-primary" data-toggle="modal">Edytuj</button>
 
-                                <button th:with="mag=(${magazyn})" href = "#editModal" type="button" class="btn btn-primary" data-toggle="modal">Edytuj</button>
-                                <button href = "#deleteModal" type="button" class="btn btn-danger" data-toggle="modal">Usuń</button>
+                                    <div th:id = "'editModal'+${mag.nrMagazynu}" class="modal">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Edytuj magazyn</h5>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form th:action="@{/admin/warehouse/update/{nrMagazynu}(nrMagazynu=${mag.nrMagazynu})}"
+                                                          th:object="${magazyn}" method="post">
+                                                        <div class="form-group">
+                                                            <label for="nazwa" class="col-form-label">Nazwa:</label>
+                                                            <input type="text" class="form-control" id="nazwa" th:value="${mag.nazwa}" th:name="nazwa"/>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="miasto" class="col-form-label">Miasto</label>
+                                                            <input type="text" class="form-control" id="miasto" th:value="${mag.adres.miasto}" th:name="adres.miasto"/>
+                                                        </div>
 
+                                                        <div class="form-group">
+                                                            <label for="ulica" class="col-form-label">Ulica</label>
+                                                            <input type="text" class="form-control" id="ulica" th:value="${mag.adres.ulica}" th:name="adres.ulica">
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label for="nrLokalu" class="col-form-label">Numer lokalu</label>
+                                                            <input type="text" class="form-control" id="nrLokalu" th:value="${mag.adres.nrLokalu}" th:name="adres.nrLokalu">
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label for="kodPoczty" class="col-form-label">Kod poczty</label>
+                                                            <input type="text" class="form-control" id="kodPoczty" th:value="${mag.adres.kodPoczty}" th:name="adres.kodPoczty">
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label for="poczta" class="col-form-label">Poczta</label>
+                                                            <input type="text" class="form-control" id="poczta" th:value="${mag.adres.poczta}" th:name="adres.poczta">
+                                                        </div>
+
+                                                        <br/>
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                                                        <input type="submit" class="btn btn-primary" />
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <button th:href = "'#deleteModal'+${mag.nrMagazynu}" type="button" class="btn btn-danger" data-toggle="modal">Usuń</button>
+                                    <div th:id = "'deleteModal'+${mag.nrMagazynu}" class="modal">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="deleteModalLabel">Usuń magazyn</h5>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Czy na pewno chcesz usunać?</p>
+                                                    <form>
+                                                        <br/>
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                                                        <input type="submit" class="btn btn-primary" />
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
                             </td>
                         </tr>
                     </div>
                     </tbody>
                 </table>
-            </div>
-        </div>
-    </div>
-</div>
 
 
-<div id = "editModal" class="modal">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Edytuj magazyn</h5>
-            </div>
-            <div class="modal-body">
-                <form>
 
-                    <div class="form-group">
-                        <label for="nazwa" class="col-form-label">Nazwa</label>
-                        <input type="text" class="form-control" id="nazwa" th:value="${}">
+                <button href = "#newModal" type="button" class="btn btn-primary" data-toggle="modal" >Dodaj magazyn</button>
+
+                <div id = "newModal" class="modal">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="newModalLabel">Dodaj magazyn</h5>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="nazwaNew" class="col-form-label">Nazwa:</label>
+                                        <input type="text" class="form-control" id="nazwaNew"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="miastoNew" class="col-form-label">Miasto</label>
+                                        <input type="text" class="form-control" id="miastoNew"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="ulicaNew" class="col-form-label">Ulica</label>
+                                        <input type="text" class="form-control" id="ulicaNew"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nrLokaluNew" class="col-form-label">Numer lokalu</label>
+                                        <input type="text" class="form-control" id="nrLokaluNew"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="kodPocztyNew" class="col-form-label">Kod poczty</label>
+                                        <input type="text" class="form-control" id="kodPocztyNew"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="pocztaNew" class="col-form-label">Poczta</label>
+                                        <input type="text" class="form-control" id="pocztaNew"/>
+                                    </div>
+
+                                    <br/>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                                    <input type="submit" class="btn btn-primary" />
+                                </form>
+                            </div>
+                        </div>
                     </div>
+                </div>
 
-                    <br/>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-                    <input type="submit" class="btn btn-primary" ></input>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div id = "deleteModal" class="modal">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Usuń magazyn</h5>
-            </div>
-            <div class="modal-body">
-                <p>Czy na pewno chcesz usunać?</p>
-                <form>
-                    <br/>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-                    <input type="submit" class="btn btn-primary" ></input>
-                </form>
             </div>
         </div>
     </div>
