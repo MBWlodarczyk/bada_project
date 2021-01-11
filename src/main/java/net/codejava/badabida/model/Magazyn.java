@@ -1,8 +1,10 @@
 package net.codejava.badabida.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "magazyny")
@@ -18,8 +20,8 @@ public class Magazyn implements Serializable {
     private String nazwa;
 
     @Column(name = "DATA_ZALOZENIA")
-    @Temporal(TemporalType.DATE)
-    private Date dataZalozenia;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dataZalozenia;
 
     @ManyToOne
     @JoinColumn(name = "nr_hurtowni")
@@ -33,7 +35,7 @@ public class Magazyn implements Serializable {
     public Magazyn() {
     }
 
-    public Magazyn(Long nrMagazynu, String nazwa, Date dataZalozenia, Hurtownia hurtownia, Adres adres) {
+    public Magazyn(Long nrMagazynu, String nazwa, LocalDate dataZalozenia, Hurtownia hurtownia, Adres adres) {
         this.nrMagazynu = nrMagazynu;
         this.nazwa = nazwa;
         this.dataZalozenia = dataZalozenia;
@@ -68,11 +70,11 @@ public class Magazyn implements Serializable {
         this.nazwa = nazwa;
     }
 
-    public Date getDataZalozenia() {
+    public LocalDate getDataZalozenia() {
         return dataZalozenia;
     }
 
-    public void setDataZalozenia(Date dataZalozenia) {
+    public void setDataZalozenia(LocalDate dataZalozenia) {
         this.dataZalozenia = dataZalozenia;
     }
 

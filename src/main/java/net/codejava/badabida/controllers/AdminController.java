@@ -88,7 +88,7 @@ public class AdminController {
     }
 
     @PostMapping("/admin/warehouse/update/{nrMagazynu}")
-    public String updateUser(@PathVariable("nrMagazynu") Long nrMagazynu, Magazyn newMagazyn) {
+    public String updateWarehouse(@PathVariable("nrMagazynu") Long nrMagazynu, Magazyn newMagazyn) {
         Magazyn oldMagazyn = magazynRepository.findByNrMagazynu(nrMagazynu).get();
         oldMagazyn.setNazwa(newMagazyn.getNazwa());
         Adres magazynAdres = oldMagazyn.getAdres();
@@ -100,6 +100,16 @@ public class AdminController {
         magazynRepository.saveAndFlush(oldMagazyn);
         return "redirect:/admin/warehouse";
     }
+
+    @PostMapping("/admin/warehouse/new")
+    public String addWarehouse(Magazyn magazyn) {
+        System.out.println(magazyn.toString());
+        magazynRepository.saveAndFlush(magazyn);
+        //model.addAttribute("magazyn",magazyn);
+
+        return "redirect:/admin/warehouse";
+    }
+
 
 
     @PostMapping("/admin/item/update/{nrCzesci}")

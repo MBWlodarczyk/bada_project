@@ -174,32 +174,39 @@
                                 <h5 class="modal-title" id="newModalLabel">Dodaj magazyn</h5>
                             </div>
                             <div class="modal-body">
-                                <form>
+                                <form th:action="@{/admin/warehouse/new}" th:object="${magazyn}" method="post">
                                     <div class="form-group">
                                         <label for="nazwaNew" class="col-form-label">Nazwa:</label>
-                                        <input type="text" class="form-control" id="nazwaNew"/>
+                                        <input type="text" class="form-control" id="nazwaNew" th:name="nazwa"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="dataNew" class="col-form-label">Data założenia:</label>
+                                        <input type="date" class="form-control" id="dataNew" th:name="dataZalozenia"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="hurtNew" th:name="nrHurtowni" th:value="${hurtownia.nrHurtowni}" style="display:none;"/>
                                     </div>
                                     <div class="form-group">
                                         <label for="miastoNew" class="col-form-label">Miasto</label>
-                                        <input type="text" class="form-control" id="miastoNew"/>
+                                        <input type="text" class="form-control" id="miastoNew" th:name="adres.miasto"/>
                                     </div>
                                     <div class="form-group">
                                         <label for="ulicaNew" class="col-form-label">Ulica</label>
-                                        <input type="text" class="form-control" id="ulicaNew"/>
+                                        <input type="text" class="form-control" id="ulicaNew" th:name="adres.ulica"/>
                                     </div>
                                     <div class="form-group">
                                         <label for="nrLokaluNew" class="col-form-label">Numer lokalu</label>
-                                        <input type="text" class="form-control" id="nrLokaluNew"/>
+                                        <input type="text" class="form-control" id="nrLokaluNew" th:name="adres.nrLokalu"/>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="kodPocztyNew" class="col-form-label">Kod poczty</label>
-                                        <input type="text" class="form-control" id="kodPocztyNew"/>
+                                        <input type="text" class="form-control" id="kodPocztyNew" th:name="adres.kodPoczty"/>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="pocztaNew" class="col-form-label">Poczta</label>
-                                        <input type="text" class="form-control" id="pocztaNew"/>
+                                        <input type="text" class="form-control" id="pocztaNew" th:name="adres.poczta"/>
                                     </div>
 
                                     <br/>
