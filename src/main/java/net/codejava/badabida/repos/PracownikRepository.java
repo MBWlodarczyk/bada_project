@@ -9,4 +9,6 @@ import java.util.Optional;
 @Repository
 public interface PracownikRepository extends JpaRepository<Pracownik, Long> {
     Optional<Pracownik> findByUsername(String username);
+    Optional<Pracownik> findByNrPracownika(Long nrPracownika);
+
 }

@@ -1,5 +1,6 @@
 package net.codejava.badabida.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,16 +9,19 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 
 @Entity
 @Table(name = "pracownicy")
+@SequenceGenerator(name = "nr_pracownika_ai", sequenceName = "nr_pracownika_ai", allocationSize = 0)
+
 public class Pracownik implements Serializable, UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "nr_pracownika_ai")
     @Column(updatable = false, nullable = false)
     private Long nrPracownika;
 
@@ -28,22 +32,14 @@ public class Pracownik implements Serializable, UserDetails {
     private String nazwisko;
 
     @Column(name = "DATA_URODZENIA")
-    private Timestamp dataUrodzenia;
-
-    @Column(name = "PESEL")
-    private String pesel;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dataUrodzenia;
 
     @Column(name = "TELEFON")
     private String telefon;
 
-    @Column(name = "wynagrodzenie")
-    private BigDecimal wynagrodzenie;
-
     @Column(name = "STANOWISKO")
     private String stanowisko;
-
-    @Column(name = "PLEC")
-    private String plec;
 
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.REFRESH)
     @JoinColumn(name = "nr_hurtowni")
@@ -137,20 +133,12 @@ public class Pracownik implements Serializable, UserDetails {
         this.nazwisko = nazwisko;
     }
 
-    public Timestamp getDataUrodzenia() {
+    public LocalDate getDataUrodzenia() {
         return dataUrodzenia;
     }
 
-    public void setDataUrodzenia(Timestamp data_urodzenia) {
+    public void setDataUrodzenia(LocalDate data_urodzenia) {
         this.dataUrodzenia = data_urodzenia;
-    }
-
-    public String getPesel() {
-        return pesel;
-    }
-
-    public void setPesel(String pesel) {
-        this.pesel = pesel;
     }
 
     public String getTelefon() {
@@ -161,28 +149,12 @@ public class Pracownik implements Serializable, UserDetails {
         this.telefon = telefon;
     }
 
-    public BigDecimal getWynagrodzenie() {
-        return wynagrodzenie;
-    }
-
-    public void setWynagrodzenie(BigDecimal wynagrodzenie) {
-        this.wynagrodzenie = wynagrodzenie;
-    }
-
     public String getStanowisko() {
         return stanowisko;
     }
 
     public void setStanowisko(String stanowisko) {
         this.stanowisko = stanowisko;
-    }
-
-    public String getPlec() {
-        return plec;
-    }
-
-    public void setPlec(String plec) {
-        this.plec = plec;
     }
 
     public Hurtownia getHurtownia() {
@@ -225,16 +197,13 @@ public class Pracownik implements Serializable, UserDetails {
         this.role = role;
     }
 
-    public Pracownik(Long nr_pracownika, String imie, String nazwisko, Timestamp data_urodzenia, String pesel, String telefon, BigDecimal wynagrodzenie, String stanowisko, String plec, Hurtownia hurtownia, Magazyn magazyn, Adres adres, Set<Zamowienie> zamowienia, String username, String password, String role) {
-        this.nrPracownika = nr_pracownika;
+    public Pracownik(Long nrPracownika, String imie, String nazwisko, LocalDate dataUrodzenia, String telefon, String stanowisko, Hurtownia hurtownia, Magazyn magazyn, Adres adres, Set<Zamowienie> zamowienia, String username, String password, String role) {
+        this.nrPracownika = nrPracownika;
         this.imie = imie;
         this.nazwisko = nazwisko;
-        this.dataUrodzenia = data_urodzenia;
-        this.pesel = pesel;
+        this.dataUrodzenia = dataUrodzenia;
         this.telefon = telefon;
-        this.wynagrodzenie = wynagrodzenie;
         this.stanowisko = stanowisko;
-        this.plec = plec;
         this.hurtownia = hurtownia;
         this.magazyn = magazyn;
         this.adres = adres;
@@ -250,5 +219,24 @@ public class Pracownik implements Serializable, UserDetails {
 
     public void setZamowienia(Set<Zamowienie> zamowienia) {
         this.zamowienia = zamowienia;
+    }
+
+    @Override
+    public String toString() {
+        return "Pracownik{" +
+                "nrPracownika=" + nrPracownika +
+                ", imie='" + imie + '\'' +
+                ", nazwisko='" + nazwisko + '\'' +
+                ", dataUrodzenia=" + dataUrodzenia +
+                ", telefon='" + telefon + '\'' +
+                ", stanowisko='" + stanowisko + '\'' +
+                ", hurtownia=" + hurtownia +
+                ", magazyn=" + magazyn +
+                ", adres=" + adres +
+                ", zamowienia=" + zamowienia +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
+                '}';
     }
 }

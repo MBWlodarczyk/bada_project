@@ -1,13 +1,9 @@
 package net.codejava.badabida.controllers;
 
-import net.codejava.badabida.model.Adres;
-import net.codejava.badabida.model.Czesc;
-import net.codejava.badabida.model.Hurtownia;
-import net.codejava.badabida.model.Magazyn;
-import net.codejava.badabida.repos.AdresRepository;
-import net.codejava.badabida.repos.CzescRepository;
-import net.codejava.badabida.repos.HurtowniaRepository;
-import net.codejava.badabida.repos.MagazynRepository;
+import net.codejava.badabida.model.*;
+import net.codejava.badabida.repos.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,13 +19,20 @@ public class AdminController {
     private final HurtowniaRepository hurtowniaRepository;
     private final MagazynRepository magazynRepository;
     private final AdresRepository adresRepository;
+    private final PracownikRepository pracownikRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
-    public AdminController(CzescRepository czescRepository, HurtowniaRepository hurtowniaRepository, MagazynRepository magazynRepository, AdresRepository adresRepository) {
+    public AdminController(CzescRepository czescRepository, HurtowniaRepository hurtowniaRepository,
+                           MagazynRepository magazynRepository, AdresRepository adresRepository,
+                           PracownikRepository pracownikRepository) {
         this.czescRepository = czescRepository;
         this.hurtowniaRepository = hurtowniaRepository;
         this.magazynRepository = magazynRepository;
         this.adresRepository = adresRepository;
+        this.pracownikRepository = pracownikRepository;
     }
 
     @GetMapping("/admin/login")
@@ -55,6 +58,8 @@ public class AdminController {
         return "admin/store";
     }
 
+
+    ////////////////////////// HURTOWNIA ////////////////////////////////////
     @GetMapping("/admin/wholesaler")
     public String getWholesaler(Model model) {
         model.addAttribute("hurtownia", hurtowniaRepository.findByNrHurtowni((long) 1).get());
@@ -80,6 +85,7 @@ public class AdminController {
         return "redirect:/admin/wholesaler";
     }
 
+    ////////////////////////// MAGAZYN ////////////////////////////////////
     @GetMapping("/admin/warehouse")
     public String getWarehouse(Model model) {
         model.addAttribute("magazyny", magazynRepository.findAll());
@@ -126,6 +132,71 @@ public class AdminController {
         return "redirect:/admin/warehouse";
     }
 
+    ////////////////////////// PRACOWNICY ////////////////////////////////////
+    @GetMapping("/admin/employees")
+    public String getEmployees(Model model) {
+        model.addAttribute("pracownicy", pracownikRepository.findAll());
+        return "admin/employees";
+    }
+
+    @ModelAttribute()
+    public Pracownik newEmployee() {
+        return new Pracownik();
+    }
+
+    @PostMapping("/admin/employees/update/{nrPracownika}")
+    public String updateEmployee(@PathVariable("nrPracownika") Long nrPracownika, Pracownik newPracownik) {
+        Pracownik oldPracownik = pracownikRepository.findByNrPracownika(nrPracownika).get();
+        oldPracownik.setImie(newPracownik.getImie());
+        oldPracownik.setNazwisko(newPracownik.getNazwisko());
+        oldPracownik.setDataUrodzenia(newPracownik.getDataUrodzenia());
+        oldPracownik.setTelefon(newPracownik.getTelefon());
+        Adres a = oldPracownik.getAdres();
+        a.setKodPoczty(newPracownik.getAdres().getKodPoczty());
+        a.setMiasto(newPracownik.getAdres().getMiasto());
+        a.setNrLokalu(newPracownik.getAdres().getNrLokalu());
+        a.setPoczta(newPracownik.getAdres().getPoczta());
+        a.setUlica(newPracownik.getAdres().getUlica());
+        oldPracownik.setAdres(a);
+        oldPracownik.setMagazyn(magazynRepository.findByNrMagazynu(newPracownik.getMagazyn().getNrMagazynu()).get());
+        pracownikRepository.saveAndFlush(oldPracownik);
+        return "redirect:/admin/employees";
+    }
+
+    @PostMapping("/admin/employees/new")
+    public String addEmployeee(Pracownik pracownik) {
+        pracownik.setHurtownia(hurtowniaRepository.findByNrHurtowni((long) 1).get());
+        pracownik.setMagazyn(magazynRepository.findByNrMagazynu(pracownik.getMagazyn().getNrMagazynu()).get());
+
+        Adres a = new Adres();
+        a.setMiasto(pracownik.getAdres().getMiasto());
+        a.setKodPoczty(pracownik.getAdres().getKodPoczty());
+        a.setNrLokalu(pracownik.getAdres().getNrLokalu());
+        a.setPoczta(pracownik.getAdres().getPoczta());
+        a.setUlica(pracownik.getAdres().getUlica());
+
+        Adres a2 = adresRepository.save(a);
+        pracownik.setAdres(a2);
+
+        //TODO no cyberbezpieczne
+        String xd = pracownik.getPassword();
+        String hash = passwordEncoder.encode(xd);
+
+        pracownik.setPassword(hash);
+
+        System.out.println(pracownik.toString());
+
+        pracownikRepository.saveAndFlush(pracownik);
+        return "redirect:/admin/employees";
+    }
+
+    @PostMapping("/admin/employees/remove{nrPracownika}")
+    public String removeEmployee(@PathVariable("nrPracownika") Long nrPracownika) {
+        pracownikRepository.deleteById(nrPracownika);
+        return "redirect:/admin/employees";
+    }
+
+    ////////////////////////// COS INNEGO ////////////////////////////////////
 
     @PostMapping("/admin/item/update/{nrCzesci}")
     public String updateItem(@PathVariable("nrCzesci") Long nrCzesci, Czesc newCzesc) {
