@@ -144,6 +144,9 @@ public class AdminController {
         return new Pracownik();
     }
 
+    @ModelAttribute()
+    public Czesc newCzesc() { return new Czesc();}
+
     @PostMapping("/admin/employees/update/{nrPracownika}")
     public String updateEmployee(@PathVariable("nrPracownika") Long nrPracownika, Pracownik newPracownik) {
         Pracownik oldPracownik = pracownikRepository.findByNrPracownika(nrPracownika).get();
@@ -208,13 +211,18 @@ public class AdminController {
         oldCzesc.setProducent(newCzesc.getProducent());
         czescRepository.saveAndFlush(oldCzesc);
 
-        return "admin/item";
+        return "redirect:/admin/store";
+    }
+    @PostMapping("/admin/item/remove/{nrCzesci}")
+    public String removeItem(@PathVariable("nrCzesci") Long nrCzesci) {
+        czescRepository.deleteById(nrCzesci);
+        return "redirect:/admin/store";
     }
 
-    @PostMapping("/admin/item/add")
-    public String addItem(Model model, Czesc newCzesc) {
-        Czesc czesc = czescRepository.saveAndFlush(newCzesc);
-        System.out.println(czesc.getNrCzesci());
-        return "admin/item";
+
+    @PostMapping("/admin/item/new")
+    public String addItem(Czesc newCzesc) {
+        czescRepository.saveAndFlush(newCzesc);
+        return "redirect:/admin/store";
     }
 }

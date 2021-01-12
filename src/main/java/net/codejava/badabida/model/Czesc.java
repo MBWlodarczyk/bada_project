@@ -7,10 +7,11 @@ import java.util.List;
 
 @Entity
 @Table(name = "czesci")
+@SequenceGenerator(name = "nr_czesci_ai", sequenceName = "nr_czesci_ai", allocationSize = 0)
 public class Czesc implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "nr_czesci_ai")
     @Column(updatable = false, nullable = false)
     private Long nrCzesci;
 
