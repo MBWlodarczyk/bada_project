@@ -131,7 +131,7 @@
 
                                                         <label for="magazyn" class="col-form-label"> Magazyn: </label>
                                                         <div class="form-select">
-                                                            <select th:name="magazyn" id="magazyn">
+                                                            <select class="form-control" th:name="magazyn" id="magazyn">
                                                                 <option selected value=0> Nieprzypisany </option>
                                                                 <option th:each="magazyn : ${magazyny1}"
                                                                         th:value="${magazyn.nrMagazynu}"
@@ -234,7 +234,7 @@
 
                                     <label for="magazynNew" class="col-form-label"> Magazyn: </label>
                                     <div class="form-select">
-                                            <select th:name="magazyn" id="magazynNew">
+                                            <select class="form-control" th:name="magazyn" id="magazynNew">
                                                 <option selected value=0> Nieprzypisany </option>
                                                 <option th:each="magazyn : ${magazyny1}"
                                                         th:value="${magazyn.nrMagazynu}"

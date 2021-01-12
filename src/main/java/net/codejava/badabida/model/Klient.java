@@ -12,10 +12,11 @@ import java.util.Set;
 
 @Entity
 @Table(name = "klienci")
+@SequenceGenerator(name = "nr_klienta_ai", sequenceName = "nr_klienta_ai", allocationSize = 0)
 public class Klient implements Serializable, UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "nr_klienta_ai")
     @Column(updatable = false, nullable = false)
     private Long nrKlienta;
 

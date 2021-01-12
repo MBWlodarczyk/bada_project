@@ -9,10 +9,11 @@ import java.util.Set;
 
 @Entity
 @Table(name = "zamowienia")
-public class Zamowienie implements Serializable {
+@SequenceGenerator(name = "nr_zamowienia_ai", sequenceName = "nr_zamowienia_ai", allocationSize = 0)
+public class Zamowienie implements Serializable, Comparable<Zamowienie> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "nr_zamowienia_ai")
     @Column(updatable = false, nullable = false)
     private Long nrZamowienia;
 
@@ -90,5 +91,10 @@ public class Zamowienie implements Serializable {
 
     public void setCzesci(List<CzesciZamowienia> czesci) {
         this.czesci = czesci;
+    }
+
+    @Override
+    public int compareTo(Zamowienie o) {
+        return nrZamowienia.compareTo(o.nrZamowienia);
     }
 }

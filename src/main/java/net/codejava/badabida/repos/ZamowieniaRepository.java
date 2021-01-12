@@ -4,10 +4,11 @@ import net.codejava.badabida.model.Zamowienie;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
 import java.util.Set;
 
 @Repository
 public interface ZamowieniaRepository extends CrudRepository<Zamowienie, Long> {
     Set<Zamowienie> findAll();
-    Zamowienie findZamowienieByNrZamowienia(Long id);
+    Optional<Zamowienie> findByNrZamowienia(Long id);
 }

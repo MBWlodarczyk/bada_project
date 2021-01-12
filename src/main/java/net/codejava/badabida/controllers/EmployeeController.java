@@ -1,8 +1,9 @@
 package net.codejava.badabida.controllers;
 
-import net.codejava.badabida.model.Klient;
 import net.codejava.badabida.model.Pracownik;
+import net.codejava.badabida.model.Zamowienie;
 import net.codejava.badabida.repos.PracownikRepository;
+import net.codejava.badabida.repos.ZamowieniaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,15 +15,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Controller
 public class EmployeeController {
 
     private final PracownikRepository pracownikRepository;
+    private final ZamowieniaRepository zamowieniaRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public EmployeeController(PracownikRepository pracownikRepository) {
+    public EmployeeController(PracownikRepository pracownikRepository, ZamowieniaRepository zamowieniaRepository) {
         this.pracownikRepository = pracownikRepository;
+        this.zamowieniaRepository = zamowieniaRepository;
     }
 
     @GetMapping("/employee/home")
@@ -35,6 +41,9 @@ public class EmployeeController {
     public String getEmployeeLogin() {
         return "employee/login";
     }
+
+
+    /////////////////// DANE///////////////////////////////////////////////
 
     @GetMapping("/employee/personaldata")
     public String getClientInfo(Model model) {
@@ -55,7 +64,7 @@ public class EmployeeController {
             oldPracownik.setNazwisko(newPracownik.getNazwisko());
             oldPracownik.setTelefon(newPracownik.getTelefon());
 
-            if(newPracownik.getPassword()!="" && newPracownik.getPassword() != null )
+            if (newPracownik.getPassword() != "" && newPracownik.getPassword() != null)
                 oldPracownik.setPassword(passwordEncoder.encode(newPracownik.getPassword()));
 
             oldPracownik.getAdres().setKodPoczty(newPracownik.getAdres().getKodPoczty());
@@ -71,4 +80,33 @@ public class EmployeeController {
         return "redirect:/employee/personaldata";
     }
 
+    //////////////////////////////////// ZAMÓWIENIA ////////////////////////////////////////
+
+    @GetMapping("/employee/orders")
+    public String getOrders(Model model, Authentication auth) {
+        UserDetails principal = (UserDetails) auth.getPrincipal();
+        model.addAttribute("zamowienia", pracownikRepository.findByUsername(principal.getUsername()).get().getZamowienia());
+        Set<String> possibleStatus = new HashSet<String>();
+        possibleStatus.add("zlozone");
+        possibleStatus.add("zaakceptowane");
+        possibleStatus.add("realizowane");
+        possibleStatus.add("zrealizowane");
+        model.addAttribute("statusy",possibleStatus);
+        return "employee/orders";
+    }
+
+    @PostMapping("/employee/orders/update/{nrZamowienia}")
+    public String updateOrder(@PathVariable("nrZamowienia") Long nrZamowienia, String statusZamowienia){
+        Set<String> possibleStatus = new HashSet<String>();
+        possibleStatus.add("zlozone");
+        possibleStatus.add("zaakceptowane");
+        possibleStatus.add("realizowane");
+        possibleStatus.add("zrealizowane");
+        if(possibleStatus.contains(statusZamowienia)){
+            Zamowienie z = zamowieniaRepository.findByNrZamowienia(nrZamowienia).get();
+            z.setStatusZamowienia(statusZamowienia);
+            zamowieniaRepository.save(z);
+        }
+        return "redirect:/employee/orders";
+    }
 }

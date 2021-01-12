@@ -1,5 +1,7 @@
 package net.codejava.badabida.model;
 
+import org.hibernate.annotations.SortComparator;
+import org.hibernate.annotations.SortNatural;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,11 +15,11 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
+import java.util.SortedSet;
 
 @Entity
 @Table(name = "pracownicy")
 @SequenceGenerator(name = "nr_pracownika_ai", sequenceName = "nr_pracownika_ai", allocationSize = 0)
-
 public class Pracownik implements Serializable, UserDetails {
 
     @Id
@@ -59,6 +61,7 @@ public class Pracownik implements Serializable, UserDetails {
             joinColumns = { @JoinColumn(name = "nr_pracownika") },
             inverseJoinColumns = { @JoinColumn(name = "nr_zamowienia") }
     )
+    @SortNatural
     private Set<Zamowienie> zamowienia;
 
     @Column(name = "username")
