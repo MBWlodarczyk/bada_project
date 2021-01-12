@@ -1,5 +1,6 @@
 package net.codejava.badabida.model;
 
+import org.hibernate.annotations.SortNatural;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,7 +14,7 @@ import java.util.Set;
 @Entity
 @Table(name = "klienci")
 @SequenceGenerator(name = "nr_klienta_ai", sequenceName = "nr_klienta_ai", allocationSize = 0)
-public class Klient implements Serializable, UserDetails {
+public class Klient implements Serializable, UserDetails, Comparable<Klient> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "nr_klienta_ai")
@@ -48,6 +49,7 @@ public class Klient implements Serializable, UserDetails {
             joinColumns = { @JoinColumn(name = "nr_klienta") },
             inverseJoinColumns = { @JoinColumn(name = "nr_zamowienia") }
     )
+    @SortNatural
     private Set<Zamowienie> zamowienia;
 
     public Klient() {
@@ -176,5 +178,10 @@ public class Klient implements Serializable, UserDetails {
 
     public void setZamowienia(Set<Zamowienie> zamowienia) {
         this.zamowienia = zamowienia;
+    }
+
+    @Override
+    public int compareTo(Klient o) {
+        return nrKlienta.compareTo(o.nrKlienta);
     }
 }
