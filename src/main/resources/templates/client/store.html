@@ -10,9 +10,64 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <style type="text/css">
-        body { background: 	#ffffff !important; }
+    <link rel="stylesheet" th:href="@{/css/store.css}"/>
+    <script type="text/javascript" th:src="@{/js/all.js}">
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "300px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+        }
+
+    </script>
+    <style>
+        .sidenav {
+            margin-top: 56px;
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            right: 0;
+            background-color: #212529;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .sidenav a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidenav a:hover {
+            color: #f1f1f1;
+        }
+
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        #cartBut{
+            position:absolute;
+            transform: rotate(270deg);
+            top: 150px;
+            right:-18px;
+        }
+
     </style>
+
+
+
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -44,8 +99,23 @@
     </div>
 </nav>
 
+<!---------------------------------- KOSZYK --------------NADPISANY COLOR -------------->
+<div id="mySidenav" class="sidenav" style="color: white">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+    <a href="#"> Jakas</a>
+    <a href="#"> wartosc</a>
+    <a href="#"> tutaj</a>
+    <h1> siema</h1>
+
+</div>
+
+
 <div class = "container">
-    <div vlass = "jumborton">
+    <!-- koszyk button -->
+    <button id = "cartBut" type="button" class="btn btn-secondary" onclick="openNav()">Koszyk</button>
+
+    <div class = "jumbotron">
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Sklep</h5>
@@ -67,7 +137,7 @@
                                 <td th:text="${czesc.producent}"></td>
                                 <td th:text="${czesc.cena}"></td>
                                 <td style ="text-align:center;">
-                                    <button href = "#addToZamowienie"type="button" class="btn btn-primary" data-toggle="modal">Edytuj</button>
+                                    <button href = "#addToZamowienie"type="button" class="btn btn-primary" data-toggle="modal">Dodaj</button>
                                 </td>
                             </tr>
                         </div>
@@ -84,7 +154,7 @@
         <div class="modal-content">
             <form>
                 <div class="modal-header">
-                    <h4 class="modal-title">Dodaj do zamówienia</h4>
+                    <h4 class="modal-title">Dodaj do koszyka</h4>
                 </div>
                 <div class="modal-body">
                     <form>
