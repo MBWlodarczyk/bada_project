@@ -36,34 +36,14 @@ public class KlientController {
     }
 
 
-    @GetMapping("client/zamowienia")
-    public String getUserZamowienia(Model model, Authentication auth) {
-        Object principal = auth.getPrincipal();
-        String username = ((UserDetails) principal).getUsername();
-        model.addAttribute("zamowienia", klientRepository.findByUsername(username).get().getZamowienia());
-        return "client/zamowienia";
-    }
-
-    @GetMapping("/client/dane")
+    @GetMapping("/client/personaldata")
     public String getClientInfo(Model model) {
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("klient", klientRepository.findByUsername(principal.getUsername()).get());
-        return "client/dane";
+        return "client/personaldata";
     }
 
-    @GetMapping("/client/store/item/{nrCzesci}")
-    public String getItemInfo(@PathVariable("nrCzesci") Long nrCzesci, Model model) {
-        model.addAttribute("czesc", czescRepository.findCzescByNrCzesci(nrCzesci));
-        return "client/item";
-    }
-
-    @GetMapping("/client/store")
-    public String getItemInfo(Model model) {
-        model.addAttribute("czesci", czescRepository.findAll());
-        return "client/store";
-    }
-
-    @PostMapping("/client/dane/update/{nrKlienta}")
+    @PostMapping("/client/personaldata/update/{nrKlienta}")
     public String updateUser(@PathVariable("nrKlienta") Long nrKlienta, Klient newKlient, Authentication auth) {
         UserDetails principal = (UserDetails) auth.getPrincipal();
         Klient oldKlient = klientRepository.findByUsername(principal.getUsername()).get();
@@ -85,7 +65,28 @@ public class KlientController {
         } else {
             return "redirect:/403";
         }
-        return "redirect:/client/dane";
+        return "redirect:/client/personaldata";
     }
+
+    @GetMapping("client/orders")
+    public String getUserZamowienia(Model model, Authentication auth) {
+        Object principal = auth.getPrincipal();
+        String username = ((UserDetails) principal).getUsername();
+        model.addAttribute("zamowienia", klientRepository.findByUsername(username).get().getZamowienia());
+        return "client/orders";
+    }
+
+    @GetMapping("/client/store/item/{nrCzesci}")
+    public String getItemInfo(@PathVariable("nrCzesci") Long nrCzesci, Model model) {
+        model.addAttribute("czesc", czescRepository.findCzescByNrCzesci(nrCzesci));
+        return "client/item";
+    }
+
+    @GetMapping("/client/store")
+    public String getItemInfo(Model model) {
+        model.addAttribute("czesci", czescRepository.findAll());
+        return "client/store";
+    }
+
 }
 

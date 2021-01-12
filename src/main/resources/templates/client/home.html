@@ -23,7 +23,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">SuperBazaDanych</a>
+        <a class="navbar-brand" href="home">SuperBazaDanych</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -33,10 +33,10 @@
                     <a class="nav-link active" aria-current="page" href="home">Strona główna</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="dane">Twoje dane</a>
+                    <a class="nav-link" href="personaldata">Twoje dane</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="zamowienia">Twoje zamówienia</a>
+                    <a class="nav-link" href="orders">Twoje zamówienia</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="store">Sklep</a>
@@ -55,38 +55,9 @@
 <div class = "container">
     <div class = "jumborton">
         <div class="card">
-
             <div class="card-body">
-                <h5 class="card-title">Zamówienia</h5>
-                <table class="table table-dark">
-                    <thead>
-                    <tr>
-                        <th scope="col">Nr zamowienia</th>
-                        <th scope="col">Data zlozenia</th>
-                        <th scope="col">Staus zamowienia</th>
-                        <th scope="col" style="text-align:center;">ACTIONS</th>
-                    </tr>
-                    </thead>
-                    <tbody>
+                <h5 class="card-title">Strona główna</h5>
 
-
-                    <div th:each="zamowienie : ${zamowienia}">
-                        <tr>
-                            <th th:text="${zamowienie.nrZamowienia}"></th>
-                            <td th:text="${zamowienie.dataZlozenia}"></td>
-                            <td th:text="${zamowienie.statusZamowienia}"></td>
-                            <th style="text-align:center;">
-                                <button type="button" class="btn btn-primary">
-                                    Edit
-                                </button>
-                                <button type="button" class="btn btn-danger">
-                                    Delete
-                                </button>
-                            </th>
-                        </tr>
-                    </div>
-                    </tbody>
-                </table>
 
             </div>
         </div>
