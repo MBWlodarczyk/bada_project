@@ -109,6 +109,8 @@ public class Pracownik implements Serializable, UserDetails {
         return true;
     }
 
+    public boolean hasMagazyn() {return magazyn!=null;}
+
     public Long getNrPracownika() {
         return nrPracownika;
     }

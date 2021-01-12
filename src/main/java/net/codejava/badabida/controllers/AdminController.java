@@ -135,6 +135,7 @@ public class AdminController {
     ////////////////////////// PRACOWNICY ////////////////////////////////////
     @GetMapping("/admin/employees")
     public String getEmployees(Model model) {
+        model.addAttribute("magazyny1", magazynRepository.findAll());
         model.addAttribute("pracownicy", pracownikRepository.findAll());
         return "admin/employees";
     }
@@ -161,7 +162,8 @@ public class AdminController {
         a.setPoczta(newPracownik.getAdres().getPoczta());
         a.setUlica(newPracownik.getAdres().getUlica());
         oldPracownik.setAdres(a);
-        oldPracownik.setMagazyn(magazynRepository.findByNrMagazynu(newPracownik.getMagazyn().getNrMagazynu()).get());
+        if(newPracownik.hasMagazyn()) oldPracownik.setMagazyn(magazynRepository.findByNrMagazynu(newPracownik.getMagazyn().getNrMagazynu()).get());
+        else oldPracownik.setMagazyn(null);
         pracownikRepository.saveAndFlush(oldPracownik);
         return "redirect:/admin/employees";
     }
@@ -169,9 +171,10 @@ public class AdminController {
     @PostMapping("/admin/employees/new")
     public String addEmployeee(Pracownik pracownik) {
         pracownik.setHurtownia(hurtowniaRepository.findByNrHurtowni((long) 1).get());
-        //todo fix if
-        if(pracownik.getMagazyn() != null && pracownik.getMagazyn().getNrMagazynu() != 0)
-            pracownik.setMagazyn(magazynRepository.findByNrMagazynu(pracownik.getMagazyn().getNrMagazynu()).get());
+
+        if(!pracownik.hasMagazyn()){
+            pracownik.setMagazyn(null);
+        }
 
         Adres a = new Adres();
         a.setMiasto(pracownik.getAdres().getMiasto());

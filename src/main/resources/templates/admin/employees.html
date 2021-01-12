@@ -58,7 +58,7 @@
     <div class = "jumborton">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Magazyny</h5>
+                <h5 class="card-title">Pracownicy</h5>
                 <table class="table table-dark">
                     <thead>
                     <tr>
@@ -118,7 +118,7 @@
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="data" class="col-form-label">Data urodzenia:</label>
-                                                            <input type="date" class="form-control" id="data" th:name="dataUrodzenia"/>
+                                                            <input type="date" class="form-control" id="data" th:value="${pra.dataUrodzenia}" th:name="dataUrodzenia"/>
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="tele" class="col-form-label">Telefon:</label>
@@ -129,9 +129,14 @@
                                                             <input type="text" class="form-control" id="stanowisko" th:value="${pra.stanowisko}"  th:name="stanowisko"/>
                                                         </div>
 
-                                                        <div class="form-group">
-                                                            <label for="magazyn" class="col-form-label">Nr magazynu (jeśli puste=brak magazynu):</label>
-                                                            <input type="text" class="form-control" id="magazyn" th:value="${pra.magazyn!=null} ?${pra.magazyn.nrMagazynu} : ''"  th:name="magazyn.nrMagazynu"/>
+                                                        <label for="magazyn" class="col-form-label"> Magazyn: </label>
+                                                        <div class="form-select">
+                                                            <select th:name="magazyn" id="magazyn">
+                                                                <option selected value=0> Nieprzypisany </option>
+                                                                <option th:each="magazyn : ${magazyny1}"
+                                                                        th:value="${magazyn.nrMagazynu}"
+                                                                        th:text="${magazyn.nazwa}"></option>
+                                                            </select>
                                                         </div>
 
                                                         <div class="form-group">
@@ -227,9 +232,14 @@
                                         <input type="text" class="form-control" id="stanowiskoNew"   th:name="stanowisko"/>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label for="magazynNew" class="col-form-label">Nr magazynu:</label>
-                                        <input type="text" class="form-control" id="magazynNew"  th:name="magazyn.nrMagazynu"/>
+                                    <label for="magazynNew" class="col-form-label"> Magazyn: </label>
+                                    <div class="form-select">
+                                            <select th:name="magazyn" id="magazynNew">
+                                                <option selected value=0> Nieprzypisany </option>
+                                                <option th:each="magazyn : ${magazyny1}"
+                                                        th:value="${magazyn.nrMagazynu}"
+                                                        th:text="${magazyn.nazwa}"></option>
+                                            </select>
                                     </div>
 
                                     <div class="form-group">
