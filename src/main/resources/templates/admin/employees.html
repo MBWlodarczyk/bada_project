@@ -88,7 +88,7 @@
                             <td th:text="${pra.dataUrodzenia}"></td>
                             <td th:text="${pra.telefon}"></td>
                             <td th:text="${pra.stanowisko}"></td>
-                            <td th:text="${pra.magazyn.nrMagazynu}"></td>
+                            <td th:text="${pra.magazyn != null} ? ${pra.magazyn.nrMagazynu} : 'null'"></td>
                             <td th:text="${pra.adres.miasto}"></td>
                             <td th:text="${pra.adres.ulica}"></td>
                             <td th:text="${pra.adres.nrLokalu}"></td>
@@ -128,9 +128,10 @@
                                                             <label for="stanowisko" class="col-form-label">Stanowisko:</label>
                                                             <input type="text" class="form-control" id="stanowisko" th:value="${pra.stanowisko}"  th:name="stanowisko"/>
                                                         </div>
+
                                                         <div class="form-group">
-                                                            <label for="magazyn" class="col-form-label">Nr magazynu:</label>
-                                                            <input type="text" class="form-control" id="magazyn" th:value="${pra.magazyn.nrMagazynu}"  th:name="magazyn.nrMagazynu"/>
+                                                            <label for="magazyn" class="col-form-label">Nr magazynu (jeśli puste=brak magazynu):</label>
+                                                            <input type="text" class="form-control" id="magazyn" th:value="${pra.magazyn!=null} ?${pra.magazyn.nrMagazynu} : ''"  th:name="magazyn.nrMagazynu"/>
                                                         </div>
 
                                                         <div class="form-group">

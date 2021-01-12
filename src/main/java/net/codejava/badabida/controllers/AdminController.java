@@ -169,7 +169,9 @@ public class AdminController {
     @PostMapping("/admin/employees/new")
     public String addEmployeee(Pracownik pracownik) {
         pracownik.setHurtownia(hurtowniaRepository.findByNrHurtowni((long) 1).get());
-        pracownik.setMagazyn(magazynRepository.findByNrMagazynu(pracownik.getMagazyn().getNrMagazynu()).get());
+        //todo fix if
+        if(pracownik.getMagazyn() != null && pracownik.getMagazyn().getNrMagazynu() != 0)
+            pracownik.setMagazyn(magazynRepository.findByNrMagazynu(pracownik.getMagazyn().getNrMagazynu()).get());
 
         Adres a = new Adres();
         a.setMiasto(pracownik.getAdres().getMiasto());
@@ -187,7 +189,6 @@ public class AdminController {
 
         pracownik.setPassword(hash);
 
-        System.out.println(pracownik.toString());
 
         pracownikRepository.saveAndFlush(pracownik);
         return "redirect:/admin/employees";
