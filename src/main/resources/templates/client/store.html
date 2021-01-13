@@ -103,10 +103,11 @@
 <div id="mySidenav" class="sidenav" style="color: white">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 
-    <a href="#"> Jakas</a>
-    <a href="#"> wartosc</a>
-    <a href="#"> tutaj</a>
-    <h1> siema</h1>
+
+    <div th:each="xd : ${session.cart}">
+            <td th:text="${xd.key.nazwa}"></td>
+    </div>
+
 
 
     <br/>
@@ -146,7 +147,36 @@
                                 <td th:text="${czesc.producent}"></td>
                                 <td th:text="${czesc.cena}"></td>
                                 <td style ="text-align:center;">
-                                    <button href = "#addToZamowienie"type="button" class="btn btn-primary" data-toggle="modal">Dodaj</button>
+                                    <div style="color:black">
+
+                                    <button th:href = "'#addToZamowienie'+${czesc.nrCzesci}"type="button" class="btn btn-primary" data-toggle="modal">Dodaj</button>
+
+                                    <div th:id="'addToZamowienie'+${czesc.nrCzesci}" class="modal fade">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <form>
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Dodaj do koszyka</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form th:action="@{/client/cart/add}" th:object="${nrCzesci} && ${quantity}" method="post">
+                                                            <input type="hidden" name="nrCzesci" style="">
+                                                            <div class="form-group">
+                                                                <label for="ilosc" class="col-form-label">Ilość:</label>
+                                                                <input type="text" class="form-control" id="ilosc" name="quantity">
+                                                            </div>
+
+                                                            <br>
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                                                            <input type="submit" class="btn btn-primary" ></input>
+                                                        </form>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    </div>
                                 </td>
                             </tr>
                         </div>
@@ -158,29 +188,6 @@
 </div>
 
 
-<div id="addToZamowienie" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form>
-                <div class="modal-header">
-                    <h4 class="modal-title">Dodaj do koszyka</h4>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="ilosc" class="col-form-label">Ilość:</label>
-                            <input type="text" class="form-control" id="ilosc" th:value="0">
-                        </div>
-
-                        <br>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-                        <input type="submit" class="btn btn-primary" ></input>
-                    </form>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 
 </body>
 </html>

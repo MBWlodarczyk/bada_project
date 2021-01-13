@@ -21,7 +21,7 @@ public class SessionController {
         this.czescRepository = czescRepository;
     }
 
-    @PostMapping("/client/cart/add/")
+    @PostMapping("/client/cart/add")
     public String addToCart(Long nrCzesci,Integer quantity, HttpSession session){
 
         Czesc czesc = czescRepository.findById(nrCzesci).get();
@@ -37,7 +37,7 @@ public class SessionController {
         return "redirect:/client/store";
     }
 
-    @GetMapping("/client/cart/remove/")
+    @GetMapping("/client/cart/remove")
     public String removeFromCart(Long nrCzesci,Integer quantity, HttpSession session) {
         Czesc czesc = czescRepository.findById(nrCzesci).get();
 
