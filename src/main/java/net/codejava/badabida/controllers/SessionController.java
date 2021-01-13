@@ -13,11 +13,11 @@ import java.util.HashMap;
 
 
 @Controller
-public class sessionTestController {
+public class SessionController {
 
     private final CzescRepository czescRepository;
 
-    public sessionTestController(KlientRepository klientRepository, CzescRepository czescRepository) {
+    public SessionController(CzescRepository czescRepository) {
         this.czescRepository = czescRepository;
     }
 
