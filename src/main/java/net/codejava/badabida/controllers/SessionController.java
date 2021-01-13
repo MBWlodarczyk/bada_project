@@ -37,9 +37,9 @@ public class SessionController {
             if (contain(list, czesc)) {
                 for (Czesc c : list) {
                     if (c.getNrCzesci().equals(nrCzesci)) {
-                        Integer pastQuantity = cart.get(c);
+                        Integer oldQuantity = cart.get(c);
                         cart.remove(c);
-                        cart.put(czesc, quantity + pastQuantity);
+                        cart.put(czesc, quantity + oldQuantity);
                         break;
                     }
                 }
@@ -60,23 +60,38 @@ public class SessionController {
     }
 
 
-    @GetMapping("/client/cart/remove")
-    public String removeFromCart(Long nrCzesci, Integer quantity, HttpSession session) {
+    @PostMapping("/client/cart/remove/{nrCzesci}")
+    public String removeFromCart(@PathVariable("nrCzesci")Long nrCzesci, Integer quantity, HttpSession session) {
         Czesc czesc = czescRepository.findById(nrCzesci).get();
 
         if (session.getAttribute("cart") == null) {
             return "redirect:/client/store";
         } else {
             HashMap<Czesc, Integer> cart = (HashMap<Czesc, Integer>) session.getAttribute("cart");
-            if (!cart.containsKey(czesc)) {
-                return "redirect:/client/store";
-            } else {
-                Integer oldQuantity = cart.get(czesc);
-                if (oldQuantity - quantity < 0) {
-                    cart.remove(czesc);
-                } else {
-                    cart.put(czesc, cart.get(czesc) - quantity);
+            List<Czesc> list = new ArrayList<>(cart.keySet());  //k ,v
+            if (contain(list,czesc)) {
+                for (Czesc c : list) {
+                    if (c.getNrCzesci().equals(nrCzesci)) {
+                        Integer oldQuantity = cart.get(c);
+                        if (oldQuantity - quantity <= 0) {
+                            cart.remove(c);
+                        } else {
+                            cart.remove(c);
+                            cart.put(czesc, oldQuantity - quantity);
+                        }
+                        break;
+                    }
                 }
+                //TODO naprawic ten brzydki kod
+                calculateTheSum(session);
+                if(cart.size() == 0){
+                    session.setAttribute("cart",null);
+                }
+            } else {
+                return "redirect:/client/store";
+            }
+            if(cart.size() == 0){
+                session.setAttribute("cart",null);
             }
         }
         calculateTheSum(session);

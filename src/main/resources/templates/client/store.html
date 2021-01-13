@@ -70,6 +70,16 @@
             left: 161px;
         }
 
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #000;
+        }
+
     </style>
 
 
@@ -120,22 +130,55 @@
                 <th scope="col">Nazwa</th>
                 <th scope="col">Ilość</th>
                 <th scope="col">Kwota</th>
+                <th scope="col">Delete</th>
             </tr>
             </thead>
             <tbody>
-            <div th:each="xd : ${session.cart}" th:if="${session.cart} != null">
+                <div th:each="xd : ${session.cart}" th:if="${session.cart} != null">
+                    <tr>
+                        <td th:text="${xd.key.nazwa}"></td>
+                        <td th:text="${xd.value}"></td>
+                        <td th:text="${xd.key.cena * xd.value}"></td>
+                        <td>
+
+                            <button th:href = "'#deleteModal'+${xd.key.nrCzesci}" type="button" class="btn btn-primary" data-toggle="modal">&#x1f5d1;</button>
+
+                            <div th:id = "'deleteModal'+${xd.key.nrCzesci}" class="modal">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Usuń przedmiot z koszyka</h5>
+                                        </div>
+                                        <div class="modal-body">
+
+                                            <form th:action="@{/client/cart/remove/{nrCzesci}(nrCzesci=${xd.key.nrCzesci})}"
+                                                  th:object="${quantity}" method="post">
+
+                                                <div class="form-group">
+                                                    <label for="iloscDel" class="col-form-label">Ilość do usunięcia:</label>
+                                                    <input type="text" class="form-control" id="iloscDel" th:value="${xd.value}" name = "quantity">
+                                                </div>
+
+                                                <br/>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                                                <input type="submit" class="btn btn-primary" />
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </td>
+                    </tr>
+                </div>
+
                 <tr>
-                    <td th:text="${xd.key.nazwa}"></td>
-                    <td th:text="${xd.value}"></td>
-                    <td th:text="${xd.key.cena * xd.value}"></td>
+                    <td colspan="4"></td>
                 </tr>
-            </div>
-            <tr>
-                <td colspan="3"></td>
-            </tr>
-            <tr>
-                <td style="text-align:center" colspan="3" th:text="'Suma:' + ${session.amount}" th:if="${session.amount} != null"></td>
-            </tr>
+
+                <tr>
+                    <td style="text-align:center" colspan="4" th:text="'Suma:' + ${session.amount}" th:if="${session.amount} != null"></td>
+                </tr>
             </tbody>
         </table>
 
@@ -143,11 +186,6 @@
             <input id = "zamowButton"type="submit" class="btn btn-primary btn-lg" value="Zamów"/>
         </form>
     </div>
-
-
-
-
-
 </div>
 <!-------------------------------------------------------------------------------------------------------------------------------------------->
 
