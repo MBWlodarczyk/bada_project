@@ -24,9 +24,7 @@ public class SessionController {
     }
 
     @PostMapping("/client/cart/add/{nrCzesci}")
-    public String addToCart(@PathVariable("nrCzesci") Long nrCzesci,
-                            Integer quantity, HttpSession session) {
-
+    public String addToCart(@PathVariable("nrCzesci") Long nrCzesci, Integer quantity, HttpSession session) {
         Czesc czesc = czescRepository.findById(nrCzesci).get();
 
         if (session.getAttribute("cart") == null) {
@@ -35,11 +33,32 @@ public class SessionController {
             session.setAttribute("cart", cart);
         } else {
             HashMap<Czesc, Integer> cart = (HashMap<Czesc, Integer>) session.getAttribute("cart");
-            cart.put(czesc, cart.containsKey(czesc) ? cart.get(czesc) + quantity : quantity);
+            List<Czesc> list = new ArrayList<>(cart.keySet()); //k ,v
+            if (contain(list, czesc)) {
+                for (Czesc c : list) {
+                    if (c.getNrCzesci().equals(nrCzesci)) {
+                        Integer pastQuantity = cart.get(c);
+                        cart.remove(c);
+                        cart.put(czesc, quantity + pastQuantity);
+                        break;
+                    }
+                }
+            } else {
+                cart.put(czesc, cart.containsKey(czesc) ? cart.get(czesc) + quantity : quantity);
+            }
         }
         calculateTheSum(session);
         return "redirect:/client/store";
     }
+
+    private boolean contain(List<Czesc> list, Czesc czesc) {
+        for (Czesc c : list) {
+            if (c.getNrCzesci().equals(czesc.getNrCzesci()))
+                return true;
+        }
+        return false;
+    }
+
 
     @GetMapping("/client/cart/remove")
     public String removeFromCart(Long nrCzesci, Integer quantity, HttpSession session) {
