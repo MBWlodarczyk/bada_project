@@ -27,18 +27,19 @@ public class Czesc implements Serializable {
     @Column(name = "PRODUCENT")
     private String producent;
 
-    @OneToMany(mappedBy = "czesc",cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "czesc",cascade = CascadeType.MERGE,orphanRemoval = true,fetch = FetchType.LAZY)
     private List<CzesciZamowienia> zamowienia;
 
     public Czesc() {
     }
 
-    public Czesc(Long nr_czesci, BigDecimal cena, String nazwa, int czas_gwarancji, String producent) {
+    public Czesc(Long nr_czesci, BigDecimal cena, String nazwa, int czas_gwarancji, String producent, List<CzesciZamowienia> zamowienia) {
         this.nrCzesci = nr_czesci;
         this.cena = cena;
         this.nazwa = nazwa;
         this.czasGwarancji = czas_gwarancji;
         this.producent = producent;
+        this.zamowienia = zamowienia;
     }
 
     public Long getNrCzesci() {
@@ -90,5 +91,13 @@ public class Czesc implements Serializable {
                 ", czas_gwarancji=" + czasGwarancji +
                 ", producent='" + producent + '\'' +
                 '}';
+    }
+
+    public List<CzesciZamowienia> getZamowienia() {
+        return zamowienia;
+    }
+
+    public void setZamowienia(List<CzesciZamowienia> zamowienia) {
+        this.zamowienia = zamowienia;
     }
 }

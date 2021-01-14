@@ -1,14 +1,14 @@
 package net.codejava.badabida.repos;
 
 import net.codejava.badabida.model.Zamowienie;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Repository
-public interface ZamowieniaRepository extends CrudRepository<Zamowienie, Long> {
-    Set<Zamowienie> findAll();
+public interface ZamowieniaRepository extends JpaRepository<Zamowienie, Long> {
+    List<Zamowienie> findAll();
     Optional<Zamowienie> findByNrZamowienia(Long id);
 }

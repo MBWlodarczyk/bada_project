@@ -151,8 +151,7 @@
                                         </div>
                                         <div class="modal-body">
 
-                                            <form th:action="@{/client/cart/remove/{nrCzesci}(nrCzesci=${xd.key.nrCzesci})}"
-                                                  th:object="${quantity}" method="post">
+                                            <form th:action="@{/client/cart/remove/{nrCzesci}(nrCzesci=${xd.key.nrCzesci})}" method="post">
 
                                                 <div class="form-group">
                                                     <label for="iloscDel" class="col-form-label">Ilość do usunięcia:</label>
@@ -228,7 +227,7 @@
                                                         </div>
                                                         <div class="modal-body">
                                                             <form th:action="@{/client/cart/add/{nrCzesci}(nrCzesci=${czesc.nrCzesci})}"
-                                                                  th:object="${quantity}" method="post">
+                                                                     method="post">
 
                                                                 <div class="form-group">
                                                                     <label for="ilosc" class="col-form-label">Ilość:</label>

@@ -1,26 +1,39 @@
 package net.codejava.badabida.controllers;
 
 import net.codejava.badabida.model.Czesc;
+import net.codejava.badabida.model.CzesciZamowienia;
+import net.codejava.badabida.model.Klient;
+import net.codejava.badabida.model.Zamowienie;
 import net.codejava.badabida.repos.CzescRepository;
+import net.codejava.badabida.repos.CzesciZamowieniaRepository;
+import net.codejava.badabida.repos.KlientRepository;
+import net.codejava.badabida.repos.ZamowieniaRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.sql.Date;
+import java.util.*;
 
 
 @Controller
 public class SessionController {
 
     private final CzescRepository czescRepository;
+    private final KlientRepository klientRepository;
+    private final ZamowieniaRepository zamowieniaRepository;
+    private final CzesciZamowieniaRepository czesciZamowieniaRepository;
 
-    public SessionController(CzescRepository czescRepository) {
+    public SessionController(CzescRepository czescRepository, KlientRepository klientRepository, ZamowieniaRepository zamowieniaRepository, CzesciZamowieniaRepository czesciZamowieniaRepository) {
         this.czescRepository = czescRepository;
+        this.klientRepository = klientRepository;
+        this.zamowieniaRepository = zamowieniaRepository;
+        this.czesciZamowieniaRepository = czesciZamowieniaRepository;
     }
 
     @PostMapping("/client/cart/add/{nrCzesci}")
@@ -112,6 +125,48 @@ public class SessionController {
             session.setAttribute("amount", amount);
         }
         return "redirect:/client/store";
+    }
+
+    @Transactional
+    @PostMapping("/client/cart/submit")
+    public String submitCart(HttpSession session, Authentication auth){
+
+        Zamowienie zamowienie = new Zamowienie();
+
+        Object principal = auth.getPrincipal();
+        String username = ((UserDetails) principal).getUsername();
+        Klient klient = klientRepository.findByUsername(username).get();
+        Set<Klient> klienci = new HashSet<>();
+        klienci.add(klient);
+        zamowienie.setKlienci(klienci);
+
+        zamowienie.setStatusZamowienia("zlozone");
+
+        zamowienie.setDataZlozenia(new Date(Calendar.getInstance().getTime().getTime()));
+
+        zamowienie = zamowieniaRepository.saveAndFlush(zamowienie);
+        klient.getZamowienia().add(zamowienie);
+
+        List<CzesciZamowienia> czesci = new ArrayList<>();
+
+
+        HashMap<Czesc, Integer> cart = (HashMap<Czesc, Integer>) session.getAttribute("cart");
+
+
+
+        for( Czesc c: cart.keySet()){
+            CzesciZamowienia link = new CzesciZamowienia(c,zamowienie,cart.get(c));
+            czesci.add(link);
+        }
+
+        czesciZamowieniaRepository.saveAll(czesci);
+
+        zamowienie.setCzesci(czesci);
+
+        session.setAttribute("cart",null);
+
+
+        return "redirect:/client/orders";
     }
 }
 

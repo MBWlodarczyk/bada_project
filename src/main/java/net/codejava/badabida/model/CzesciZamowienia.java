@@ -25,8 +25,9 @@ public class CzesciZamowienia implements Serializable {
     public CzesciZamowienia() {
     }
 
-    public CzesciZamowienia(Czesc czesc, Zamowienie zamowienie){
+    public CzesciZamowienia(Czesc czesc, Zamowienie zamowienie,int ilosc){
         this.czesc = czesc;
+        this.ilosc = ilosc;
         this. zamowienie = zamowienie;
         this.id = new CzesciZamowieniaId(czesc.getNrCzesci(), zamowienie.getNrZamowienia());
     }

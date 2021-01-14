@@ -29,7 +29,7 @@ public class Zamowienie implements Serializable, Comparable<Zamowienie> {
     @ManyToMany(fetch = FetchType.LAZY,mappedBy = "zamowienia")
     private Set<Klient> pracownicy;
 
-    @OneToMany(mappedBy = "zamowienie",cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "zamowienie",cascade = CascadeType.MERGE,orphanRemoval = true)
     private List<CzesciZamowienia> czesci;
 
     public Zamowienie() {
