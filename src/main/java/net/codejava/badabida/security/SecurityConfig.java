@@ -105,8 +105,8 @@ public class SecurityConfig {
         protected void configure(HttpSecurity http) throws Exception {
             http
                     .authorizeRequests()
-                    .antMatchers("/").permitAll()
-                    .antMatchers("/", "/client/**", "/js/**", "/static/css/**").hasRole("USER") //,"/static/css/**"
+                    .antMatchers("/start","/","/store").permitAll()
+                    .antMatchers("/client/**", "/js/**", "/static/css/**").hasRole("USER") //,"/static/css/**"
                     .anyRequest().authenticated()
                     .and()
                     .formLogin()
