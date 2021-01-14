@@ -88,7 +88,7 @@
                             <td th:text="${pra.dataUrodzenia}"></td>
                             <td th:text="${pra.telefon}"></td>
                             <td th:text="${pra.stanowisko}"></td>
-                            <td th:text="${pra.magazyn != null} ? ${pra.magazyn.nrMagazynu} : 'null'"></td>
+                            <td th:text="${pra.magazyn != null} ? ${pra.magazyn.nrMagazynu} : 'brak'"></td>
                             <td th:text="${pra.adres.miasto}"></td>
                             <td th:text="${pra.adres.ulica}"></td>
                             <td th:text="${pra.adres.nrLokalu}"></td>
@@ -277,9 +277,15 @@
                                         <input type="text" class="form-control" id="passwordNew"  th:name="password">
                                     </div>
 
-                                    <div class="form-group">
-                                        <label for="roleNew" class="col-form-label">Rola:</label>
-                                        <input type="text" class="form-control" id="roleNew"  th:name="role">
+
+                                    <label for="roleNew" class="col-form-label"> Rola: </label>
+                                    <div class="form-select">
+                                        <select class="form-control" th:name="role" id="roleNew">
+                                            <option selected th:text="${possibleRoles[1]}"></option>
+                                            <option th:each="pr : ${possibleRoles}"
+                                                    th:value="${pr}"
+                                                    th:text="${pr}" th:if="${pr}!= ${possibleRoles[1]}"></option>
+                                        </select>
                                     </div>
 
 

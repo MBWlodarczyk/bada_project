@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "czesci")
@@ -99,5 +100,22 @@ public class Czesc implements Serializable {
 
     public void setZamowienia(List<CzesciZamowienia> zamowienia) {
         this.zamowienia = zamowienia;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Czesc czesc = (Czesc) o;
+        return czasGwarancji == czesc.czasGwarancji &&
+                Objects.equals(nrCzesci, czesc.nrCzesci) &&
+                Objects.equals(cena, czesc.cena) &&
+                Objects.equals(nazwa, czesc.nazwa) &&
+                Objects.equals(producent, czesc.producent);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nrCzesci, cena, nazwa, czasGwarancji, producent);
     }
 }

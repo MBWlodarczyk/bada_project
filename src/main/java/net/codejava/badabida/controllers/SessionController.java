@@ -39,28 +39,23 @@ public class SessionController {
     @PostMapping("/client/cart/add/{nrCzesci}")
     public String addToCart(@PathVariable("nrCzesci") Long nrCzesci, Integer quantity, HttpSession session) {
         Czesc czesc = czescRepository.findById(nrCzesci).get();
-
-        if (session.getAttribute("cart") == null) {
-            HashMap<Czesc, Integer> cart = new HashMap<>();
-            cart.put(czesc, quantity);
-            session.setAttribute("cart", cart);
-        } else {
-            HashMap<Czesc, Integer> cart = (HashMap<Czesc, Integer>) session.getAttribute("cart");
-            List<Czesc> list = new ArrayList<>(cart.keySet()); //k ,v
-            if (contain(list, czesc)) {
-                for (Czesc c : list) {
-                    if (c.getNrCzesci().equals(nrCzesci)) {
-                        Integer oldQuantity = cart.get(c);
-                        cart.remove(c);
-                        cart.put(czesc, quantity + oldQuantity);
-                        break;
-                    }
-                }
+        if (quantity > 0) {
+            if (session.getAttribute("cart") == null) {
+                HashMap<Czesc, Integer> cart = new HashMap<>();
+                cart.put(czesc, quantity);
+                session.setAttribute("cart", cart);
             } else {
-                cart.put(czesc, cart.containsKey(czesc) ? cart.get(czesc) + quantity : quantity);
+                HashMap<Czesc, Integer> cart = (HashMap<Czesc, Integer>) session.getAttribute("cart");
+                if (cart.containsKey(czesc)) {
+                    Integer oldQuantity = cart.get(czesc);
+                    cart.remove(czesc);
+                    cart.put(czesc, quantity + oldQuantity);
+                } else {
+                    cart.put(czesc, cart.containsKey(czesc) ? cart.get(czesc) + quantity : quantity);
+                }
             }
+            calculateTheSum(session);
         }
-        calculateTheSum(session);
         return "redirect:/client/store";
     }
 
@@ -74,44 +69,38 @@ public class SessionController {
 
 
     @PostMapping("/client/cart/remove/{nrCzesci}")
-    public String removeFromCart(@PathVariable("nrCzesci")Long nrCzesci, Integer quantity, HttpSession session) {
+    public String removeFromCart(@PathVariable("nrCzesci") Long nrCzesci, Integer quantity, HttpSession session) {
         Czesc czesc = czescRepository.findById(nrCzesci).get();
-
-        if (session.getAttribute("cart") == null) {
+        if (session.getAttribute("cart") == null || quantity < 0) {
             return "redirect:/client/store";
         } else {
             HashMap<Czesc, Integer> cart = (HashMap<Czesc, Integer>) session.getAttribute("cart");
-            List<Czesc> list = new ArrayList<>(cart.keySet());  //k ,v
-            if (contain(list,czesc)) {
-                for (Czesc c : list) {
-                    if (c.getNrCzesci().equals(nrCzesci)) {
-                        Integer oldQuantity = cart.get(c);
-                        if (oldQuantity - quantity <= 0) {
-                            cart.remove(c);
-                        } else {
-                            cart.remove(c);
-                            cart.put(czesc, oldQuantity - quantity);
-                        }
-                        break;
-                    }
+            if (cart.containsKey(czesc)) {
+                Integer oldQuantity = cart.get(czesc);
+                if (oldQuantity - quantity <= 0) {
+                    cart.remove(czesc);
+                } else {
+                    cart.remove(czesc);
+                    cart.put(czesc, oldQuantity - quantity);
                 }
-                //TODO naprawic ten brzydki kod
+                checkEmpty(cart, session);
                 calculateTheSum(session);
-                if(cart.size() == 0){
-                    session.setAttribute("cart",null);
-                }
             } else {
                 return "redirect:/client/store";
-            }
-            if(cart.size() == 0){
-                session.setAttribute("cart",null);
             }
         }
         calculateTheSum(session);
         return "redirect:/client/store";
     }
 
-    public String calculateTheSum(HttpSession session) {
+    private void checkEmpty(HashMap<Czesc, Integer> cart, HttpSession session) {
+        if (cart.size() == 0) {
+            session.setAttribute("cart", null);
+        }
+    }
+
+
+    private String calculateTheSum(HttpSession session) {
         BigDecimal amount = new BigDecimal("0");
         if (session.getAttribute("cart") == null) {
             session.setAttribute("amount", amount);

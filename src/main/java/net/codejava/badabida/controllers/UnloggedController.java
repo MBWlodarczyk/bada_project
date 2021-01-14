@@ -24,6 +24,11 @@ public class UnloggedController {
         return "index";
     }
 
+    @GetMapping("/register")
+    public String getRegister() {
+        return "register";
+    }
+
     @GetMapping("/store")
     public String getItemInfo(Model model) {
         model.addAttribute("czesci", czescRepository.findAll());
