@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.HashSet;
+import java.util.Set;
+
 
 @Controller
 public class AdminController {
@@ -137,6 +140,11 @@ public class AdminController {
     public String getEmployees(Model model) {
         model.addAttribute("magazyny1", magazynRepository.findAll());
         model.addAttribute("pracownicy", pracownikRepository.findAll());
+        Set<String> possibleRoles = new HashSet<String>();
+        possibleRoles.add("ROLE_ADMIN");
+        possibleRoles.add("ROLE_EMP");
+        possibleRoles.add("ROLE_USER");
+        model.addAttribute("possibleRoles",possibleRoles);
         return "admin/employees";
     }
 
