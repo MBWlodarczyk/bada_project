@@ -1,7 +1,9 @@
 package net.codejava.badabida.controllers;
 
+import net.codejava.badabida.model.CzesciZamowienia;
 import net.codejava.badabida.model.Pracownik;
 import net.codejava.badabida.model.Zamowienie;
+import net.codejava.badabida.repos.CzescRepository;
 import net.codejava.badabida.repos.PracownikRepository;
 import net.codejava.badabida.repos.ZamowieniaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +25,14 @@ public class EmployeeController {
 
     private final PracownikRepository pracownikRepository;
     private final ZamowieniaRepository zamowieniaRepository;
+    private final CzescRepository czescRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public EmployeeController(PracownikRepository pracownikRepository, ZamowieniaRepository zamowieniaRepository) {
+    public EmployeeController(PracownikRepository pracownikRepository, ZamowieniaRepository zamowieniaRepository, CzescRepository czescRepository) {
         this.pracownikRepository = pracownikRepository;
         this.zamowieniaRepository = zamowieniaRepository;
+        this.czescRepository = czescRepository;
     }
 
     @GetMapping("/employee/home")
@@ -108,5 +112,13 @@ public class EmployeeController {
             zamowieniaRepository.save(z);
         }
         return "redirect:/employee/orders";
+    }
+
+    //////////////////////////////////// Sklep ////////////////////////////////////////
+
+    @GetMapping("/employee/store")
+    public String getItemInfo(Model model) {
+        model.addAttribute("czesci", czescRepository.findAll());
+        return "employee/store";
     }
 }

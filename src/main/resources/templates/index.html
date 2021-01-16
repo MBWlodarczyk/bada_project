@@ -43,6 +43,9 @@
                     <a class="nav-link" href="client/login">Zaloguj (Klient)</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" data-toggle="modal" data-target="#exampleModal">Zarejestruj!</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="employee/login">Zaloguj (Pracownik)</a>
                 </li>
                 <li class="nav-item">
@@ -51,6 +54,77 @@
             </ul>
     </div>
 </nav>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Rejestracja</h5>
+            </div>
+
+            <div class="modal-body">
+
+                <form th:action="@{/newClient}" th:object="${klient}" method="post">
+
+                    <div class="form-group">
+                        <label for="imie" class="col-form-label">Imie:</label>
+                        <input type="text" class="form-control" id="imie" th:name="imie">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nazwisko" class="col-form-label">Nazwisko:</label>
+                        <input type="text" class="form-control" id="nazwisko" th:name="nazwisko">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telefon" class="col-form-label">Telefon:</label>
+                        <input type="text" class="form-control" id="telefon" th:name="telefon">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="miastoNew" class="col-form-label">Miasto:</label>
+                        <input type="text" class="form-control" id="miastoNew"  th:name="adres.miasto"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ulicaNew" class="col-form-label">Ulica:</label>
+                        <input type="text" class="form-control" id="ulicaNew"  th:name="adres.ulica">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nrLokaluNew" class="col-form-label">Numer lokalu:</label>
+                        <input type="text" class="form-control" id="nrLokaluNew"  th:name="adres.nrLokalu">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="kodPocztyNew" class="col-form-label">Kod poczty:</label>
+                        <input type="text" class="form-control" id="kodPocztyNew" th:name="adres.kodPoczty">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pocztaNew" class="col-form-label">Poczta:</label>
+                        <input type="text" class="form-control" id="pocztaNew"  th:name="adres.poczta">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="usernameNew" class="col-form-label">Login:</label>
+                        <input type="text" class="form-control" id="usernameNew"  th:name="username">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="passwordNew" class="col-form-label">Hasło:</label>
+                        <input type="password" class="form-control" id="passwordNew"  th:name="password">
+                    </div>
+
+                    <br/>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                    <input type="submit" class="btn btn-primary" value="Zarejestruj się!"/>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 
 <div class = "container">
