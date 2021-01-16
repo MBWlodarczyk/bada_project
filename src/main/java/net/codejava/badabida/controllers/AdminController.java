@@ -43,6 +43,11 @@ public class AdminController {
         return "admin/login";
     }
 
+    @GetMapping("/admin/login?logout")
+    public String getAdminLogin2() {
+        return "admin/login";
+    }
+
     @GetMapping("/admin/home")
     public String getAdminHome() {
         return "admin/home";
@@ -143,7 +148,6 @@ public class AdminController {
         Set<String> possibleRoles = new HashSet<String>();
         possibleRoles.add("ROLE_ADMIN");
         possibleRoles.add("ROLE_EMP");
-        possibleRoles.add("ROLE_USER");
         model.addAttribute("possibleRoles",possibleRoles);
         return "admin/employees";
     }

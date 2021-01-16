@@ -106,7 +106,7 @@ public class SecurityConfig {
             http
                     .authorizeRequests()
                     .antMatchers("/start","/","/store","/register").permitAll()
-                    .antMatchers("/client/**", "/js/**", "/static/css/**").hasRole("USER") //,"/static/css/**"
+                    .antMatchers("/client/**", "/js/**", "/static/css/**").hasRole("USER")
                     .anyRequest().authenticated()
                     .and()
                     .formLogin()

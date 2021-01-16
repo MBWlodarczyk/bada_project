@@ -58,12 +58,15 @@
 
             <div class="card-body">
                 <h5 class="card-title">Zamówienia</h5>
+
                 <table class="table table-dark">
                     <thead>
                     <tr>
                         <th scope="col">Nr zamowienia</th>
                         <th scope="col">Data zlozenia</th>
                         <th scope="col">Staus zamowienia</th>
+                        <th scope="col">Rozwiń zamówienie</th>
+
                     </tr>
                     </thead>
                     <tbody>
@@ -71,10 +74,57 @@
 
                     <div th:each="zamowienie : ${zamowienia}">
                         <tr>
-                            <th th:text="${zamowienie.nrZamowienia}"></th>
-                            <td th:text="${zamowienie.dataZlozenia}"></td>
-                            <td th:text="${zamowienie.statusZamowienia}"></td>
+                            <th th:text="${zamowienie.nrZamowienia}" data-toggle="collapse" th:data-target="'#collapse'+${zamowienie.nrZamowienia}" aria-expanded="false" aria-controls="collapseExample"></th>
+                            <td th:text="${zamowienie.dataZlozenia}" data-toggle="collapse" th:data-target="'#collapse'+${zamowienie.nrZamowienia}" aria-expanded="false" aria-controls="collapseExample"></td>
+                            <td th:text="${zamowienie.statusZamowienia}" data-toggle="collapse" th:data-target="'#collapse'+${zamowienie.nrZamowienia}" aria-expanded="false" aria-controls="collapseExample"></td>
+                            <td data-toggle="collapse" th:data-target="'#collapse'+${zamowienie.nrZamowienia}" aria-expanded="false" aria-controls="collapseExample">
+                                <button class="btn btn-primary" type="button" data-toggle="collapse" th:data-target="'#collapse'+${zamowienie.nrZamowienia}" aria-expanded="false" aria-controls="collapseExample">
+                                    Pokaż zawartość
+                                </button>
+                            </td>
                         </tr>
+
+                        <tr>
+                            <td colspan="4">
+                                <div class="collapse" th:id="'collapse'+${zamowienie.nrZamowienia}">
+                                    <table class="table table-striped" style="background: white">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Nazwa</th>
+                                                <th scope="col">Czas gwarancji</th>
+                                                <th scope="col">Producent</th>
+                                                <th scope="col">Cena (sztuka)</th>
+                                                <th scope="col">Ilość</th>
+                                                <th scope="col">Kwota</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <div th:each="zamCz : ${zamowienie.getCzesci()}">
+                                                <tr>
+                                                    <td th:text="${zamCz.getCzesc().getNazwa()}"></td>
+                                                    <td th:text="${zamCz.getCzesc().getCzasGwarancji()}"></td>
+                                                    <td th:text="${zamCz.getCzesc().getProducent()}"></td>
+                                                    <td th:text="${zamCz.getCzesc().getCena()}"></td>
+                                                    <td th:text="${zamCz.getIlosc()}"></td>
+                                                    <td th:text="${zamCz.getCzesc().getCena()} * ${zamCz.getIlosc()}"></td>
+                                                </tr>
+                                            </div>
+                                            <tr> <td colspan="6"></td></tr>
+                                            <tr>
+                                                <td colspan="2"></td>
+                                                <th >Suma:</th>
+                                                <th th:text="${totalPrice.get(zamowienie.nrZamowienia)}"></th>
+                                                <td colspan="2"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+
+                                </div>
+                            </td>
+                        </tr>
+
                     </div>
                     </tbody>
                 </table>

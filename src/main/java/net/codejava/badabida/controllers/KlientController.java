@@ -1,6 +1,9 @@
 package net.codejava.badabida.controllers;
 
+import net.codejava.badabida.model.Czesc;
+import net.codejava.badabida.model.CzesciZamowienia;
 import net.codejava.badabida.model.Klient;
+import net.codejava.badabida.model.Zamowienie;
 import net.codejava.badabida.repos.CzescRepository;
 import net.codejava.badabida.repos.KlientRepository;
 import org.springframework.security.core.Authentication;
@@ -11,6 +14,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Set;
 
 
 @Controller
@@ -23,7 +30,6 @@ public class KlientController {
         this.klientRepository = klientRepository;
         this.czescRepository = czescRepository;
     }
-
 
     @GetMapping("/client/home")
     public String getClientHome() {
@@ -72,7 +78,20 @@ public class KlientController {
     public String getUserZamowienia(Model model, Authentication auth) {
         Object principal = auth.getPrincipal();
         String username = ((UserDetails) principal).getUsername();
-        model.addAttribute("zamowienia", klientRepository.findByUsername(username).get().getZamowienia());
+        Set<Zamowienie> zamowienieSet = klientRepository.findByUsername(username).get().getZamowienia();
+        model.addAttribute("zamowienia", zamowienieSet);
+
+        HashMap<Long,BigDecimal> totalPrice = new HashMap<>();
+        BigDecimal sum;
+        for ( Zamowienie z: zamowienieSet) {
+            sum = new BigDecimal(0);
+            for(CzesciZamowienia cz : z.getCzesci()){
+                    sum = sum.add(cz.getCzesc().getCena().multiply(new BigDecimal(cz.getIlosc())));
+            }
+            totalPrice.put(z.getNrZamowienia(),sum);
+        }
+        model.addAttribute("totalPrice",totalPrice);
+
         return "client/orders";
     }
 
@@ -87,6 +106,5 @@ public class KlientController {
         model.addAttribute("czesci", czescRepository.findAll());
         return "client/store";
     }
-
 }
 
