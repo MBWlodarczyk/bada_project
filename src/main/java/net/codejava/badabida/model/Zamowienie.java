@@ -23,13 +23,13 @@ public class Zamowienie implements Serializable, Comparable<Zamowienie> {
     @Column(name = "status_zamowienia")
     private String statusZamowienia;
 
-    @ManyToMany(fetch = FetchType.LAZY,mappedBy = "zamowienia")
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "zamowienia")
     private Set<Klient> klienci;
 
-    @ManyToMany(fetch = FetchType.LAZY,mappedBy = "zamowienia")
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "zamowienia")
     private Set<Klient> pracownicy;
 
-    @OneToMany(mappedBy = "zamowienie",cascade = CascadeType.MERGE,orphanRemoval = true)
+    @OneToMany(mappedBy = "zamowienie", cascade = CascadeType.MERGE, orphanRemoval = true)
     private List<CzesciZamowienia> czesci;
 
     public Zamowienie() {

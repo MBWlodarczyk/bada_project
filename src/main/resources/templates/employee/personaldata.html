@@ -3,17 +3,26 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Employee dane</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
 
 
     <style type="text/css">
-        body { background: 	#ffffff !important; }
+        body {
+            background: #ffffff !important;
+        }
     </style>
 
 </head>
@@ -24,7 +33,8 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="home">SuperBazaDanych</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
@@ -53,8 +63,8 @@
 </nav>
 
 
-<div class = "container">
-    <div class = "jumborton">
+<div class="container">
+    <div class="jumborton">
         <div class="card">
             <div class="card-body">
                 <div class="row">
@@ -62,7 +72,8 @@
                         <div class="well well-sm">
                             <div class="row">
                                 <div class="col-sm-6 col-md-4">
-                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/User_font_awesome.svg/1200px-User_font_awesome.svg.png" width="150" height="150" alt="" class="img-rounded img-responsive" />
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/User_font_awesome.svg/1200px-User_font_awesome.svg.png"
+                                         width="150" height="150" alt="" class="img-rounded img-responsive"/>
                                 </div>
                                 <div class="col-sm-6 col-md-8">
                                     <h4>
@@ -70,8 +81,11 @@
                                         <td th:text="${pracownik.nazwisko}"></td>
                                     </h4>
                                     <h5>
-                                        Stanowisko: <td th:text="${pracownik.stanowisko}"></td><br/>
-                                        Magazyn: <td th:text="${pracownik.magazyn != null} ? ${pracownik.magazyn.nazwa} : ''"></td>
+                                        Stanowisko:
+                                        <td th:text="${pracownik.stanowisko}"></td>
+                                        <br/>
+                                        Magazyn:
+                                        <td th:text="${pracownik.magazyn != null} ? ${pracownik.magazyn.nazwa} : ''"></td>
                                     </h5>
 
                                     <small><cite title="Adres">
@@ -86,12 +100,17 @@
                                         <i class="glyphicon glyphicon-map-marker"></i>
                                     </cite></small>
                                     <p>
-                                        <i class="glyphicon glyphicon-envelope"></i> <td th:text="${pracownik.telefon}"></td><br/>
-                                        <i class="glyphicon glyphicon-envelope"></i><td th:text="${pracownik.dataUrodzenia}"></td>
-                                    <br />
+                                        <i class="glyphicon glyphicon-envelope"></i>
+                                    <td th:text="${pracownik.telefon}"></td>
+                                    <br/>
+                                    <i class="glyphicon glyphicon-envelope"></i>
+                                    <td th:text="${pracownik.dataUrodzenia}"></td>
+                                    <br/>
                                     </p>
 
-                                    <button href = "#editModal"type="button" class="btn btn-primary" data-toggle="modal">Edytuj</button>
+                                    <button href="#editModal" type="button" class="btn btn-primary" data-toggle="modal">
+                                        Edytuj
+                                    </button>
 
                                 </div>
                             </div>
@@ -103,7 +122,7 @@
     </div>
 </div>
 
-<div id = "editModal" class="modal">
+<div id="editModal" class="modal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -123,12 +142,14 @@
 
                     <div class="form-group">
                         <label for="nazwisko" class="col-form-label">Nazwisko:</label>
-                        <input type="text" class="form-control" id="nazwisko" th:value="${pracownik.nazwisko}" th:name="nazwisko">
+                        <input type="text" class="form-control" id="nazwisko" th:value="${pracownik.nazwisko}"
+                               th:name="nazwisko">
                     </div>
 
                     <div class="form-group">
                         <label for="telefon" class="col-form-label">Telefon:</label>
-                        <input type="text" class="form-control" id="telefon" th:value="${pracownik.telefon}" th:name="telefon">
+                        <input type="text" class="form-control" id="telefon" th:value="${pracownik.telefon}"
+                               th:name="telefon">
                     </div>
 
                     <div class="form-group">
@@ -138,38 +159,42 @@
 
                     <div class="form-group">
                         <label for="miasto" class="col-form-label">Miasto:</label>
-                        <input type="text" class="form-control" id="miasto" th:value="${pracownik.adres.miasto}" th:name="adres.miasto">
+                        <input type="text" class="form-control" id="miasto" th:value="${pracownik.adres.miasto}"
+                               th:name="adres.miasto">
                     </div>
 
                     <div class="form-group">
                         <label for="ulica" class="col-form-label">Ulica:</label>
-                        <input type="text" class="form-control" id="ulica" th:value="${pracownik.adres.ulica}" th:name="adres.ulica">
+                        <input type="text" class="form-control" id="ulica" th:value="${pracownik.adres.ulica}"
+                               th:name="adres.ulica">
                     </div>
 
                     <div class="form-group">
                         <label for="nrLokalu" class="col-form-label">Numer lokalu:</label>
-                        <input type="text" class="form-control" id="nrLokalu" th:value="${pracownik.adres.nrLokalu}" th:name="adres.nrLokalu">
+                        <input type="text" class="form-control" id="nrLokalu" th:value="${pracownik.adres.nrLokalu}"
+                               th:name="adres.nrLokalu">
                     </div>
 
                     <div class="form-group">
                         <label for="kodPoczty" class="col-form-label">Kod poczty:</label>
-                        <input type="text" class="form-control" id="kodPoczty" th:value="${pracownik.adres.kodPoczty}" th:name="adres.kodPoczty">
+                        <input type="text" class="form-control" id="kodPoczty" th:value="${pracownik.adres.kodPoczty}"
+                               th:name="adres.kodPoczty">
                     </div>
 
                     <div class="form-group">
                         <label for="poczta" class="col-form-label">Poczta:</label>
-                        <input type="text" class="form-control" id="poczta" th:value="${pracownik.adres.poczta}" th:name="adres.poczta">
+                        <input type="text" class="form-control" id="poczta" th:value="${pracownik.adres.poczta}"
+                               th:name="adres.poczta">
                     </div>
 
                     <br/>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-                    <input type="submit" class="btn btn-primary" />
+                    <input type="submit" class="btn btn-primary"/>
                 </form>
             </div>
         </div>
     </div>
 </div>
-
 
 
 </body>

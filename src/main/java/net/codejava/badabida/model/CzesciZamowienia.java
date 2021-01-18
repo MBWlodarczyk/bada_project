@@ -2,6 +2,7 @@ package net.codejava.badabida.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+
 @Entity
 @Table(name = "czesci_zamowienia")
 public class CzesciZamowienia implements Serializable {
@@ -11,12 +12,12 @@ public class CzesciZamowienia implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("nrCzesci")
-    @JoinColumn(name ="nr_czesci")
+    @JoinColumn(name = "nr_czesci")
     private Czesc czesc;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("nrZamowienia")
-    @JoinColumn(name ="nr_zamowienia")
+    @JoinColumn(name = "nr_zamowienia")
     private Zamowienie zamowienie;
 
     @Column(name = "ILOSC")
@@ -25,10 +26,10 @@ public class CzesciZamowienia implements Serializable {
     public CzesciZamowienia() {
     }
 
-    public CzesciZamowienia(Czesc czesc, Zamowienie zamowienie,int ilosc){
+    public CzesciZamowienia(Czesc czesc, Zamowienie zamowienie, int ilosc) {
         this.czesc = czesc;
         this.ilosc = ilosc;
-        this. zamowienie = zamowienie;
+        this.zamowienie = zamowienie;
         this.id = new CzesciZamowieniaId(czesc.getNrCzesci(), zamowienie.getNrZamowienia());
     }
 

@@ -30,7 +30,7 @@ public class Klient implements Serializable, UserDetails, Comparable<Klient> {
     @Column(name = "TELEFON")
     private String telefon;
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.REFRESH)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "nr_adresu")
     private Adres adres;
 
@@ -46,8 +46,8 @@ public class Klient implements Serializable, UserDetails, Comparable<Klient> {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "zamowienia_klienci",
-            joinColumns = { @JoinColumn(name = "nr_klienta") },
-            inverseJoinColumns = { @JoinColumn(name = "nr_zamowienia") }
+            joinColumns = {@JoinColumn(name = "nr_klienta")},
+            inverseJoinColumns = {@JoinColumn(name = "nr_zamowienia")}
     )
     @SortNatural
     private Set<Zamowienie> zamowienia;

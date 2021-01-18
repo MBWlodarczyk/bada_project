@@ -2,8 +2,6 @@ package net.codejava.badabida.controllers;
 
 import net.codejava.badabida.model.Adres;
 import net.codejava.badabida.model.Klient;
-import net.codejava.badabida.model.Magazyn;
-import net.codejava.badabida.model.Pracownik;
 import net.codejava.badabida.repos.AdresRepository;
 import net.codejava.badabida.repos.CzescRepository;
 import net.codejava.badabida.repos.KlientRepository;

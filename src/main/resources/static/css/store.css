@@ -33,14 +33,14 @@
     margin-left: 50px;
 }
 
-#cartBut{
-    position:absolute;
+#cartBut {
+    position: absolute;
     transform: rotate(270deg);
     top: 150px;
-    right:-18px;
+    right: -18px;
 }
 
-#zamowButton{
+#zamowButton {
     position: absolute;
     top: 500px;
     left: 161px;

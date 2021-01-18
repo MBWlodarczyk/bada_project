@@ -28,7 +28,7 @@ public class Czesc implements Serializable {
     @Column(name = "PRODUCENT")
     private String producent;
 
-    @OneToMany(mappedBy = "czesc",cascade = CascadeType.MERGE,orphanRemoval = true,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "czesc", cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<CzesciZamowienia> zamowienia;
 
     public Czesc() {

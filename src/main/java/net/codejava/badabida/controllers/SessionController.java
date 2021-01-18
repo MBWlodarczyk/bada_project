@@ -118,7 +118,7 @@ public class SessionController {
 
     @Transactional
     @PostMapping("/client/cart/submit")
-    public String submitCart(HttpSession session, Authentication auth){
+    public String submitCart(HttpSession session, Authentication auth) {
 
         Zamowienie zamowienie = new Zamowienie();
 
@@ -142,9 +142,8 @@ public class SessionController {
         HashMap<Czesc, Integer> cart = (HashMap<Czesc, Integer>) session.getAttribute("cart");
 
 
-
-        for( Czesc c: cart.keySet()){
-            CzesciZamowienia link = new CzesciZamowienia(c,zamowienie,cart.get(c));
+        for (Czesc c : cart.keySet()) {
+            CzesciZamowienia link = new CzesciZamowienia(c, zamowienie, cart.get(c));
             czesci.add(link);
         }
 
@@ -152,7 +151,7 @@ public class SessionController {
 
         zamowienie.setCzesci(czesci);
 
-        session.setAttribute("cart",null);
+        session.setAttribute("cart", null);
 
 
         return "redirect:/client/orders";

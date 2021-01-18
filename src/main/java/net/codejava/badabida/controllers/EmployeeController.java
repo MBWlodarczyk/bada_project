@@ -1,6 +1,5 @@
 package net.codejava.badabida.controllers;
 
-import net.codejava.badabida.model.CzesciZamowienia;
 import net.codejava.badabida.model.Pracownik;
 import net.codejava.badabida.model.Zamowienie;
 import net.codejava.badabida.repos.CzescRepository;
@@ -8,7 +7,6 @@ import net.codejava.badabida.repos.PracownikRepository;
 import net.codejava.badabida.repos.ZamowieniaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -50,8 +48,8 @@ public class EmployeeController {
     /////////////////// DANE///////////////////////////////////////////////
 
     @GetMapping("/employee/personaldata")
-    public String getClientInfo(Model model,Authentication auth) {
-        if(auth!=null) {
+    public String getClientInfo(Model model, Authentication auth) {
+        if (auth != null) {
             UserDetails principal = (UserDetails) auth.getPrincipal();
             model.addAttribute("pracownik", pracownikRepository.findByUsername(principal.getUsername()).get());
             return "employee/personaldata";
@@ -98,18 +96,18 @@ public class EmployeeController {
         possibleStatus.add("zaakceptowane");
         possibleStatus.add("realizowane");
         possibleStatus.add("zrealizowane");
-        model.addAttribute("statusy",possibleStatus);
+        model.addAttribute("statusy", possibleStatus);
         return "employee/orders";
     }
 
     @PostMapping("/employee/orders/update/{nrZamowienia}")
-    public String updateOrder(@PathVariable("nrZamowienia") Long nrZamowienia, String statusZamowienia){
+    public String updateOrder(@PathVariable("nrZamowienia") Long nrZamowienia, String statusZamowienia) {
         Set<String> possibleStatus = new HashSet<String>();
         possibleStatus.add("zlozone");
         possibleStatus.add("zaakceptowane");
         possibleStatus.add("realizowane");
         possibleStatus.add("zrealizowane");
-        if(possibleStatus.contains(statusZamowienia)){
+        if (possibleStatus.contains(statusZamowienia)) {
             Zamowienie z = zamowieniaRepository.findByNrZamowienia(nrZamowienia).get();
             z.setStatusZamowienia(statusZamowienia);
             zamowieniaRepository.save(z);

@@ -3,17 +3,26 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Client zamówienia</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
 
 
     <style type="text/css">
-        body { background: 	#ffffff !important; }
+        body {
+            background: #ffffff !important;
+        }
     </style>
 
 </head>
@@ -24,7 +33,8 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="home">SuperBazaDanych</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
@@ -52,8 +62,8 @@
 </nav>
 
 
-<div class = "container">
-    <div class = "jumborton">
+<div class="container">
+    <div class="jumborton">
         <div class="card">
 
             <div class="card-body">
@@ -74,11 +84,20 @@
 
                     <div th:each="zamowienie : ${zamowienia}">
                         <tr>
-                            <th th:text="${zamowienie.nrZamowienia}" data-toggle="collapse" th:data-target="'#collapse'+${zamowienie.nrZamowienia}" aria-expanded="false" aria-controls="collapseExample"></th>
-                            <td th:text="${zamowienie.dataZlozenia}" data-toggle="collapse" th:data-target="'#collapse'+${zamowienie.nrZamowienia}" aria-expanded="false" aria-controls="collapseExample"></td>
-                            <td th:text="${zamowienie.statusZamowienia}" data-toggle="collapse" th:data-target="'#collapse'+${zamowienie.nrZamowienia}" aria-expanded="false" aria-controls="collapseExample"></td>
-                            <td data-toggle="collapse" th:data-target="'#collapse'+${zamowienie.nrZamowienia}" aria-expanded="false" aria-controls="collapseExample">
-                                <button class="btn btn-primary" type="button" data-toggle="collapse" th:data-target="'#collapse'+${zamowienie.nrZamowienia}" aria-expanded="false" aria-controls="collapseExample">
+                            <th th:text="${zamowienie.nrZamowienia}" data-toggle="collapse"
+                                th:data-target="'#collapse'+${zamowienie.nrZamowienia}" aria-expanded="false"
+                                aria-controls="collapseExample"></th>
+                            <td th:text="${zamowienie.dataZlozenia}" data-toggle="collapse"
+                                th:data-target="'#collapse'+${zamowienie.nrZamowienia}" aria-expanded="false"
+                                aria-controls="collapseExample"></td>
+                            <td th:text="${zamowienie.statusZamowienia}" data-toggle="collapse"
+                                th:data-target="'#collapse'+${zamowienie.nrZamowienia}" aria-expanded="false"
+                                aria-controls="collapseExample"></td>
+                            <td data-toggle="collapse" th:data-target="'#collapse'+${zamowienie.nrZamowienia}"
+                                aria-expanded="false" aria-controls="collapseExample">
+                                <button class="btn btn-primary" type="button" data-toggle="collapse"
+                                        th:data-target="'#collapse'+${zamowienie.nrZamowienia}" aria-expanded="false"
+                                        aria-controls="collapseExample">
                                     Pokaż zawartość
                                 </button>
                             </td>
@@ -89,34 +108,36 @@
                                 <div class="collapse" th:id="'collapse'+${zamowienie.nrZamowienia}">
                                     <table class="table table-striped" style="background: white">
                                         <thead>
-                                            <tr>
-                                                <th scope="col">Nazwa</th>
-                                                <th scope="col">Czas gwarancji</th>
-                                                <th scope="col">Producent</th>
-                                                <th scope="col">Cena (sztuka)</th>
-                                                <th scope="col">Ilość</th>
-                                                <th scope="col">Kwota</th>
+                                        <tr>
+                                            <th scope="col">Nazwa</th>
+                                            <th scope="col">Czas gwarancji</th>
+                                            <th scope="col">Producent</th>
+                                            <th scope="col">Cena (sztuka)</th>
+                                            <th scope="col">Ilość</th>
+                                            <th scope="col">Kwota</th>
 
-                                            </tr>
+                                        </tr>
                                         </thead>
                                         <tbody>
-                                            <div th:each="zamCz : ${zamowienie.getCzesci()}">
-                                                <tr>
-                                                    <td th:text="${zamCz.getCzesc().getNazwa()}"></td>
-                                                    <td th:text="${zamCz.getCzesc().getCzasGwarancji()}"></td>
-                                                    <td th:text="${zamCz.getCzesc().getProducent()}"></td>
-                                                    <td th:text="${zamCz.getCzesc().getCena()}"></td>
-                                                    <td th:text="${zamCz.getIlosc()}"></td>
-                                                    <td th:text="${zamCz.getCzesc().getCena()} * ${zamCz.getIlosc()}"></td>
-                                                </tr>
-                                            </div>
-                                            <tr> <td colspan="6"></td></tr>
+                                        <div th:each="zamCz : ${zamowienie.getCzesci()}">
                                             <tr>
-                                                <td colspan="2"></td>
-                                                <th >Suma:</th>
-                                                <th th:text="${totalPrice.get(zamowienie.nrZamowienia)}"></th>
-                                                <td colspan="2"></td>
+                                                <td th:text="${zamCz.getCzesc().getNazwa()}"></td>
+                                                <td th:text="${zamCz.getCzesc().getCzasGwarancji()}"></td>
+                                                <td th:text="${zamCz.getCzesc().getProducent()}"></td>
+                                                <td th:text="${zamCz.getCzesc().getCena()}"></td>
+                                                <td th:text="${zamCz.getIlosc()}"></td>
+                                                <td th:text="${zamCz.getCzesc().getCena()} * ${zamCz.getIlosc()}"></td>
                                             </tr>
+                                        </div>
+                                        <tr>
+                                            <td colspan="6"></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2"></td>
+                                            <th>Suma:</th>
+                                            <th th:text="${totalPrice.get(zamowienie.nrZamowienia)}"></th>
+                                            <td colspan="2"></td>
+                                        </tr>
                                         </tbody>
                                     </table>
 

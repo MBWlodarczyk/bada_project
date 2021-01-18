@@ -10,5 +10,6 @@ import java.util.Optional;
 @Repository
 public interface ZamowieniaRepository extends JpaRepository<Zamowienie, Long> {
     List<Zamowienie> findAll();
+
     Optional<Zamowienie> findByNrZamowienia(Long id);
 }

@@ -1,6 +1,5 @@
 package net.codejava.badabida.model;
 
-import org.hibernate.annotations.SortComparator;
 import org.hibernate.annotations.SortNatural;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
@@ -9,13 +8,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
-import java.util.SortedSet;
 
 @Entity
 @Table(name = "pracownicy")
@@ -43,23 +39,23 @@ public class Pracownik implements Serializable, UserDetails {
     @Column(name = "STANOWISKO")
     private String stanowisko;
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.REFRESH)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "nr_hurtowni")
     private Hurtownia hurtownia;
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.REFRESH)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "nr_magazynu")
     private Magazyn magazyn;
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.REFRESH)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "nr_adresu")
     private Adres adres;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "pracownicy_zamowienia",
-            joinColumns = { @JoinColumn(name = "nr_pracownika") },
-            inverseJoinColumns = { @JoinColumn(name = "nr_zamowienia") }
+            joinColumns = {@JoinColumn(name = "nr_pracownika")},
+            inverseJoinColumns = {@JoinColumn(name = "nr_zamowienia")}
     )
     @SortNatural
     private Set<Zamowienie> zamowienia;
@@ -112,7 +108,9 @@ public class Pracownik implements Serializable, UserDetails {
         return true;
     }
 
-    public boolean hasMagazyn() {return magazyn!=null;}
+    public boolean hasMagazyn() {
+        return magazyn != null;
+    }
 
     public Long getNrPracownika() {
         return nrPracownika;

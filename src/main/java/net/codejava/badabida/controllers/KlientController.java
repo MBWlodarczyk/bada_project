@@ -1,6 +1,5 @@
 package net.codejava.badabida.controllers;
 
-import net.codejava.badabida.model.Czesc;
 import net.codejava.badabida.model.CzesciZamowienia;
 import net.codejava.badabida.model.Klient;
 import net.codejava.badabida.model.Zamowienie;
@@ -81,16 +80,16 @@ public class KlientController {
         Set<Zamowienie> zamowienieSet = klientRepository.findByUsername(username).get().getZamowienia();
         model.addAttribute("zamowienia", zamowienieSet);
 
-        HashMap<Long,BigDecimal> totalPrice = new HashMap<>();
+        HashMap<Long, BigDecimal> totalPrice = new HashMap<>();
         BigDecimal sum;
-        for ( Zamowienie z: zamowienieSet) {
+        for (Zamowienie z : zamowienieSet) {
             sum = new BigDecimal(0);
-            for(CzesciZamowienia cz : z.getCzesci()){
-                    sum = sum.add(cz.getCzesc().getCena().multiply(new BigDecimal(cz.getIlosc())));
+            for (CzesciZamowienia cz : z.getCzesci()) {
+                sum = sum.add(cz.getCzesc().getCena().multiply(new BigDecimal(cz.getIlosc())));
             }
-            totalPrice.put(z.getNrZamowienia(),sum);
+            totalPrice.put(z.getNrZamowienia(), sum);
         }
-        model.addAttribute("totalPrice",totalPrice);
+        model.addAttribute("totalPrice", totalPrice);
 
         return "client/orders";
     }

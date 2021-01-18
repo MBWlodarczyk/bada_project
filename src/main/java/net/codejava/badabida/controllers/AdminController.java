@@ -138,7 +138,7 @@ public class AdminController {
         Set<String> possibleRoles = new HashSet<String>();
         possibleRoles.add("ROLE_ADMIN");
         possibleRoles.add("ROLE_EMP");
-        model.addAttribute("possibleRoles",possibleRoles);
+        model.addAttribute("possibleRoles", possibleRoles);
         return "admin/employees";
     }
 
@@ -148,7 +148,9 @@ public class AdminController {
     }
 
     @ModelAttribute()
-    public Czesc newCzesc() { return new Czesc();}
+    public Czesc newCzesc() {
+        return new Czesc();
+    }
 
     @PostMapping("/admin/employees/update/{nrPracownika}")
     public String updateEmployee(@PathVariable("nrPracownika") Long nrPracownika, Pracownik newPracownik) {
@@ -164,7 +166,8 @@ public class AdminController {
         a.setPoczta(newPracownik.getAdres().getPoczta());
         a.setUlica(newPracownik.getAdres().getUlica());
         oldPracownik.setAdres(a);
-        if(newPracownik.hasMagazyn()) oldPracownik.setMagazyn(magazynRepository.findByNrMagazynu(newPracownik.getMagazyn().getNrMagazynu()).get());
+        if (newPracownik.hasMagazyn())
+            oldPracownik.setMagazyn(magazynRepository.findByNrMagazynu(newPracownik.getMagazyn().getNrMagazynu()).get());
         else oldPracownik.setMagazyn(null);
         pracownikRepository.saveAndFlush(oldPracownik);
         return "redirect:/admin/employees";
@@ -174,7 +177,7 @@ public class AdminController {
     public String addEmployeee(Pracownik pracownik) {
         pracownik.setHurtownia(hurtowniaRepository.findByNrHurtowni((long) 1).get());
 
-        if(!pracownik.hasMagazyn()){
+        if (!pracownik.hasMagazyn()) {
             pracownik.setMagazyn(null);
         }
 
@@ -209,16 +212,18 @@ public class AdminController {
 
     @PostMapping("/admin/item/update/{nrCzesci}")
     public String updateItem(@PathVariable("nrCzesci") Long nrCzesci, Czesc newCzesc) {
-        Czesc oldCzesc = czescRepository.findCzescByNrCzesci(nrCzesci);
+        if(newCzesc.getCzasGwarancji() >= 0 && newCzesc.getCena().signum() > 0) {
+            Czesc oldCzesc = czescRepository.findCzescByNrCzesci(nrCzesci);
 
-        oldCzesc.setCena(newCzesc.getCena());
-        oldCzesc.setCzasGwarancji(newCzesc.getCzasGwarancji());
-        oldCzesc.setNazwa(newCzesc.getNazwa());
-        oldCzesc.setProducent(newCzesc.getProducent());
-        czescRepository.saveAndFlush(oldCzesc);
-
+            oldCzesc.setCena(newCzesc.getCena());
+            oldCzesc.setCzasGwarancji(newCzesc.getCzasGwarancji());
+            oldCzesc.setNazwa(newCzesc.getNazwa());
+            oldCzesc.setProducent(newCzesc.getProducent());
+            czescRepository.saveAndFlush(oldCzesc);
+        }
         return "redirect:/admin/store";
     }
+
     @PostMapping("/admin/item/remove/{nrCzesci}")
     public String removeItem(@PathVariable("nrCzesci") Long nrCzesci) {
         czescRepository.deleteById(nrCzesci);

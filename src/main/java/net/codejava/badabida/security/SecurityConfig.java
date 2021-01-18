@@ -98,6 +98,7 @@ public class SecurityConfig {
 
         }
     }
+
     @Configuration
     @Order(3)
     public static class ClientSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -119,7 +120,7 @@ public class SecurityConfig {
             http
                     .csrf().disable()
                     .authorizeRequests()
-                    .antMatchers("/","/store","/newClient").permitAll()
+                    .antMatchers("/", "/store", "/newClient").permitAll()
                     .antMatchers("/client/**", "/js/**", "/static/css/**").hasRole("USER")
                     .antMatchers("/employee/**").hasRole("EMP")
                     .antMatchers("/admin/**").hasRole("ADMIN")
