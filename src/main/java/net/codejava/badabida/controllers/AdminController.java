@@ -38,16 +38,6 @@ public class AdminController {
         this.pracownikRepository = pracownikRepository;
     }
 
-    @GetMapping("/admin/login")
-    public String getAdminLogin() {
-        return "admin/login";
-    }
-
-    @GetMapping("/admin/login?logout")
-    public String getAdminLogin2() {
-        return "admin/login";
-    }
-
     @GetMapping("/admin/home")
     public String getAdminHome() {
         return "admin/home";
