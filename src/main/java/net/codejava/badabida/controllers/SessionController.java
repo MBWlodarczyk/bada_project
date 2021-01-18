@@ -132,15 +132,14 @@ public class SessionController {
         int size = pracownicy.size();
         int item = new Random().nextInt(size);
 
-        Set<Pracownik> pracownicyNew = new HashSet<>();
 
-        pracownicyNew.add(pracownicy.get(item));
-
-        zamowienie.setPracownicy(pracownicyNew);
 
         zamowienie.setDataZlozenia(new Date(Calendar.getInstance().getTime().getTime()));
 
         zamowienie = zamowieniaRepository.saveAndFlush(zamowienie);
+
+        pracownicy.get(item).getZamowienia().add(zamowienie);
+
         klient.getZamowienia().add(zamowienie);
 
         List<CzesciZamowienia> czesci = new ArrayList<>();
