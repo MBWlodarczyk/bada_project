@@ -50,10 +50,13 @@ public class EmployeeController {
     /////////////////// DANE///////////////////////////////////////////////
 
     @GetMapping("/employee/personaldata")
-    public String getClientInfo(Model model) {
-        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("pracownik", pracownikRepository.findByUsername(principal.getUsername()).get());
-        return "employee/personaldata";
+    public String getClientInfo(Model model,Authentication auth) {
+        if(auth!=null) {
+            UserDetails principal = (UserDetails) auth.getPrincipal();
+            model.addAttribute("pracownik", pracownikRepository.findByUsername(principal.getUsername()).get());
+            return "employee/personaldata";
+        }
+        return "redirect:/403";
     }
 
     @PostMapping("/employee/personaldata/update/{nrPracownika}")
