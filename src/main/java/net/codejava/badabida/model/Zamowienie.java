@@ -27,7 +27,7 @@ public class Zamowienie implements Serializable, Comparable<Zamowienie> {
     private Set<Klient> klienci;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "zamowienia")
-    private Set<Klient> pracownicy;
+    private Set<Pracownik> pracownicy;
 
     @OneToMany(mappedBy = "zamowienie", cascade = CascadeType.MERGE, orphanRemoval = true)
     private List<CzesciZamowienia> czesci;
@@ -44,7 +44,7 @@ public class Zamowienie implements Serializable, Comparable<Zamowienie> {
                 '}';
     }
 
-    public Zamowienie(Long nrZamowienia, Date data_zlozenia, String status_zamowienia, Set<Klient> klienci, Set<Klient> pracownicy, List<CzesciZamowienia> czesci) {
+    public Zamowienie(Long nrZamowienia, Date data_zlozenia, String status_zamowienia, Set<Klient> klienci, Set<Pracownik> pracownicy, List<CzesciZamowienia> czesci) {
         this.nrZamowienia = nrZamowienia;
         this.dataZlozenia = data_zlozenia;
         this.statusZamowienia = status_zamowienia;
@@ -96,5 +96,13 @@ public class Zamowienie implements Serializable, Comparable<Zamowienie> {
     @Override
     public int compareTo(Zamowienie o) {
         return nrZamowienia.compareTo(o.nrZamowienia);
+    }
+
+    public Set<Pracownik> getPracownicy() {
+        return pracownicy;
+    }
+
+    public void setPracownicy(Set<Pracownik> pracownicy) {
+        this.pracownicy = pracownicy;
     }
 }

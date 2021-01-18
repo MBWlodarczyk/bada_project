@@ -1,13 +1,7 @@
 package net.codejava.badabida.controllers;
 
-import net.codejava.badabida.model.Czesc;
-import net.codejava.badabida.model.CzesciZamowienia;
-import net.codejava.badabida.model.Klient;
-import net.codejava.badabida.model.Zamowienie;
-import net.codejava.badabida.repos.CzescRepository;
-import net.codejava.badabida.repos.CzesciZamowieniaRepository;
-import net.codejava.badabida.repos.KlientRepository;
-import net.codejava.badabida.repos.ZamowieniaRepository;
+import net.codejava.badabida.model.*;
+import net.codejava.badabida.repos.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -28,12 +22,14 @@ public class SessionController {
     private final KlientRepository klientRepository;
     private final ZamowieniaRepository zamowieniaRepository;
     private final CzesciZamowieniaRepository czesciZamowieniaRepository;
+    private final PracownikRepository pracownikRepository;
 
-    public SessionController(CzescRepository czescRepository, KlientRepository klientRepository, ZamowieniaRepository zamowieniaRepository, CzesciZamowieniaRepository czesciZamowieniaRepository) {
+    public SessionController(CzescRepository czescRepository, KlientRepository klientRepository, ZamowieniaRepository zamowieniaRepository, CzesciZamowieniaRepository czesciZamowieniaRepository, PracownikRepository pracownikRepository) {
         this.czescRepository = czescRepository;
         this.klientRepository = klientRepository;
         this.zamowieniaRepository = zamowieniaRepository;
         this.czesciZamowieniaRepository = czesciZamowieniaRepository;
+        this.pracownikRepository = pracownikRepository;
     }
 
     @PostMapping("/client/cart/add/{nrCzesci}")
@@ -131,6 +127,17 @@ public class SessionController {
 
         zamowienie.setStatusZamowienia("zlozone");
 
+        List<Pracownik> pracownicy = pracownikRepository.findAllByStanowisko("magazyn");
+
+        int size = pracownicy.size();
+        int item = new Random().nextInt(size);
+
+        Set<Pracownik> pracownicyNew = new HashSet<>();
+
+        pracownicyNew.add(pracownicy.get(item));
+
+        zamowienie.setPracownicy(pracownicyNew);
+
         zamowienie.setDataZlozenia(new Date(Calendar.getInstance().getTime().getTime()));
 
         zamowienie = zamowieniaRepository.saveAndFlush(zamowienie);
@@ -156,5 +163,6 @@ public class SessionController {
 
         return "redirect:/client/orders";
     }
+
 }
 
