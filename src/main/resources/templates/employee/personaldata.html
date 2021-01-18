@@ -67,53 +67,55 @@
     <div class="jumborton">
         <div class="card">
             <div class="card-body">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-6 col-md-6">
-                        <div class="well well-sm">
-                            <div class="row">
-                                <div class="col-sm-6 col-md-4">
-                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/User_font_awesome.svg/1200px-User_font_awesome.svg.png"
-                                         width="150" height="150" alt="" class="img-rounded img-responsive"/>
-                                </div>
-                                <div class="col-sm-6 col-md-8">
-                                    <h4>
-                                        <td th:text="${pracownik.imie}"></td>
-                                        <td th:text="${pracownik.nazwisko}"></td>
-                                    </h4>
-                                    <h5>
-                                        Stanowisko:
-                                        <td th:text="${pracownik.stanowisko}"></td>
-                                        <br/>
-                                        Magazyn:
-                                        <td th:text="${pracownik.magazyn != null} ? ${pracownik.magazyn.nazwa} : ''"></td>
-                                    </h5>
 
-                                    <small><cite title="Adres">
-                                        <td th:text="${pracownik.adres.ulica}"></td>
-                                        <td th:text="${pracownik.adres.nrLokalu}"></td>
-                                        <br>
-                                        <td th:text="${pracownik.adres.miasto}"></td>
-                                        <br>
-                                        <td th:text="${pracownik.adres.kodPoczty}"></td>
-                                        <td th:text="${pracownik.adres.poczta}"></td>
 
-                                        <i class="glyphicon glyphicon-map-marker"></i>
-                                    </cite></small>
-                                    <p>
-                                        <i class="glyphicon glyphicon-envelope"></i>
-                                    <td th:text="${pracownik.telefon}"></td>
-                                    <br/>
-                                    <i class="glyphicon glyphicon-envelope"></i>
-                                    <td th:text="${pracownik.dataUrodzenia}"></td>
-                                    <br/>
-                                    </p>
+                <div class="row justify-content-center">
+                    <div class="col-4">
+                        <div class="col-sm-6 col-md-4">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/User_font_awesome.svg/1200px-User_font_awesome.svg.png"
+                                 width="150" height="150" alt="" class="img-rounded img-responsive"/>
+                        </div>
 
-                                    <button href="#editModal" type="button" class="btn btn-primary" data-toggle="modal">
-                                        Edytuj
-                                    </button>
+                    </div>
 
-                                </div>
-                            </div>
+                    <div class="col-4">
+
+                        <div class="col-sm-6 col-md-8">
+                            <h4>
+                                <td th:text="${pracownik.imie}"></td>
+                                <td th:text="${pracownik.nazwisko}"></td>
+                            </h4>
+                            <h5>
+                                Stanowisko:
+                                <td th:text="${pracownik.stanowisko}"></td>
+                                <br/>
+                                Magazyn:
+                                <td th:text="${pracownik.magazyn != null} ? ${pracownik.magazyn.nazwa} : ''"></td>
+                            </h5>
+
+                            <small><cite title="Adres">
+                                <td th:text="${pracownik.adres.ulica}"></td>
+                                <td th:text="${pracownik.adres.nrLokalu}"></td>
+                                <br>
+                                <td th:text="${pracownik.adres.miasto}"></td>
+                                <br>
+                                <td th:text="${pracownik.adres.kodPoczty}"></td>
+                                <td th:text="${pracownik.adres.poczta}"></td>
+
+                                <i class="glyphicon glyphicon-map-marker"></i>
+                            </cite></small>
+                            <p>
+                                <i class="glyphicon glyphicon-envelope"></i>
+                            <td th:text="${pracownik.telefon}"></td>
+                            <br/>
+                            <i class="glyphicon glyphicon-envelope"></i>
+                            <td th:text="${pracownik.dataUrodzenia}"></td>
+                            <br/>
+                            </p>
+
+                            <button href="#editModal" type="button" class="btn btn-primary" data-toggle="modal">
+                                Edytuj
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -154,7 +156,7 @@
 
                     <div class="form-group">
                         <label for="pass" class="col-form-label">Password (jeśli puste pozostaje bez zmian):</label>
-                        <input type="text" class="form-control" id="pass" vale="" th:name="*{password}">
+                        <input type="text" class="form-control" id="pass" th:name="*{password}">
                     </div>
 
                     <div class="form-group">
