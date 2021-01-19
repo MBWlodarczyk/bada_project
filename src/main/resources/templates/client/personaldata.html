@@ -65,48 +65,54 @@
     <div class="jumbotron">
         <div class="card">
             <div class="card-body">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-6 col-md-6">
-                            <div class="well well-sm">
-                                <div class="row">
-                                    <div class="col-sm-6 col-md-4">
-                                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/User_font_awesome.svg/1200px-User_font_awesome.svg.png"
-                                             width="150" height="150" alt="" class="img-rounded img-responsive"/>
-                                    </div>
-                                    <div class="col-sm-6 col-md-8">
-                                        <h4>
-                                            <td th:text="${klient.imie}"></td>
-                                            <td th:text="${klient.nazwisko}"></td>
-                                        </h4>
 
-                                        <small><cite title="Adres">
-                                            <td th:text="${klient.adres.ulica}"></td>
-                                            <td th:text="${klient.adres.nrLokalu}"></td>
-                                            <br>
-                                            <td th:text="${klient.adres.miasto}"></td>
-                                            <br>
-                                            <td th:text="${klient.adres.kodPoczty}"></td>
-                                            <td th:text="${klient.adres.poczta}"></td>
 
-                                            <i class="glyphicon glyphicon-map-marker"></i>
-                                        </cite></small>
-                                        <p>
-                                            <i class="glyphicon glyphicon-envelope"></i>
-                                        <td th:text="${klient.telefon}"></td>
-                                        <br/>
-                                        </p>
-
-                                        <button href="#editModal" type="button" class="btn btn-primary"
-                                                data-toggle="modal">Edytuj
-                                        </button>
-
-                                    </div>
-                                </div>
-                            </div>
+                <div class="row justify-content-center">
+                    <div class="col-4">
+                        <div class="col-sm-6 col-md-4">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/User_font_awesome.svg/1200px-User_font_awesome.svg.png"
+                                 width="150" height="150" alt="" class="img-rounded img-responsive"/>
                         </div>
+
+
+                    </div>
+                    <div class="col-4">
+
+                        <div class="col-sm-6 col-md-8">
+                            <h4>
+                                <td th:text="${klient.imie}"></td>
+                                <td th:text="${klient.nazwisko}"></td>
+                            </h4>
+
+                            <small><cite title="Adres">
+                                <td th:text="${klient.adres.ulica}"></td>
+                                <td th:text="${klient.adres.nrLokalu}"></td>
+                                <br>
+                                <td th:text="${klient.adres.miasto}"></td>
+                                <br>
+                                <td th:text="${klient.adres.kodPoczty}"></td>
+                                <td th:text="${klient.adres.poczta}"></td>
+
+                                <i class="glyphicon glyphicon-map-marker"></i>
+                            </cite></small>
+                            <p>
+                                <i class="glyphicon glyphicon-envelope"></i>
+                            <td th:text="${klient.telefon}"></td>
+                            <br/>
+                            </p>
+
+                        </div>
+
+                        <button href="#editModal" type="button" class="btn btn-primary" data-toggle="modal" >Edytuj
+                        </button>
+
                     </div>
                 </div>
+
+
+
+
+
             </div>
         </div>
     </div>

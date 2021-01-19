@@ -70,21 +70,23 @@
         <div class="card">
             <div class="card-body">
 
-                <h4 th:text="${hurtownia.nazwa}"></h4>
-                <h4 th:text="${hurtownia.dataZalozenia}"></h4>
+                    <div align="center">
+                        <h4 th:text="${hurtownia.nazwa}"></h4>
+                        <h4 th:text="${hurtownia.dataZalozenia}"></h4>
 
-                <small><cite title="Adres">
-                    <td th:text="${hurtownia.adres.ulica}"></td>
-                    <td th:text="${hurtownia.adres.nrLokalu}"></td>
-                    <br>
-                    <td th:text="${hurtownia.adres.miasto}"></td>
-                    <br>
-                    <td th:text="${hurtownia.adres.kodPoczty}"></td>
-                    <td th:text="${hurtownia.adres.poczta}"></td>
-                </cite></small>
-                <br>
-                <button href="#editModal" type="button" class="btn btn-primary" data-toggle="modal">Edytuj</button>
+                        <small><cite title="Adres">
+                            <td th:text="${hurtownia.adres.ulica}"></td>
+                            <td th:text="${hurtownia.adres.nrLokalu}"></td>
+                            <br>
+                            <td th:text="${hurtownia.adres.miasto}"></td>
+                            <br>
+                            <td th:text="${hurtownia.adres.kodPoczty}"></td>
+                            <td th:text="${hurtownia.adres.poczta}"></td>
+                        </cite></small>
+                        <br>
 
+                        <button href="#editModal" type="button" class="btn btn-primary" data-toggle="modal">Edytuj</button>
+                    </div>
             </div>
         </div>
     </div>
