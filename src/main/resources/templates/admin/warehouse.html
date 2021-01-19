@@ -255,7 +255,7 @@
                                                 <th scope="col">Producent</th>
                                                 <th scope="col">Cena</th>
                                                 <th scope="col">Ilość</th>
-                                                <th scope="col">ACTIONS</th>
+                                                <th scope="col" style="text-align:center">ACTIONS</th>
 
                                             </tr>
                                         </thead>
@@ -267,45 +267,46 @@
                                                     <td th:text="${magCz.getCzesc().getProducent()}"></td>
                                                     <td th:text="${magCz.getCzesc().getCena()}"></td>
                                                     <td th:text="${magCz.ilosc}"></td>
-                                                    <td>
+                                                    <td style="text-align:center" >
 
                                                         <button th:href="'#editModal'+${mag.getNrMagazynu()} + ${magCz.getCzesc().getNrCzesci()}" type="button"
                                                                 class="btn btn-primary" data-toggle="modal">Edytuj
                                                         </button>
 
-                                                        <div th:id="'editModal'+${mag.getNrMagazynu()} + ${magCz.getCzesc().getNrCzesci()}" class="modal">
-                                                            <div class="modal-dialog" role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title" id="exampleModalLabel2">Edytuj część</h5>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        <form th:action="@{/admin/warehouse/update/item/{nrMagazynu}(nrMagazynu=${mag.nrMagazynu})}" method="post">
-
-                                                                            <input type="hidden" name="nrCzesci" th:value="${magCz.getCzesc().getNrCzesci()}">
-
-                                                                            <div class="form-group">
-                                                                                <label for="ilosc2" class="col-form-label">Ilosc:</label>
-                                                                                <input type="number" class="form-control" id="ilosc2"
-                                                                                       th:value="${magCz.ilosc}" th:name="ilosc"/>
-                                                                            </div>
-
-                                                                            <br/>
-                                                                            <button type="button" class="btn btn-secondary"
-                                                                                    data-dismiss="modal">Anuluj
-                                                                            </button>
-                                                                            <input type="submit" class="btn btn-primary"/>
-                                                                        </form>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
                                                         <button th:href="'#deleteModal'+${mag.getNrMagazynu()} + ${magCz.getCzesc().getNrCzesci()}" type="button"
                                                                 class="btn btn-danger" data-toggle="modal">Usuń
                                                         </button>
 
-                                                        <div th:id="'deleteModal'+${mag.getNrMagazynu()} + ${magCz.getCzesc().getNrCzesci()}" class="modal">
+                                                        <div style="text-align:left">
+                                                            <div th:id="'editModal'+${mag.getNrMagazynu()} + ${magCz.getCzesc().getNrCzesci()}" class="modal">
+                                                                <div class="modal-dialog" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="exampleModalLabel2">Edytuj część</h5>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <form th:action="@{/admin/warehouse/update/item/{nrMagazynu}(nrMagazynu=${mag.nrMagazynu})}" method="post">
+
+                                                                                <input type="hidden" name="nrCzesci" th:value="${magCz.getCzesc().getNrCzesci()}">
+
+                                                                                <div class="form-group">
+                                                                                    <label for="ilosc2" class="col-form-label">Ilosc:</label>
+                                                                                    <input type="number" class="form-control" id="ilosc2"
+                                                                                           th:value="${magCz.ilosc}" th:name="ilosc"/>
+                                                                                </div>
+
+                                                                                <br/>
+                                                                                <button type="button" class="btn btn-secondary"
+                                                                                        data-dismiss="modal">Anuluj
+                                                                                </button>
+                                                                                <input type="submit" class="btn btn-primary"/>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div th:id="'deleteModal'+${mag.getNrMagazynu()} + ${magCz.getCzesc().getNrCzesci()}" class="modal">
                                                             <div class="modal-dialog" role="document">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
@@ -326,7 +327,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-
+                                                        </div>
                                                     </td>
                                                 </tr>
                                             </div>
