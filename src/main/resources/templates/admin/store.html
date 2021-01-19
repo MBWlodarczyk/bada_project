@@ -79,7 +79,7 @@
                             <td th:text="${czesc.czasGwarancji}"></td>
                             <td th:text="${czesc.producent}"></td>
                             <td th:text="${czesc.cena}"></td>
-                            <td>
+                            <td style="text-align:center;">
                                 <div style="color:black">
                                     <button th:href="'#editModal'+${czesc.nrCzesci}" type="button"
                                             class="btn btn-primary" data-toggle="modal">Edytuj
@@ -89,8 +89,7 @@
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Edytuj
-                                                        pracownika</h5>
+                                                    <h5 class="modal-title" id="exampleModalLabel">Edytuj część</h5>
                                                 </div>
                                                 <div class="modal-body">
                                                     <form th:action="@{/admin/item/update/{nrCzesci}(nrCzesci=${czesc.nrCzesci})}"
@@ -137,7 +136,7 @@
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="deleteModalLabel">Usuń pracownika</h5>
+                                                    <h5 class="modal-title" id="deleteModalLabel">Usuń część</h5>
                                                 </div>
                                                 <div class="modal-body">
                                                     <p>Czy na pewno chcesz usunać?</p>
