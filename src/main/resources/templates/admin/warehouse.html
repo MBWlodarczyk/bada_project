@@ -72,7 +72,7 @@
                         <th scope="col">Nr lokalu</th>
                         <th scope="col">Kod poczty</th>
                         <th scope="col">Poczta</th>
-                        <th scope="col">ACTIONS</th>
+                        <th scope="col" style="text-align:center">ACTIONS</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -80,107 +80,258 @@
 
                     <div th:each="mag : ${magazyny}">
                         <tr>
-                            <th th:text="${mag.nrMagazynu}"></th>
-                            <td th:text="${mag.nazwa}"></td>
-                            <td th:text="${mag.dataZalozenia}"></td>
-                            <td th:text="${mag.adres.miasto}"></td>
-                            <td th:text="${mag.adres.ulica}"></td>
-                            <td th:text="${mag.adres.nrLokalu}"></td>
-                            <td th:text="${mag.adres.kodPoczty}"></td>
-                            <td th:text="${mag.adres.poczta}"></td>
-                            <td>
+                            <th th:text="${mag.nrMagazynu}" data-toggle="collapse"
+                                th:data-target="'#collapse'+${mag.nrMagazynu}" aria-expanded="false"
+                                aria-controls="collapseExample"></th>
+                            <td th:text="${mag.nazwa}" data-toggle="collapse"
+                                th:data-target="'#collapse'+${mag.nrMagazynu}" aria-expanded="false"
+                                aria-controls="collapseExample"></td>
+                            <td th:text="${mag.dataZalozenia}" data-toggle="collapse"
+                                th:data-target="'#collapse'+${mag.nrMagazynu}" aria-expanded="false"
+                                aria-controls="collapseExample"></td>
+                            <td th:text="${mag.adres.miasto}" data-toggle="collapse"
+                                th:data-target="'#collapse'+${mag.nrMagazynu}" aria-expanded="false"
+                                aria-controls="collapseExample"></td>
+                            <td th:text="${mag.adres.ulica}" data-toggle="collapse"
+                                th:data-target="'#collapse'+${mag.nrMagazynu}" aria-expanded="false"
+                                aria-controls="collapseExample"></td>
+                            <td th:text="${mag.adres.nrLokalu}" data-toggle="collapse"
+                                th:data-target="'#collapse'+${mag.nrMagazynu}" aria-expanded="false"
+                                aria-controls="collapseExample"></td>
+                            <td th:text="${mag.adres.kodPoczty}" data-toggle="collapse"
+                                th:data-target="'#collapse'+${mag.nrMagazynu}" aria-expanded="false"
+                                aria-controls="collapseExample"></td>
+                            <td th:text="${mag.adres.poczta}" data-toggle="collapse"
+                                th:data-target="'#collapse'+${mag.nrMagazynu}" aria-expanded="false"
+                                aria-controls="collapseExample"></td>
+                            <td style="text-align:center">
+
                                 <div style="color:black">
-                                    <button th:href="'#editModal'+${mag.nrMagazynu}" type="button"
-                                            class="btn btn-primary" data-toggle="modal">Edytuj
-                                    </button>
+                                    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                                        <button th:href="'#editModal'+${mag.nrMagazynu}" type="button"
+                                                class="btn btn-primary" data-toggle="modal">Edytuj
+                                        </button>
 
-                                    <div th:id="'editModal'+${mag.nrMagazynu}" class="modal">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Edytuj magazyn</h5>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <form th:action="@{/admin/warehouse/update/{nrMagazynu}(nrMagazynu=${mag.nrMagazynu})}"
-                                                          th:object="${magazyn}" method="post">
-                                                        <div class="form-group">
-                                                            <label for="nazwa" class="col-form-label">Nazwa:</label>
-                                                            <input type="text" class="form-control" id="nazwa"
-                                                                   th:value="${mag.nazwa}" th:name="nazwa"/>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="miasto" class="col-form-label">Miasto</label>
-                                                            <input type="text" class="form-control" id="miasto"
-                                                                   th:value="${mag.adres.miasto}"
-                                                                   th:name="adres.miasto"/>
-                                                        </div>
+                                        <div th:id="'editModal'+${mag.nrMagazynu}" class="modal">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Edytuj magazyn</h5>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form th:action="@{/admin/warehouse/update/{nrMagazynu}(nrMagazynu=${mag.nrMagazynu})}"
+                                                              th:object="${magazyn}" method="post">
+                                                            <div class="form-group">
+                                                                <label for="nazwa" class="col-form-label">Nazwa:</label>
+                                                                <input type="text" class="form-control" id="nazwa"
+                                                                       th:value="${mag.nazwa}" th:name="nazwa"/>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="miasto" class="col-form-label">Miasto</label>
+                                                                <input type="text" class="form-control" id="miasto"
+                                                                       th:value="${mag.adres.miasto}"
+                                                                       th:name="adres.miasto"/>
+                                                            </div>
 
-                                                        <div class="form-group">
-                                                            <label for="ulica" class="col-form-label">Ulica</label>
-                                                            <input type="text" class="form-control" id="ulica"
-                                                                   th:value="${mag.adres.ulica}" th:name="adres.ulica">
-                                                        </div>
+                                                            <div class="form-group">
+                                                                <label for="ulica" class="col-form-label">Ulica</label>
+                                                                <input type="text" class="form-control" id="ulica"
+                                                                       th:value="${mag.adres.ulica}" th:name="adres.ulica">
+                                                            </div>
 
-                                                        <div class="form-group">
-                                                            <label for="nrLokalu" class="col-form-label">Numer
-                                                                lokalu</label>
-                                                            <input type="text" class="form-control" id="nrLokalu"
-                                                                   th:value="${mag.adres.nrLokalu}"
-                                                                   th:name="adres.nrLokalu">
-                                                        </div>
+                                                            <div class="form-group">
+                                                                <label for="nrLokalu" class="col-form-label">Numer
+                                                                    lokalu</label>
+                                                                <input type="text" class="form-control" id="nrLokalu"
+                                                                       th:value="${mag.adres.nrLokalu}"
+                                                                       th:name="adres.nrLokalu">
+                                                            </div>
 
-                                                        <div class="form-group">
-                                                            <label for="kodPoczty" class="col-form-label">Kod
-                                                                poczty</label>
-                                                            <input type="text" class="form-control" id="kodPoczty"
-                                                                   th:value="${mag.adres.kodPoczty}"
-                                                                   th:name="adres.kodPoczty">
-                                                        </div>
+                                                            <div class="form-group">
+                                                                <label for="kodPoczty" class="col-form-label">Kod
+                                                                    poczty</label>
+                                                                <input type="text" class="form-control" id="kodPoczty"
+                                                                       th:value="${mag.adres.kodPoczty}"
+                                                                       th:name="adres.kodPoczty">
+                                                            </div>
 
-                                                        <div class="form-group">
-                                                            <label for="poczta" class="col-form-label">Poczta</label>
-                                                            <input type="text" class="form-control" id="poczta"
-                                                                   th:value="${mag.adres.poczta}"
-                                                                   th:name="adres.poczta">
-                                                        </div>
+                                                            <div class="form-group">
+                                                                <label for="poczta" class="col-form-label">Poczta</label>
+                                                                <input type="text" class="form-control" id="poczta"
+                                                                       th:value="${mag.adres.poczta}"
+                                                                       th:name="adres.poczta">
+                                                            </div>
 
-                                                        <br/>
-                                                        <button type="button" class="btn btn-secondary"
-                                                                data-dismiss="modal">Anuluj
-                                                        </button>
-                                                        <input type="submit" class="btn btn-primary"/>
-                                                    </form>
+                                                            <br/>
+                                                            <button type="button" class="btn btn-secondary"
+                                                                    data-dismiss="modal">Anuluj
+                                                            </button>
+                                                            <input type="submit" class="btn btn-primary"/>
+                                                        </form>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <button th:href="'#deleteModal'+${mag.nrMagazynu}" type="button"
-                                            class="btn btn-danger" data-toggle="modal">Usuń
-                                    </button>
-                                    <div th:id="'deleteModal'+${mag.nrMagazynu}" class="modal">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="deleteModalLabel">Usuń magazyn</h5>
+                                        <button th:href="'#deleteModal'+${mag.nrMagazynu}" type="button"
+                                                class="btn btn-danger" data-toggle="modal">Usuń
+                                        </button>
+                                        <div th:id="'deleteModal'+${mag.nrMagazynu}" class="modal">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="deleteModalLabel">Usuń magazyn</h5>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>Czy na pewno chcesz usunać?</p>
+                                                        <form form
+                                                              th:action="@{/admin/warehouse/remove{nrMagazynu}(nrMagazynu=${mag.nrMagazynu})}"
+                                                              method="post">
+                                                            <br/>
+                                                            <button type="button" class="btn btn-secondary"
+                                                                    data-dismiss="modal">Anuluj
+                                                            </button>
+                                                            <input type="submit" class="btn btn-primary"/>
+                                                        </form>
+                                                    </div>
                                                 </div>
-                                                <div class="modal-body">
-                                                    <p>Czy na pewno chcesz usunać?</p>
-                                                    <form form
-                                                          th:action="@{/admin/warehouse/remove{nrMagazynu}(nrMagazynu=${mag.nrMagazynu})}"
-                                                          method="post">
-                                                        <br/>
-                                                        <button type="button" class="btn btn-secondary"
-                                                                data-dismiss="modal">Anuluj
-                                                        </button>
-                                                        <input type="submit" class="btn btn-primary"/>
-                                                    </form>
+                                            </div>
+                                        </div>
+
+
+                                        <button th:href="'#newModal'+${mag.nrMagazynu}" type="button" class="btn btn-success" data-toggle="modal">Dodaj część</button>
+
+                                        <div th:id="'newModal'+${mag.nrMagazynu}" class="modal">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="newModalLabel3">Dodaj część</h5>
+                                                    </div>
+                                                    <div class="modal-body">
+
+                                                        <form th:action="@{/admin/warehouse/add/item/{nrMagazynu}(nrMagazynu=${mag.nrMagazynu})}" method="post">
+
+                                                            <label for="czescNew" class="col-form-label"> Część: </label>
+                                                            <div class="form-select">
+                                                                <select class="form-control" name="nrCzesci" id="czescNew">
+                                                                    <option selected value=0> Wybierz część</option>
+                                                                    <option th:each="cz : ${czesci}"
+                                                                            th:value="${cz.getNrCzesci()}"
+                                                                            th:text="${cz.nazwa}"
+                                                                            th:if="${cz} != ${mag.getMagazynCzesci()}"></option>
+                                                                </select>
+                                                            </div>
+
+
+                                                            <div class="form-group">
+                                                                <label for="ilocsNew" class="col-form-label">Ilość:</label>
+                                                                <input type="number"  class="form-control" id="ilocsNew" th:name="ilosc"/>
+                                                            </div>
+
+                                                            <br/>
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                                                            <input type="submit" class="btn btn-primary"/>
+                                                        </form>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="9">
+                                <div class="collapse" th:id="'collapse'+${mag.nrMagazynu}">
+                                    <table class="table table-striped" style="background: white">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Nazwa</th>
+                                                <th scope="col">Czas gwarancji</th>
+                                                <th scope="col">Producent</th>
+                                                <th scope="col">Cena</th>
+                                                <th scope="col">Ilość</th>
+                                                <th scope="col">ACTIONS</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <div th:each="magCz : ${mag.magazynCzesci}">
+                                                <tr>
+                                                    <td th:text="${magCz.getCzesc().getNazwa()}"></td>
+                                                    <td th:text="${magCz.getCzesc().getCzasGwarancji()}"></td>
+                                                    <td th:text="${magCz.getCzesc().getProducent()}"></td>
+                                                    <td th:text="${magCz.getCzesc().getCena()}"></td>
+                                                    <td th:text="${magCz.ilosc}"></td>
+                                                    <td>
+
+                                                        <button th:href="'#editModal'+${mag.getNrMagazynu()} + ${magCz.getCzesc().getNrCzesci()}" type="button"
+                                                                class="btn btn-primary" data-toggle="modal">Edytuj
+                                                        </button>
+
+                                                        <div th:id="'editModal'+${mag.getNrMagazynu()} + ${magCz.getCzesc().getNrCzesci()}" class="modal">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="exampleModalLabel2">Edytuj
+                                                                            pracownika</h5>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <form th:action="@{/admin/warehouse/update/item/{nrMagazynu}(nrMagazynu=${mag.nrMagazynu})}" method="post">
+
+                                                                            <input type="hidden" name="nrCzesci" th:value="${magCz.getCzesc().getNrCzesci()}">
+
+                                                                            <div class="form-group">
+                                                                                <label for="ilosc2" class="col-form-label">Ilosc:</label>
+                                                                                <input type="number" class="form-control" id="ilosc2"
+                                                                                       th:value="${magCz.ilosc}" th:name="ilosc"/>
+                                                                            </div>
+
+                                                                            <br/>
+                                                                            <button type="button" class="btn btn-secondary"
+                                                                                    data-dismiss="modal">Anuluj
+                                                                            </button>
+                                                                            <input type="submit" class="btn btn-primary"/>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <button th:href="'#deleteModal'+${mag.getNrMagazynu()} + ${magCz.getCzesc().getNrCzesci()}" type="button"
+                                                                class="btn btn-danger" data-toggle="modal">Usuń
+                                                        </button>
+
+                                                        <div th:id="'deleteModal'+${mag.getNrMagazynu()} + ${magCz.getCzesc().getNrCzesci()}" class="modal">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="deleteModalLabel2">Usuń pracownika</h5>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <p>Czy na pewno chcesz usunać?</p>
+                                                                        <form th:action="@{/admin/warehouse/remove/item/{nrMagazynu}(nrMagazynu=${mag.nrMagazynu})}"
+                                                                              method="post">
+                                                                            <br/>
+                                                                            <input type="hidden" name="nrCzesci" th:value="${magCz.getCzesc().getNrCzesci()}">
+                                                                            <button type="button" class="btn btn-secondary"
+                                                                                    data-dismiss="modal">Anuluj
+                                                                            </button>
+                                                                            <input type="submit" class="btn btn-primary"/>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </td>
+                                                </tr>
+                                            </div>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </td>
                         </tr>
                     </div>

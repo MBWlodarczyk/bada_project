@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.*;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -22,6 +24,7 @@ public class AdminController {
     private final MagazynRepository magazynRepository;
     private final AdresRepository adresRepository;
     private final PracownikRepository pracownikRepository;
+    private final MagazynCzesciRepository magazynCzesciRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -29,12 +32,13 @@ public class AdminController {
 
     public AdminController(CzescRepository czescRepository, HurtowniaRepository hurtowniaRepository,
                            MagazynRepository magazynRepository, AdresRepository adresRepository,
-                           PracownikRepository pracownikRepository) {
+                           PracownikRepository pracownikRepository, MagazynCzesciRepository magazynCzesciRepository) {
         this.czescRepository = czescRepository;
         this.hurtowniaRepository = hurtowniaRepository;
         this.magazynRepository = magazynRepository;
         this.adresRepository = adresRepository;
         this.pracownikRepository = pracownikRepository;
+        this.magazynCzesciRepository = magazynCzesciRepository;
     }
 
     @GetMapping("/admin/home")
@@ -86,7 +90,7 @@ public class AdminController {
     @GetMapping("/admin/warehouse")
     public String getWarehouse(Model model) {
         model.addAttribute("magazyny", magazynRepository.findAll());
-        List<Magazyn> m = magazynRepository.findAll();
+        model.addAttribute("czesci",czescRepository.findAll());
         return "admin/warehouse";
     }
 
@@ -130,6 +134,62 @@ public class AdminController {
         return "redirect:/admin/warehouse";
     }
 
+    ////////////////////////// Dodanie itemu do magazynu ////////////////////////////////////
+
+    @ModelAttribute()
+    public MagazynyCzesci newMagazynCzesc() {
+        return new MagazynyCzesci();
+    }
+
+    @PostMapping("/admin/warehouse/add/item/{nrMagazynu}")
+    public String addItemToWarehouse(@PathVariable("nrMagazynu") Long nrMagazynu, Long nrCzesci, Long ilosc) {
+        if(ilosc > 0 && czescRepository.findCzescByNrCzesci(nrCzesci) != null && magazynRepository.findByNrMagazynu(nrMagazynu).isPresent()){
+            Set<MagazynyCzesci> mc_list = magazynRepository.findByNrMagazynu(nrMagazynu).get().getMagazynCzesci();
+            MagazynyCzesci mc;
+            if(mc_list.stream().anyMatch(n -> n.getCzesc().getNrCzesci().equals(nrCzesci))){
+                mc = mc_list.stream().filter(n -> n.getCzesc().getNrCzesci().equals(nrCzesci)).findFirst().get();
+                mc.setIlosc(mc.getIlosc() + ilosc);
+            }
+            else{
+                mc = new MagazynyCzesci(magazynRepository.findByNrMagazynu(nrMagazynu).get(),czescRepository.findCzescByNrCzesci(nrCzesci),ilosc);
+            }
+            magazynCzesciRepository.saveAndFlush(mc);
+        }
+        return "redirect:/admin/warehouse";
+    }
+
+
+    @PostMapping("/admin/warehouse/update/item/{nrMagazynu}")
+    public String updateItemInWarehouse(@PathVariable("nrMagazynu") Long nrMagazynu, Long nrCzesci, Long ilosc) {
+        if(ilosc > 0 && czescRepository.findCzescByNrCzesci(nrCzesci) != null && magazynRepository.findByNrMagazynu(nrMagazynu).isPresent()) {
+            Set<MagazynyCzesci> mc_list = magazynRepository.findByNrMagazynu(nrMagazynu).get().getMagazynCzesci();
+            if (mc_list.stream().anyMatch(n -> n.getCzesc().getNrCzesci().equals(nrCzesci))) {
+                MagazynyCzesci mc = mc_list.stream().filter(n -> n.getCzesc().getNrCzesci().equals(nrCzesci)).findFirst().get();
+                mc.setIlosc(ilosc);
+                magazynCzesciRepository.saveAndFlush(mc);
+            }
+        }
+        return "redirect:/admin/warehouse";
+    }
+
+
+    @PostMapping("/admin/warehouse/remove/item/{nrMagazynu}")
+    public String removeItemFromWarehouse(@PathVariable("nrMagazynu") Long nrMagazynu, Long nrCzesci) {
+        if( czescRepository.findCzescByNrCzesci(nrCzesci) != null && magazynRepository.findByNrMagazynu(nrMagazynu).isPresent()) {
+            Magazyn m = magazynRepository.findByNrMagazynu(nrMagazynu).get();
+            Set<MagazynyCzesci> mc_list = m.getMagazynCzesci();
+            if (mc_list.stream().anyMatch(n -> n.getCzesc().getNrCzesci().equals(nrCzesci))) {
+                MagazynyCzesci mc = mc_list.stream().filter(n -> n.getCzesc().getNrCzesci().equals(nrCzesci)).findFirst().get();
+                mc_list.remove(mc);
+                m.setMagazynCzesci(mc_list);
+                magazynCzesciRepository.delete(mc);
+                magazynRepository.saveAndFlush(m);
+            }
+        }
+        return "redirect:/admin/warehouse";
+    }
+
+
     ////////////////////////// PRACOWNICY ////////////////////////////////////
     @GetMapping("/admin/employees")
     public String getEmployees(Model model) {
@@ -157,11 +217,6 @@ public class AdminController {
     @ModelAttribute()
     public Pracownik newEmployee() {
         return new Pracownik();
-    }
-
-    @ModelAttribute()
-    public Czesc newCzesc() {
-        return new Czesc();
     }
 
     @PostMapping("/admin/employees/update/{nrPracownika}")
@@ -222,6 +277,11 @@ public class AdminController {
 
     ////////////////////////// COS INNEGO ////////////////////////////////////
 
+    @ModelAttribute()
+    public Czesc newCzesc() {
+        return new Czesc();
+    }
+
     @PostMapping("/admin/item/update/{nrCzesci}")
     public String updateItem(@PathVariable("nrCzesci") Long nrCzesci, Czesc newCzesc) {
         if(newCzesc.getCzasGwarancji() >= 0 && newCzesc.getCena().signum() > 0) {
@@ -235,7 +295,6 @@ public class AdminController {
         }
         return "redirect:/admin/store";
     }
-
     @PostMapping("/admin/item/remove/{nrCzesci}")
     public String removeItem(@PathVariable("nrCzesci") Long nrCzesci) {
         czescRepository.deleteById(nrCzesci);

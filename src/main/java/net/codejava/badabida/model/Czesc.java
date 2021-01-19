@@ -10,7 +10,7 @@ import java.util.Set;
 @Entity
 @Table(name = "czesci")
 @SequenceGenerator(name = "nr_czesci_ai", sequenceName = "nr_czesci_ai", allocationSize = 0)
-public class Czesc implements Serializable {
+public class Czesc implements Serializable, Comparable<Czesc> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "nr_czesci_ai")
@@ -130,5 +130,10 @@ public class Czesc implements Serializable {
 
     public void setMagazyny(Set<MagazynyCzesci> magazyny) {
         this.magazyny = magazyny;
+    }
+
+    @Override
+    public int compareTo(Czesc c) {
+        return nrCzesci.compareTo(c.getNrCzesci());
     }
 }

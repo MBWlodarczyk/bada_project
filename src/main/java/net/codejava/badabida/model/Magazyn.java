@@ -1,5 +1,6 @@
 package net.codejava.badabida.model;
 
+import org.hibernate.annotations.SortNatural;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -33,19 +34,20 @@ public class Magazyn implements Serializable {
     private Adres adres;
 
     @OneToMany(mappedBy = "magazyn", cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.LAZY)
-    private Set<MagazynyCzesci> czesci;
+    @SortNatural
+    private Set<MagazynyCzesci> magazynCzesci;
 
 
     public Magazyn() {
     }
 
-    public Magazyn(Long nrMagazynu, String nazwa, LocalDate dataZalozenia, Hurtownia hurtownia, Adres adres, Set<MagazynyCzesci> czesci) {
+    public Magazyn(Long nrMagazynu, String nazwa, LocalDate dataZalozenia, Hurtownia hurtownia, Adres adres, Set<MagazynyCzesci> magazynCzesci) {
         this.nrMagazynu = nrMagazynu;
         this.nazwa = nazwa;
         this.dataZalozenia = dataZalozenia;
         this.hurtownia = hurtownia;
         this.adres = adres;
-        this.czesci = czesci;
+        this.magazynCzesci = magazynCzesci;
     }
 
     @Override
@@ -99,11 +101,11 @@ public class Magazyn implements Serializable {
         this.adres = adres;
     }
 
-    public Set<MagazynyCzesci> getCzesci() {
-        return czesci;
+    public Set<MagazynyCzesci> getMagazynCzesci() {
+        return magazynCzesci;
     }
 
-    public void setCzesci(Set<MagazynyCzesci> czesci) {
-        this.czesci = czesci;
+    public void setMagazynCzesci(Set<MagazynyCzesci> czesci) {
+        this.magazynCzesci = czesci;
     }
 }
