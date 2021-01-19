@@ -104,116 +104,116 @@
                             <td th:text="${pra.adres.nrLokalu}"></td>
                             <td th:text="${pra.adres.kodPoczty}"></td>
                             <td th:text="${pra.adres.poczta}"></td>
-                            <td>
-                                <div style="color:black">
+                            <td style="text-align:center;">
+                                <div style="color:black;">
                                     <div class="btn-group" role="group" aria-label="Basic example">
                                         <button th:href="'#editModal'+${pra.nrPracownika}" type="button"
                                                 class="btn btn-primary" data-toggle="modal">Edytuj
                                         </button>
+                                        <button th:href="'#deleteModal'+${pra.nrPracownika}" type="button"
+                                            class="btn btn-danger" data-toggle="modal">Usuń
+                                        </button>
 
-                                        <div th:id="'editModal'+${pra.nrPracownika}" class="modal">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Edytuj
-                                                            pracownika</h5>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <form th:action="@{/admin/employees/update/{nrPracownika}(nrPracownika=${pra.nrPracownika})}"
-                                                              th:object="${pracownik}" method="post">
+                                        <div style="text-align: left">
+                                            <div th:id="'editModal'+${pra.nrPracownika}" class="modal">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Edytuj
+                                                                pracownika</h5>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form th:action="@{/admin/employees/update/{nrPracownika}(nrPracownika=${pra.nrPracownika})}"
+                                                                  th:object="${pracownik}" method="post">
 
-                                                            <div class="form-group">
-                                                                <label for="imie" class="col-form-label">Imie:</label>
-                                                                <input type="text" class="form-control" id="imie"
-                                                                       th:value="${pra.imie}" th:name="imie"/>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="nazwisko"
-                                                                       class="col-form-label">Nazwisko:</label>
-                                                                <input type="text" class="form-control" id="nazwisko"
-                                                                       th:value="${pra.nazwisko}" th:name="nazwisko"/>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="data" class="col-form-label">Data
-                                                                    urodzenia:</label>
-                                                                <input type="date" class="form-control" id="data"
-                                                                       th:value="${pra.dataUrodzenia}"
-                                                                       th:name="dataUrodzenia"/>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="tele" class="col-form-label">Telefon:</label>
-                                                                <input type="text" class="form-control" id="tele"
-                                                                       th:value="${pra.telefon}" th:name="telefon"/>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="stanowisko"
-                                                                       class="col-form-label">Stanowisko:</label>
-                                                                <input type="text" class="form-control" id="stanowisko"
-                                                                       th:value="${pra.stanowisko}" th:name="stanowisko"/>
-                                                            </div>
+                                                                <div class="form-group">
+                                                                    <label for="imie" class="col-form-label">Imie:</label>
+                                                                    <input type="text" class="form-control" id="imie"
+                                                                           th:value="${pra.imie}" th:name="imie"/>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="nazwisko"
+                                                                           class="col-form-label">Nazwisko:</label>
+                                                                    <input type="text" class="form-control" id="nazwisko"
+                                                                           th:value="${pra.nazwisko}" th:name="nazwisko"/>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="data" class="col-form-label">Data
+                                                                        urodzenia:</label>
+                                                                    <input type="date" class="form-control" id="data"
+                                                                           th:value="${pra.dataUrodzenia}"
+                                                                           th:name="dataUrodzenia"/>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="tele" class="col-form-label">Telefon:</label>
+                                                                    <input type="text" class="form-control" id="tele"
+                                                                           th:value="${pra.telefon}" th:name="telefon"/>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="stanowisko"
+                                                                           class="col-form-label">Stanowisko:</label>
+                                                                    <input type="text" class="form-control" id="stanowisko"
+                                                                           th:value="${pra.stanowisko}" th:name="stanowisko"/>
+                                                                </div>
 
-                                                            <label for="magazyn" class="col-form-label"> Magazyn: </label>
-                                                            <div class="form-select">
-                                                                <select class="form-control" th:name="magazyn" id="magazyn">
-                                                                    <option selected value=0> Nieprzypisany</option>
-                                                                    <option th:each="magazyn : ${magazyny1}"
-                                                                            th:value="${magazyn.nrMagazynu}"
-                                                                            th:text="${magazyn.nazwa}"></option>
-                                                                </select>
-                                                            </div>
+                                                                <label for="magazyn" class="col-form-label"> Magazyn: </label>
+                                                                <div class="form-select">
+                                                                    <select class="form-control" th:name="magazyn" id="magazyn">
+                                                                        <option selected value=0> Nieprzypisany</option>
+                                                                        <option th:each="magazyn : ${magazyny1}"
+                                                                                th:value="${magazyn.nrMagazynu}"
+                                                                                th:text="${magazyn.nazwa}"></option>
+                                                                    </select>
+                                                                </div>
 
-                                                            <div class="form-group">
-                                                                <label for="miasto" class="col-form-label">Miasto</label>
-                                                                <input type="text" class="form-control" id="miasto"
-                                                                       th:value="${pra.adres.miasto}"
-                                                                       th:name="adres.miasto"/>
-                                                            </div>
+                                                                <div class="form-group">
+                                                                    <label for="miasto" class="col-form-label">Miasto</label>
+                                                                    <input type="text" class="form-control" id="miasto"
+                                                                           th:value="${pra.adres.miasto}"
+                                                                           th:name="adres.miasto"/>
+                                                                </div>
 
-                                                            <div class="form-group">
-                                                                <label for="ulica" class="col-form-label">Ulica</label>
-                                                                <input type="text" class="form-control" id="ulica"
-                                                                       th:value="${pra.adres.ulica}" th:name="adres.ulica">
-                                                            </div>
+                                                                <div class="form-group">
+                                                                    <label for="ulica" class="col-form-label">Ulica</label>
+                                                                    <input type="text" class="form-control" id="ulica"
+                                                                           th:value="${pra.adres.ulica}" th:name="adres.ulica">
+                                                                </div>
 
-                                                            <div class="form-group">
-                                                                <label for="nrLokalu" class="col-form-label">Numer
-                                                                    lokalu</label>
-                                                                <input type="text" class="form-control" id="nrLokalu"
-                                                                       th:value="${pra.adres.nrLokalu}"
-                                                                       th:name="adres.nrLokalu">
-                                                            </div>
+                                                                <div class="form-group">
+                                                                    <label for="nrLokalu" class="col-form-label">Numer
+                                                                        lokalu</label>
+                                                                    <input type="text" class="form-control" id="nrLokalu"
+                                                                           th:value="${pra.adres.nrLokalu}"
+                                                                           th:name="adres.nrLokalu">
+                                                                </div>
 
-                                                            <div class="form-group">
-                                                                <label for="kodPoczty" class="col-form-label">Kod
-                                                                    poczty</label>
-                                                                <input type="text" class="form-control" id="kodPoczty"
-                                                                       th:value="${pra.adres.kodPoczty}"
-                                                                       th:name="adres.kodPoczty">
-                                                            </div>
+                                                                <div class="form-group">
+                                                                    <label for="kodPoczty" class="col-form-label">Kod
+                                                                        poczty</label>
+                                                                    <input type="text" class="form-control" id="kodPoczty"
+                                                                           th:value="${pra.adres.kodPoczty}"
+                                                                           th:name="adres.kodPoczty">
+                                                                </div>
 
-                                                            <div class="form-group">
-                                                                <label for="poczta" class="col-form-label">Poczta</label>
-                                                                <input type="text" class="form-control" id="poczta"
-                                                                       th:value="${pra.adres.poczta}"
-                                                                       th:name="adres.poczta">
-                                                            </div>
+                                                                <div class="form-group">
+                                                                    <label for="poczta" class="col-form-label">Poczta</label>
+                                                                    <input type="text" class="form-control" id="poczta"
+                                                                           th:value="${pra.adres.poczta}"
+                                                                           th:name="adres.poczta">
+                                                                </div>
 
-                                                            <br/>
-                                                            <button type="button" class="btn btn-secondary"
-                                                                    data-dismiss="modal">Anuluj
-                                                            </button>
-                                                            <input type="submit" class="btn btn-primary"/>
-                                                        </form>
+                                                                <br/>
+                                                                <button type="button" class="btn btn-secondary"
+                                                                        data-dismiss="modal">Anuluj
+                                                                </button>
+                                                                <input type="submit" class="btn btn-primary"/>
+                                                            </form>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        <button th:href="'#deleteModal'+${pra.nrPracownika}" type="button"
-                                                class="btn btn-danger" data-toggle="modal">Usuń
-                                        </button>
-
-                                        <div th:id="'deleteModal'+${pra.nrPracownika}" class="modal">
+                                            <div th:id="'deleteModal'+${pra.nrPracownika}" class="modal">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -234,6 +234,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                        </div>
                                     </div>
                                 </div>
 

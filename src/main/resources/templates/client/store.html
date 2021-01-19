@@ -229,13 +229,13 @@
                             <td th:text="${czesc.producent}"></td>
                             <td th:text="${czesc.cena}"></td>
                             <td style="text-align:center;">
-                                <div style="color:black">
+                                <div style="color:black;">
 
                                     <button th:href="'#addToZamowienie'+${czesc.nrCzesci}" type="button"
-                                            class="btn btn-primary" data-toggle="modal">Dodaj
+                                            class="btn btn-success" data-toggle="modal">Dodaj
                                     </button>
 
-                                    <div th:id="'addToZamowienie'+${czesc.nrCzesci}" class="modal fade">
+                                    <div th:id="'addToZamowienie'+${czesc.nrCzesci}" class="modal fade" style="text-align: left;">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
