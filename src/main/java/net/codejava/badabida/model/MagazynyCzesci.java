@@ -23,6 +23,13 @@ public class MagazynyCzesci implements Serializable {
     @Column(name = "ILOSC")
     private Long ilosc;
 
+    public MagazynyCzesci(Magazyn magazyn, Czesc czesc, Long ilosc) {
+        this.magazyn = magazyn;
+        this.czesc = czesc;
+        this.ilosc = ilosc;
+        this.magazynyCzesciId = new MagazynyCzesciId(magazyn.getNrMagazynu(), czesc.getNrCzesci());
+    }
+
     public MagazynyCzesci() {
     }
 

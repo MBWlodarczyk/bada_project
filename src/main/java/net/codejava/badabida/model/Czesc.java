@@ -32,7 +32,7 @@ public class Czesc implements Serializable {
     @OneToMany(mappedBy = "czesc", cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<CzesciZamowienia> zamowienia;
 
-    @OneToMany(mappedBy = "magazyn", cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "czesc", cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<MagazynyCzesci> magazyny;
 
     public Czesc() {

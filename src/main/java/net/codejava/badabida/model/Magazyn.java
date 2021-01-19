@@ -32,7 +32,7 @@ public class Magazyn implements Serializable {
     @JoinColumn(name = "nr_adresu")
     private Adres adres;
 
-    @OneToMany(mappedBy = "czesc", cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "magazyn", cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<MagazynyCzesci> czesci;
 
 

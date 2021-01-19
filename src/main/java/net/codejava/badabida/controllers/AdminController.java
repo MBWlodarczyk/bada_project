@@ -86,6 +86,7 @@ public class AdminController {
     @GetMapping("/admin/warehouse")
     public String getWarehouse(Model model) {
         model.addAttribute("magazyny", magazynRepository.findAll());
+        List<Magazyn> m = magazynRepository.findAll();
         return "admin/warehouse";
     }
 
