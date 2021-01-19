@@ -5,6 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 @Table(name = "magazyny")
@@ -31,16 +32,20 @@ public class Magazyn implements Serializable {
     @JoinColumn(name = "nr_adresu")
     private Adres adres;
 
+    @OneToMany(mappedBy = "czesc", cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Set<MagazynyCzesci> czesci;
+
 
     public Magazyn() {
     }
 
-    public Magazyn(Long nrMagazynu, String nazwa, LocalDate dataZalozenia, Hurtownia hurtownia, Adres adres) {
+    public Magazyn(Long nrMagazynu, String nazwa, LocalDate dataZalozenia, Hurtownia hurtownia, Adres adres, Set<MagazynyCzesci> czesci) {
         this.nrMagazynu = nrMagazynu;
         this.nazwa = nazwa;
         this.dataZalozenia = dataZalozenia;
         this.hurtownia = hurtownia;
         this.adres = adres;
+        this.czesci = czesci;
     }
 
     @Override
@@ -92,5 +97,13 @@ public class Magazyn implements Serializable {
 
     public void setAdres(Adres adres) {
         this.adres = adres;
+    }
+
+    public Set<MagazynyCzesci> getCzesci() {
+        return czesci;
+    }
+
+    public void setCzesci(Set<MagazynyCzesci> czesci) {
+        this.czesci = czesci;
     }
 }

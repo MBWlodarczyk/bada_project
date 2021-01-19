@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "czesci")
@@ -31,16 +32,20 @@ public class Czesc implements Serializable {
     @OneToMany(mappedBy = "czesc", cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<CzesciZamowienia> zamowienia;
 
+    @OneToMany(mappedBy = "magazyn", cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Set<MagazynyCzesci> magazyny;
+
     public Czesc() {
     }
 
-    public Czesc(Long nr_czesci, BigDecimal cena, String nazwa, int czas_gwarancji, String producent, List<CzesciZamowienia> zamowienia) {
+    public Czesc(Long nr_czesci, BigDecimal cena, String nazwa, int czas_gwarancji, String producent, List<CzesciZamowienia> zamowienia, Set<MagazynyCzesci> magazyny) {
         this.nrCzesci = nr_czesci;
         this.cena = cena;
         this.nazwa = nazwa;
         this.czasGwarancji = czas_gwarancji;
         this.producent = producent;
         this.zamowienia = zamowienia;
+        this.magazyny = magazyny;
     }
 
     public Long getNrCzesci() {
@@ -117,5 +122,13 @@ public class Czesc implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(nrCzesci, cena, nazwa, czasGwarancji, producent);
+    }
+
+    public Set<MagazynyCzesci> getMagazyny() {
+        return magazyny;
+    }
+
+    public void setMagazyny(Set<MagazynyCzesci> magazyny) {
+        this.magazyny = magazyny;
     }
 }

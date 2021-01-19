@@ -10,12 +10,14 @@ public class MagazynyCzesci implements Serializable {
     @EmbeddedId
     private MagazynyCzesciId magazynyCzesciId = new MagazynyCzesciId();
 
-    @ManyToOne
-    //@MapsId("NR_MAGAZYNU")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("nrMagazynu")
+    @JoinColumn(name = "nr_magazynu")
     private Magazyn magazyn;
 
-    @ManyToOne
-    //@MapsId("NR_CZESCI")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("nrCzesci")
+    @JoinColumn(name = "nr_czesci")
     private Czesc czesc;
 
     @Column(name = "ILOSC")
