@@ -35,7 +35,7 @@ public class Magazyn implements Serializable {
 
     @OneToMany(mappedBy = "magazyn", cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.LAZY)
     @SortNatural
-    private Set<MagazynyCzesci> magazynCzesci;
+    private Set<MagazynyCzesci> czesci;
 
 
     public Magazyn() {
@@ -47,7 +47,7 @@ public class Magazyn implements Serializable {
         this.dataZalozenia = dataZalozenia;
         this.hurtownia = hurtownia;
         this.adres = adres;
-        this.magazynCzesci = magazynCzesci;
+        this.czesci = magazynCzesci;
     }
 
     @Override
@@ -101,11 +101,11 @@ public class Magazyn implements Serializable {
         this.adres = adres;
     }
 
-    public Set<MagazynyCzesci> getMagazynCzesci() {
-        return magazynCzesci;
+    public Set<MagazynyCzesci> getCzesci() {
+        return czesci;
     }
 
-    public void setMagazynCzesci(Set<MagazynyCzesci> czesci) {
-        this.magazynCzesci = czesci;
+    public void setCzesci(Set<MagazynyCzesci> czesci) {
+        this.czesci = czesci;
     }
 }

@@ -102,7 +102,7 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <form th:action="@{/employee/orders/update/{nrZamowienia}(nrZamowienia=${zam.nrZamowienia})}"
-                                                          th:object="${statusZamowienia}" method="post">
+                                                           method="post">
 
 
                                                         <label for="status" class="col-form-label"> Status: </label>
@@ -112,9 +112,9 @@
                                                                 <option selected
                                                                         th:text="${zam.statusZamowienia}"></option>
                                                                 <option th:each="st : ${statusy}"
-                                                                        th:value="${st}"
-                                                                        th:text="${st}"
-                                                                        th:if="${st}!= ${zam.statusZamowienia}"></option>
+                                                                        th:value="${st.getKey()}"
+                                                                        th:text="${st.getKey()}"
+                                                                        th:if="${st.getValue()}> ${statusy.get(zam.statusZamowienia)}"></option>
                                                             </select>
                                                         </div>
 

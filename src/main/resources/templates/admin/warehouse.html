@@ -219,7 +219,7 @@
                                                                     <option th:each="cz : ${czesci}"
                                                                             th:value="${cz.getNrCzesci()}"
                                                                             th:text="${cz.nazwa}"
-                                                                            th:if="${cz} != ${mag.getMagazynCzesci()}"></option>
+                                                                            th:if="${cz} != ${mag.getCzesci()}"></option>
                                                                 </select>
                                                             </div>
 
@@ -260,7 +260,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <div th:each="magCz : ${mag.magazynCzesci}">
+                                            <div th:each="magCz : ${mag.czesci}">
                                                 <tr>
                                                     <td th:text="${magCz.getCzesc().getNazwa()}"></td>
                                                     <td th:text="${magCz.getCzesc().getCzasGwarancji()}"></td>

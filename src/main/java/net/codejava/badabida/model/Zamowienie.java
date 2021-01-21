@@ -32,6 +32,10 @@ public class Zamowienie implements Serializable, Comparable<Zamowienie> {
     @OneToMany(mappedBy = "zamowienie", cascade = CascadeType.MERGE, orphanRemoval = true)
     private List<CzesciZamowienia> czesci;
 
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "nr_adresu")
+    private Adres adres;
+
     public Zamowienie() {
     }
 
@@ -44,13 +48,14 @@ public class Zamowienie implements Serializable, Comparable<Zamowienie> {
                 '}';
     }
 
-    public Zamowienie(Long nrZamowienia, Date data_zlozenia, String status_zamowienia, Set<Klient> klienci, Set<Pracownik> pracownicy, List<CzesciZamowienia> czesci) {
+    public Zamowienie(Long nrZamowienia, Date data_zlozenia, String status_zamowienia, Set<Klient> klienci, Set<Pracownik> pracownicy, List<CzesciZamowienia> czesci, Adres adres) {
         this.nrZamowienia = nrZamowienia;
         this.dataZlozenia = data_zlozenia;
         this.statusZamowienia = status_zamowienia;
         this.klienci = klienci;
         this.pracownicy = pracownicy;
         this.czesci = czesci;
+        this.adres = adres;
     }
 
     public Long getNrZamowienia() {
@@ -104,5 +109,13 @@ public class Zamowienie implements Serializable, Comparable<Zamowienie> {
 
     public void setPracownicy(Set<Pracownik> pracownicy) {
         this.pracownicy = pracownicy;
+    }
+
+    public Adres getAdres() {
+        return adres;
+    }
+
+    public void setAdres(Adres adres) {
+        this.adres = adres;
     }
 }

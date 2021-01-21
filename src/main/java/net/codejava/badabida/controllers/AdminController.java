@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.*;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 
 @Controller
@@ -144,7 +142,7 @@ public class AdminController {
     @PostMapping("/admin/warehouse/add/item/{nrMagazynu}")
     public String addItemToWarehouse(@PathVariable("nrMagazynu") Long nrMagazynu, Long nrCzesci, Long ilosc) {
         if(ilosc > 0 && czescRepository.findCzescByNrCzesci(nrCzesci) != null && magazynRepository.findByNrMagazynu(nrMagazynu).isPresent()){
-            Set<MagazynyCzesci> mc_list = magazynRepository.findByNrMagazynu(nrMagazynu).get().getMagazynCzesci();
+            Set<MagazynyCzesci> mc_list = magazynRepository.findByNrMagazynu(nrMagazynu).get().getCzesci();
             MagazynyCzesci mc;
             if(mc_list.stream().anyMatch(n -> n.getCzesc().getNrCzesci().equals(nrCzesci))){
                 mc = mc_list.stream().filter(n -> n.getCzesc().getNrCzesci().equals(nrCzesci)).findFirst().get();
@@ -162,7 +160,7 @@ public class AdminController {
     @PostMapping("/admin/warehouse/update/item/{nrMagazynu}")
     public String updateItemInWarehouse(@PathVariable("nrMagazynu") Long nrMagazynu, Long nrCzesci, Long ilosc) {
         if(ilosc > 0 && czescRepository.findCzescByNrCzesci(nrCzesci) != null && magazynRepository.findByNrMagazynu(nrMagazynu).isPresent()) {
-            Set<MagazynyCzesci> mc_list = magazynRepository.findByNrMagazynu(nrMagazynu).get().getMagazynCzesci();
+            Set<MagazynyCzesci> mc_list = magazynRepository.findByNrMagazynu(nrMagazynu).get().getCzesci();
             if (mc_list.stream().anyMatch(n -> n.getCzesc().getNrCzesci().equals(nrCzesci))) {
                 MagazynyCzesci mc = mc_list.stream().filter(n -> n.getCzesc().getNrCzesci().equals(nrCzesci)).findFirst().get();
                 mc.setIlosc(ilosc);
@@ -177,11 +175,11 @@ public class AdminController {
     public String removeItemFromWarehouse(@PathVariable("nrMagazynu") Long nrMagazynu, Long nrCzesci) {
         if( czescRepository.findCzescByNrCzesci(nrCzesci) != null && magazynRepository.findByNrMagazynu(nrMagazynu).isPresent()) {
             Magazyn m = magazynRepository.findByNrMagazynu(nrMagazynu).get();
-            Set<MagazynyCzesci> mc_list = m.getMagazynCzesci();
+            Set<MagazynyCzesci> mc_list = m.getCzesci();
             if (mc_list.stream().anyMatch(n -> n.getCzesc().getNrCzesci().equals(nrCzesci))) {
                 MagazynyCzesci mc = mc_list.stream().filter(n -> n.getCzesc().getNrCzesci().equals(nrCzesci)).findFirst().get();
                 mc_list.remove(mc);
-                m.setMagazynCzesci(mc_list);
+                m.setCzesci(mc_list);
                 magazynCzesciRepository.delete(mc);
                 magazynRepository.saveAndFlush(m);
             }

@@ -43,7 +43,7 @@ public class Pracownik implements Serializable, UserDetails {
     @JoinColumn(name = "nr_hurtowni")
     private Hurtownia hurtownia;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "nr_magazynu")
     private Magazyn magazyn;
 

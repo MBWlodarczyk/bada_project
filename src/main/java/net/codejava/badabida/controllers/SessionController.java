@@ -23,13 +23,15 @@ public class SessionController {
     private final ZamowieniaRepository zamowieniaRepository;
     private final CzesciZamowieniaRepository czesciZamowieniaRepository;
     private final PracownikRepository pracownikRepository;
+    private final AdresRepository adresRepository;
 
-    public SessionController(CzescRepository czescRepository, KlientRepository klientRepository, ZamowieniaRepository zamowieniaRepository, CzesciZamowieniaRepository czesciZamowieniaRepository, PracownikRepository pracownikRepository) {
+    public SessionController(CzescRepository czescRepository, KlientRepository klientRepository, ZamowieniaRepository zamowieniaRepository, CzesciZamowieniaRepository czesciZamowieniaRepository, PracownikRepository pracownikRepository, AdresRepository adresRepository) {
         this.czescRepository = czescRepository;
         this.klientRepository = klientRepository;
         this.zamowieniaRepository = zamowieniaRepository;
         this.czesciZamowieniaRepository = czesciZamowieniaRepository;
         this.pracownikRepository = pracownikRepository;
+        this.adresRepository = adresRepository;
     }
 
     @PostMapping("/client/cart/add/{nrCzesci}")
@@ -121,10 +123,22 @@ public class SessionController {
         Object principal = auth.getPrincipal();
         String username = ((UserDetails) principal).getUsername();
         Klient klient = klientRepository.findByUsername(username).get();
+        Adres adres = klient.getAdres();
+
+        Adres newAdres = new Adres();
+
+        newAdres.setUlica(adres.getUlica());
+        newAdres.setPoczta(adres.getPoczta());
+        newAdres.setNrLokalu(adres.getNrLokalu());
+        newAdres.setMiasto(adres.getMiasto());
+        newAdres.setKodPoczty(adres.getKodPoczty());
+
+
+        adres = adresRepository.save(newAdres);
         Set<Klient> klienci = new HashSet<>();
         klienci.add(klient);
         zamowienie.setKlienci(klienci);
-
+        zamowienie.setAdres(adres);
         zamowienie.setStatusZamowienia("zlozone");
 
         List<Pracownik> pracownicy = pracownikRepository.findAllByStanowisko("magazyn");
