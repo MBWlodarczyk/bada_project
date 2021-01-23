@@ -44,7 +44,7 @@
                     <a class="nav-link" href="orders">Zamówienia</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="store">Sklep</a>
+                    <a class="nav-link active" href="store">Stan magazynu</a>
                 </li>
 
             </ul>
@@ -60,7 +60,7 @@
     <div vlass="jumborton">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Sklep</h5>
+                <h5 class="card-title">Stan magazynu</h5>
                 <table class="table table-dark">
                     <thead>
                     <tr>
@@ -68,15 +68,55 @@
                         <th scope="col">Czas gwarancji</th>
                         <th scope="col">Producent</th>
                         <th scope="col">Cena</th>
+                        <th scope="col">Ilość</th>
+                        <th scope="col" style="text-align:center;">ACTIONS</th>
                     </tr>
                     </thead>
                     <tbody>
                     <div th:each="czesc : ${czesci}">
                         <tr>
-                            <td th:text="${czesc.nazwa}"></td>
-                            <td th:text="${czesc.czasGwarancji}"></td>
-                            <td th:text="${czesc.producent}"></td>
-                            <td th:text="${czesc.cena}"></td>
+                            <td th:text="${czesc.getCzesc().nazwa}"></td>
+                            <td th:text="${czesc.getCzesc().czasGwarancji}"></td>
+                            <td th:text="${czesc.getCzesc().producent}"></td>
+                            <td th:text="${czesc.getCzesc().cena}"></td>
+                            <td th:text="${czesc.ilosc}"></td>
+
+                            <td style="text-align:center;">
+                                <div style="color:black;">
+                                    <button th:href="'#editModal'+${czesc.getCzesc().nrCzesci}" type="button"
+                                            class="btn btn-primary" data-toggle="modal">Edytuj
+                                    </button>
+
+                                    <div style="text-align: left;">
+                                        <div th:id="'editModal'+${czesc.getCzesc().nrCzesci}" class="modal">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Edytuj ilość</h5>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form th:action="@{/employee/store/update/item}" method="post">
+                                                            <input type="hidden" class="form-control"
+                                                                   th:value="${czesc.getCzesc().nrCzesci}" th:name="nrCzesci"/>
+
+                                                            <div class="form-group">
+                                                                <label for="ilosc2" class="col-form-label">Cena :</label>
+                                                                <input type="number" class="form-control" id="ilosc2"
+                                                                       th:value="${czesc.ilosc}" th:name="ilosc"/>
+                                                            </div>
+                                                            <br/>
+                                                            <button type="button" class="btn btn-secondary"
+                                                                    data-dismiss="modal">Anuluj
+                                                            </button>
+                                                            <input type="submit" class="btn btn-primary"/>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
                         </tr>
                     </div>
                     </tbody>

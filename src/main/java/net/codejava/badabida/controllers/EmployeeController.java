@@ -4,10 +4,7 @@ import net.codejava.badabida.model.Magazyn;
 import net.codejava.badabida.model.MagazynyCzesci;
 import net.codejava.badabida.model.Pracownik;
 import net.codejava.badabida.model.Zamowienie;
-import net.codejava.badabida.repos.CzescRepository;
-import net.codejava.badabida.repos.MagazynRepository;
-import net.codejava.badabida.repos.PracownikRepository;
-import net.codejava.badabida.repos.ZamowieniaRepository;
+import net.codejava.badabida.repos.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.HashMap;
+import java.util.Set;
 
 @Controller
 public class EmployeeController {
@@ -27,14 +25,22 @@ public class EmployeeController {
     private final ZamowieniaRepository zamowieniaRepository;
     private final CzescRepository czescRepository;
     private final MagazynRepository magazynRepository;
+    private final MagazynCzesciRepository magazynCzesciRepository;
+    private final HashMap<String,Integer> possibleStatus;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public EmployeeController(PracownikRepository pracownikRepository, ZamowieniaRepository zamowieniaRepository, CzescRepository czescRepository, MagazynRepository magazynRepository) {
+    public EmployeeController(PracownikRepository pracownikRepository, ZamowieniaRepository zamowieniaRepository, CzescRepository czescRepository, MagazynRepository magazynRepository, MagazynCzesciRepository magazynCzesciRepository) {
         this.pracownikRepository = pracownikRepository;
         this.zamowieniaRepository = zamowieniaRepository;
         this.czescRepository = czescRepository;
         this.magazynRepository = magazynRepository;
+        this.magazynCzesciRepository = magazynCzesciRepository;
+        this.possibleStatus = new HashMap<>();
+        this.possibleStatus.put("zlozone",1);
+        this.possibleStatus.put("zaakceptowane",2);
+        this.possibleStatus.put("realizowane",3);
+        this.possibleStatus.put("zrealizowane",4);
     }
 
     @GetMapping("/employee/home")
@@ -94,27 +100,19 @@ public class EmployeeController {
     @GetMapping("/employee/orders")
     public String getOrders(Model model, Authentication auth) {
         UserDetails principal = (UserDetails) auth.getPrincipal();
-        model.addAttribute("zamowienia", pracownikRepository.findByUsername(principal.getUsername()).get().getZamowienia());
-        HashMap<String,Integer> possibleStatus = new HashMap<>();
-        possibleStatus.put("zlozone",1);
-        possibleStatus.put("zaakceptowane",2);
-        possibleStatus.put("realizowane",3);
-        possibleStatus.put("zrealizowane",4);
-        model.addAttribute("statusy", possibleStatus);
-        return "employee/orders";
+        if(pracownikRepository.findByUsername(principal.getUsername()).isPresent()
+                && pracownikRepository.findByUsername(principal.getUsername()).get().hasMagazyn()) {
+            model.addAttribute("zamowienia", pracownikRepository.findByUsername(principal.getUsername()).get().getZamowienia());
+            model.addAttribute("statusy", possibleStatus);
+            return "employee/orders";
+        }
+        return "redirect:/403";
     }
 
     @PostMapping("/employee/orders/update/{nrZamowienia}")
     public String updateOrder(@PathVariable("nrZamowienia") Long nrZamowienia, String statusZamowienia,Authentication auth) {
         UserDetails principal = (UserDetails) auth.getPrincipal();
         Magazyn m = pracownikRepository.findByUsername(principal.getUsername()).get().getMagazyn();
-
-
-        HashMap<String,Integer> possibleStatus = new HashMap<>();
-        possibleStatus.put("zlozone",1);
-        possibleStatus.put("zaakceptowane",2);
-        possibleStatus.put("realizowane",3);
-        possibleStatus.put("zrealizowane",4);
 
         Zamowienie z = zamowieniaRepository.findByNrZamowienia(nrZamowienia).get();
 
@@ -136,8 +134,30 @@ public class EmployeeController {
     //////////////////////////////////// Sklep ////////////////////////////////////////
 
     @GetMapping("/employee/store")
-    public String getItemInfo(Model model) {
-        model.addAttribute("czesci", czescRepository.findAll());
-        return "employee/store";
+    public String getItemInfo(Model model, Authentication auth) {
+        UserDetails principal = (UserDetails) auth.getPrincipal();
+        if(pracownikRepository.findByUsername(principal.getUsername()).isPresent()
+                && pracownikRepository.findByUsername(principal.getUsername()).get().hasMagazyn()) {
+            Set<MagazynyCzesci> mc = pracownikRepository.findByUsername(principal.getUsername()).get().getMagazyn().getCzesci();
+            model.addAttribute("czesci", mc);
+            return "employee/store";
+        }
+        return "redirect:/403";
+    }
+
+    @PostMapping("/employee/store/update/item")
+    public String updateItemInWarehouse(Long nrCzesci, Long ilosc, Authentication auth) {
+        UserDetails principal = (UserDetails) auth.getPrincipal();
+        if(ilosc > 0 && czescRepository.findCzescByNrCzesci(nrCzesci) != null && pracownikRepository.findByUsername(principal.getUsername()).isPresent()
+                && pracownikRepository.findByUsername(principal.getUsername()).get().hasMagazyn()) {
+            Set<MagazynyCzesci> mc_list = pracownikRepository.findByUsername(principal.getUsername()).get().getMagazyn().getCzesci();
+            if (mc_list.stream().anyMatch(n -> n.getCzesc().getNrCzesci().equals(nrCzesci))) {
+                MagazynyCzesci mc = mc_list.stream().filter(n -> n.getCzesc().getNrCzesci().equals(nrCzesci)).findFirst().get();
+                mc.setIlosc(ilosc);
+                magazynCzesciRepository.saveAndFlush(mc);
+            }
+            return "redirect:/employee/store";
+        }
+        return "redirect:/403";
     }
 }
