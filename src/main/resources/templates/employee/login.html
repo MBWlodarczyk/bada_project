@@ -145,7 +145,7 @@
             transform: scale(0.95);
         }
 
-        input[type=text] {
+        input[type=textUser] {
             background-color: #f6f6f6;
             border: none;
             color: #0d0d0d;
@@ -166,16 +166,16 @@
             border-radius: 5px 5px 5px 5px;
         }
 
-        input[type=text]:focus {
+        input[type=textUser]:focus {
             background-color: #fff;
             border-bottom: 2px solid #5fbae9;
         }
 
-        input[type=text]::placeholder {
+        input[type=textUser]::placeholder {
             color: #cccccc;
         }
 
-        input[type=password] {
+        #password{
             background-color: #f6f6f6;
             border: none;
             color: #0d0d0d;
@@ -194,16 +194,15 @@
             transition: all 0.5s ease-in-out;
             -webkit-border-radius: 5px 5px 5px 5px;
             border-radius: 5px 5px 5px 5px;
-            -webkit-text-security: disc;
         }
 
-        input[type=password]:focus {
+        #password:focus {
             background-color: #fff;
             border-bottom: 2px solid #5fbae9;
             -webkit-text-security: disc;
         }
 
-        input[type=password]::placeholder {
+        #password::placeholder {
             color: #cccccc;
         }
 
@@ -338,6 +337,17 @@
 
         #icon {
             width: 60%;
+        }
+
+
+        .modal-backdrop {
+            position: static;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #000;
         }
     </style>
 </head>

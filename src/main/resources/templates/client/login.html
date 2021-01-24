@@ -186,7 +186,7 @@
             color: #cccccc;
         }
 
-        input[type=passwordUser] {
+        #password{
             background-color: #f6f6f6;
             border: none;
             color: #0d0d0d;
@@ -205,16 +205,15 @@
             transition: all 0.5s ease-in-out;
             -webkit-border-radius: 5px 5px 5px 5px;
             border-radius: 5px 5px 5px 5px;
-            -webkit-text-security: disc;
         }
 
-        input[type=passwordUser]:focus {
+        #password:focus {
             background-color: #fff;
             border-bottom: 2px solid #5fbae9;
             -webkit-text-security: disc;
         }
 
-        input[type=passwordUser]::placeholder {
+        #password::placeholder {
             color: #cccccc;
         }
 
@@ -370,7 +369,7 @@
     <div id="formContent">
         <form th:action="@{/client/login}" method="post">
             <input type="textUser" id="username" class="fadeIn second" name="username" placeholder="username">
-            <input type="passwordUser" id="password" class="fadeIn third" name="password" placeholder="password">
+            <input type="password" id="password" class="fadeIn third" name="password" placeholder="password">
             <input type="submit" class="fadeIn fourth" value="Zaloguj">
         </form>
 

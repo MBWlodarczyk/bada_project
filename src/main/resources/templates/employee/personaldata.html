@@ -66,55 +66,103 @@
     <div class="jumborton">
         <div class="card">
             <div class="card-body">
+                <div class="row gutters-sm">
+                    <div class="col-md-4 mb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex flex-column align-items-center text-center">
+                                    <img src="https://i.ibb.co/rHjVQc7/image.png" alt="Admin" class="rounded-circle"  height="300">
+                                    <div class="mt-3">
+                                        <h4><td th:text="${pracownik.imie} + ' ' + ${pracownik.nazwisko}"></td></h4>
+                                        <h5><td th:text="${pracownik.stanowisko}"></td></h5>
 
-
-                <div class="row justify-content-center">
-                    <div class="col-4">
-                        <div class="col-sm-6 col-md-4">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/User_font_awesome.svg/1200px-User_font_awesome.svg.png"
-                                 width="150" height="150" alt="" class="img-rounded img-responsive"/>
+                                        <button href="#editModal" type="button" class="btn btn-primary" data-toggle="modal" >Edytuj
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                     </div>
-
-                    <div class="col-4">
-
-                        <div class="col-sm-6 col-md-8">
-                            <h4>
-                                <td th:text="${pracownik.imie}"></td>
-                                <td th:text="${pracownik.nazwisko}"></td>
-                            </h4>
-                            <h5>
-                                Stanowisko:
-                                <td th:text="${pracownik.stanowisko}"></td>
-                                <br/>
-                                Magazyn:
-                                <td th:text="${pracownik.magazyn != null} ? ${pracownik.magazyn.nazwa} : ''"></td>
-                            </h5>
-
-                            <small><cite title="Adres">
-                                <td th:text="${pracownik.adres.ulica}"></td>
-                                <td th:text="${pracownik.adres.nrLokalu}"></td>
-                                <br>
-                                <td th:text="${pracownik.adres.miasto}"></td>
-                                <br>
-                                <td th:text="${pracownik.adres.kodPoczty}"></td>
-                                <td th:text="${pracownik.adres.poczta}"></td>
-
-                                <i class="glyphicon glyphicon-map-marker"></i>
-                            </cite></small>
-                            <p>
-                                <i class="glyphicon glyphicon-envelope"></i>
-                            <td th:text="${pracownik.telefon}"></td>
-                            <br/>
-                            <i class="glyphicon glyphicon-envelope"></i>
-                            <td th:text="${pracownik.dataUrodzenia}"></td>
-                            <br/>
-                            </p>
-
-                            <button href="#editModal" type="button" class="btn btn-primary" data-toggle="modal">
-                                Edytuj
-                            </button>
+                    <div class="col-md-8">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Imie</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <td th:text="${pracownik.imie}"></td>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Nazwisko</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <td th:text="${pracownik.nazwisko}"></td>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Data urodzenia</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <td th:text="${pracownik.dataUrodzenia}"></td>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Telefon</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <td th:text="${pracownik.telefon}"></td>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Stanowisko</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <td th:text="${pracownik.stanowisko}"></td>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Magazyn</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <td th:text="${pracownik.magazyn != null} ? ${pracownik.magazyn.nazwa} : ''"></td>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Adres</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <td th:text="${pracownik.adres.miasto}"></td>
+                                        <td th:text="${pracownik.adres.ulica}"></td>
+                                        <td th:text="${pracownik.adres.nrLokalu}"></td>
+                                        <td th:text="${pracownik.adres.kodPoczty}"></td>
+                                        <td th:text="${pracownik.adres.poczta}"></td>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Username</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <td th:text="${pracownik.username}"></td>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -186,11 +186,13 @@
             <tr>
                 <td colspan="4"></td>
             </tr>
-
             <tr>
-                <td style="text-align:center" colspan="4" th:text="'Suma:' + ${session.amount}"
-                    th:if="${session.amount} != null"></td>
+                <td colspan="1"></td>
+                <th>Suma:</th>
+                <th th:text="${session.amount}" th:if="${session.amount} != null"></th>
+                <td colspan="1"></td>
             </tr>
+
             </tbody>
         </table>
 
