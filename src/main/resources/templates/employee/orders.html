@@ -128,9 +128,52 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <button class="btn btn-primary" type="button" data-toggle="collapse"
+                                            th:data-target="'#collapse'+${zam.nrZamowienia}" aria-expanded="false"
+                                            aria-controls="collapseExample">
+                                        Pokaż zawartość
+                                    </button>
                                 </div>
                             </td>
                         </tr>
+
+                        <tr>
+                            <td colspan="4">
+                                <div class="collapse" th:id="'collapse'+${zam.nrZamowienia}">
+                                    <table class="table table-striped" style="background: white">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">Nazwa</th>
+                                            <th scope="col">Czas gwarancji</th>
+                                            <th scope="col">Producent</th>
+                                            <th scope="col">Cena (sztuka)</th>
+                                            <th scope="col">Ilość</th>
+                                            <th scope="col">Kwota</th>
+
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <div th:each="zamCz : ${zam.getCzesci()}">
+                                            <tr>
+                                                <td th:text="${zamCz.getCzesc().getNazwa()}"></td>
+                                                <td th:text="${zamCz.getCzesc().getCzasGwarancji()}"></td>
+                                                <td th:text="${zamCz.getCzesc().getProducent()}"></td>
+                                                <td th:text="${zamCz.getCzesc().getCena()}"></td>
+                                                <td th:text="${zamCz.getIlosc()}"></td>
+                                                <td th:text="${zamCz.getCzesc().getCena()} * ${zamCz.getIlosc()}"></td>
+                                            </tr>
+                                        </div>
+
+
+                                        </tbody>
+                                    </table>
+
+
+                                </div>
+                            </td>
+                        </tr>
+
                     </div>
                     </tbody>
                 </table>
