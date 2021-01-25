@@ -1,0 +1,278 @@
+<!DOCTYPE HTML>
+<html lang="pl"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Client sklep</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{/css/store.css}"/>
+    <script type="text/javascript" th:src="@{/js/all.js}">
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "400px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+        }
+
+    </script>
+    <style>
+        .sidenav {
+            margin-top: 56px;
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            right: 0;
+            background-color: #323640;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .sidenav a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidenav a:hover {
+            color: #f1f1f1;
+        }
+
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        #cartBut {
+            position: absolute;
+            transform: rotate(270deg);
+            top: 150px;
+            right: -18px;
+        }
+
+        #zamowButton {
+            position: absolute;
+            top: 500px;
+            left: 161px;
+        }
+
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #000;
+        }
+
+    </style>
+
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="home">ElektronixD</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-alt" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="btn btn-success">Rozwiń</span>
+        </button>
+        <div class="collapse navbar-collapse navbar-alt" id="navbarNavAltMarkup">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="home">Strona główna</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="personaldata">Twoje dane</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="orders">Twoje zamówienia</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link  active" href="store">Sklep</a>
+                </li>
+            </ul>
+        </div>
+        <form th:action="@{/client/logout}" method="post">
+            <input type="hidden" value="Sign Out"/>
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Wyloguj</button>
+        </form>
+    </div>
+</nav>
+
+<!---------------------------------- KOSZYK --------------NADPISANY COLOR -------------------------------------------------------------------->
+<div id="mySidenav" class="sidenav" style="color: white">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+    <div th:if="${session.cart} == null" style="text-align:center">
+        <h3>Nie posiadasz nic w koszyku</h3>
+    </div>
+
+    <div th:if="${session.cart} != null">
+        <table class="table table-striped table-sm" style="background: white; color: black;">
+            <thead>
+            <tr>
+                <th scope="col">Nazwa</th>
+                <th scope="col">Ilość</th>
+                <th scope="col">Kwota</th>
+                <th scope="col">Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <div th:each="xd : ${session.cart}" th:if="${session.cart} != null">
+                <tr>
+                    <td th:text="${xd.key.nazwa}"></td>
+                    <td th:text="${xd.value}"></td>
+                    <td th:text="${xd.key.cena * xd.value}"></td>
+                    <td>
+
+                        <button th:href="'#deleteModal'+${xd.key.nrCzesci}" type="button" class="btn btn-primary"
+                                data-toggle="modal">&#x1f5d1;
+                        </button>
+
+                        <div th:id="'deleteModal'+${xd.key.nrCzesci}" class="modal">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Usuń przedmiot z koszyka</h5>
+                                    </div>
+                                    <div class="modal-body">
+
+                                        <form th:action="@{/client/cart/remove/{nrCzesci}(nrCzesci=${xd.key.nrCzesci})}"
+                                              method="post">
+
+                                            <div class="form-group">
+                                                <label for="iloscDel" class="col-form-label">Ilość do usunięcia:</label>
+                                                <input type="number" class="form-control" id="iloscDel"
+                                                       th:value="${xd.value}" name="quantity">
+                                            </div>
+
+                                            <br/>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                Anuluj
+                                            </button>
+                                            <input type="submit" class="btn btn-primary"/>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </td>
+                </tr>
+            </div>
+
+            <tr>
+                <td colspan="4"></td>
+            </tr>
+            <tr>
+                <td colspan="1"></td>
+                <th>Suma:</th>
+                <th th:text="${session.amount}" th:if="${session.amount} != null"></th>
+                <td colspan="1"></td>
+            </tr>
+
+            </tbody>
+        </table>
+
+        <form th:action="@{/client/cart/submit}" method="post">
+            <input id="zamowButton" type="submit" class="btn btn-primary btn-lg" value="Zamów"/>
+        </form>
+    </div>
+</div>
+<!-------------------------------------------------------------------------------------------------------------------------------------------->
+
+
+<div class="container">
+    <!-- koszyk button -->
+    <button id="cartBut" type="button" class="btn btn-secondary" onclick="openNav()">Koszyk</button>
+
+    <div class="jumbotron">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Sklep</h5>
+                <table class="table table-dark">
+                    <thead>
+                    <tr>
+                        <th scope="col">Nazwa</th>
+                        <th scope="col">Czas gwarancji</th>
+                        <th scope="col">Producent</th>
+                        <th scope="col">Cena</th>
+                        <th scope="col" style="text-align:center;">ACTIONS</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <div th:each="czesc : ${czesci}">
+                        <tr>
+                            <td th:text="${czesc.nazwa}"></td>
+                            <td th:text="${czesc.czasGwarancji}"></td>
+                            <td th:text="${czesc.producent}"></td>
+                            <td th:text="${czesc.cena}"></td>
+                            <td style="text-align:center;">
+                                <div style="color:black;">
+
+                                    <button th:href="'#addToZamowienie'+${czesc.nrCzesci}" type="button"
+                                            class="btn btn-success" data-toggle="modal">Dodaj
+                                    </button>
+
+                                    <div th:id="'addToZamowienie'+${czesc.nrCzesci}" class="modal fade" style="text-align: left;">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Dodaj do koszyka</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form th:action="@{/client/cart/add/{nrCzesci}(nrCzesci=${czesc.nrCzesci})}"
+                                                          method="post">
+
+                                                        <div class="form-group">
+                                                            <label for="ilosc" class="col-form-label">Ilość:</label>
+                                                            <input type="number" class="form-control" id="ilosc"
+                                                                   value="0" name="quantity">
+                                                        </div>
+
+                                                        <br>
+                                                        <button type="button" class="btn btn-secondary"
+                                                                data-dismiss="modal">Anuluj
+                                                        </button>
+                                                        <input type="submit" class="btn btn-primary"/>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </div>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

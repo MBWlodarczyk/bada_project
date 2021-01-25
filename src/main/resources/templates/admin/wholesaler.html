@@ -1,0 +1,185 @@
+<!DOCTYPE HTML>
+<html lang="pl" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Admin hurtownia</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+
+
+    <style type="text/css">
+        body {
+            background: #ffffff !important;
+        }
+    </style>
+
+</head>
+
+<body>
+
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="home">ElektronixD</a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-alt" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="btn btn-success">Rozwiń</span>
+        </button>
+        <div class="collapse navbar-collapse navbar-alt" id="navbarNavAltMarkup">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="home">Strona główna</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link  active" href="wholesaler">Hurtownia</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="warehouse">Magazyny</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="employees">Pracownicy</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="store">Części</a>
+                </li>
+
+            </ul>
+        </div>
+        <form th:action="@{/employee/logout}" method="post">
+            <input type="hidden" value="Sign Out"/>
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Wyloguj</button>
+        </form>
+    </div>
+</nav>
+
+
+<div class="container">
+    <div class="jumborton">
+        <div class="card">
+            <div class="card-body">
+
+                <div class="row gutters-sm">
+                    <div class="col-md-4 mb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex flex-column align-items-center text-center">
+                                    <img src="https://i.ibb.co/qknn3d4/image.png" alt="Admin"  width="210">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Nazwa</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <td th:text="${hurtownia.nazwa}"></td>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Data założenia</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <td th:text="${hurtownia.dataZalozenia}"></td>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Adres</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <td th:text="${hurtownia.adres.miasto}"></td>
+                                        <td th:text="${hurtownia.adres.ulica}"></td>
+                                        <td th:text="${hurtownia.adres.nrLokalu}"></td>
+                                        <td th:text="${hurtownia.adres.kodPoczty}"></td>
+                                        <td th:text="${hurtownia.adres.poczta}"></td>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="mt-3">
+                                    <button href="#editModal" type="button" class="btn btn-primary" data-toggle="modal" >Edytuj
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="editModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Edytuj hurtownie</h4>
+            </div>
+            <div class="modal-body">
+                <form th:action="@{/admin/wholesaler/update}"
+                      th:object="${hurtownia}" method="post">
+                    <div class="form-group">
+                        <label for="nazwa" class="col-form-label">Nazwa:</label>
+                        <input type="text" class="form-control" id="nazwa" th:value="${hurtownia.nazwa}"
+                               th:field="*{nazwa}">
+                    </div>
+                    <div class="form-group">
+                        <label for="miasto" class="col-form-label">Miasto</label>
+                        <input type="text" class="form-control" id="miasto" th:value="${hurtownia.adres.miasto}"
+                               th:field="*{adres.miasto}">
+                    </div>
+                    <div class="form-group">
+                        <label for="ulica" class="col-form-label">Ulica:</label>
+                        <input type="text" class="form-control" id="ulica" th:value="${hurtownia.adres.ulica}"
+                               th:field="*{adres.ulica}">
+                    </div>
+                    <div class="form-group">
+                        <label for="nrLokalu" class="col-form-label">Numer lokalu:</label>
+                        <input type="text" class="form-control" id="nrLokalu" th:value="${hurtownia.adres.nrLokalu}"
+                               th:field="*{adres.nrLokalu}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="kodPoczty" class="col-form-label">Kod poczty:</label>
+                        <input type="text" class="form-control" id="kodPoczty" th:value="${hurtownia.adres.kodPoczty}"
+                               th:field="*{adres.kodPoczty}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="poczta" class="col-form-label">Poczta:</label>
+                        <input type="text" class="form-control" id="poczta" th:value="${hurtownia.adres.poczta}"
+                               th:field="*{adres.poczta}">
+                    </div>
+                    <br/>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                    <input type="submit" class="btn btn-primary"/>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+
+</html>

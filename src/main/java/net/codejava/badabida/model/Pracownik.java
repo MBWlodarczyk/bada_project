@@ -1,18 +1,27 @@
 package net.codejava.badabida.model;
 
-import java.math.BigDecimal;
-import java.sql.Timestamp;
+import org.hibernate.annotations.SortNatural;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Set;
 
 @Entity
-@Table(name = "PRACOWNICY")
-public class Pracownik {
+@Table(name = "pracownicy")
+@SequenceGenerator(name = "nr_pracownika_ai", sequenceName = "nr_pracownika_ai", allocationSize = 0)
+public class Pracownik implements Serializable, UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "NR_PRACOWNIKA",updatable=false,nullable = false)
-    private Long nr_pracownika;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "nr_pracownika_ai")
+    @Column(updatable = false, nullable = false)
+    private Long nrPracownika;
 
     @Column(name = "IMIE")
     private String imie;
@@ -21,62 +30,94 @@ public class Pracownik {
     private String nazwisko;
 
     @Column(name = "DATA_URODZENIA")
-    private Timestamp data_urodzenia;
-
-    @Column(name = "PESEL")
-    private String pesel;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dataUrodzenia;
 
     @Column(name = "TELEFON")
     private String telefon;
 
-    @Column(name = "WYNAGRODENIE")
-    private BigDecimal wynagrodzenie;
-
     @Column(name = "STANOWISKO")
     private String stanowisko;
 
-    @Column(name = "PLEC")
-    private String plec;
-
-    @ManyToOne
-    @MapsId("NR_HURTOWNI")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "nr_hurtowni")
     private Hurtownia hurtownia;
 
-    @ManyToOne
-    @MapsId("NR_MAGAZYNU")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "nr_magazynu")
     private Magazyn magazyn;
 
-    @ManyToOne
-    @MapsId("NR_ADRESU")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "nr_adresu")
     private Adres adres;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "pracownicy_zamowienia",
+            joinColumns = {@JoinColumn(name = "nr_pracownika")},
+            inverseJoinColumns = {@JoinColumn(name = "nr_zamowienia")}
+    )
+    @SortNatural
+    private Set<Zamowienie> zamowienia;
+
+    @Column(name = "username")
+    private String username;
+
+    @Column(name = "password")
+    private String password;
+
+    @Column(name = "role")
+    private String role;
 
     public Pracownik() {
     }
 
+
     @Override
-    public String toString() {
-        return "Pracownik{" +
-                "nr_pracownika=" + nr_pracownika +
-                ", imie='" + imie + '\'' +
-                ", nazwisko='" + nazwisko + '\'' +
-                ", data_urodzenia=" + data_urodzenia +
-                ", pesel='" + pesel + '\'' +
-                ", telefon='" + telefon + '\'' +
-                ", wynagrodzenie=" + wynagrodzenie +
-                ", stanowisko='" + stanowisko + '\'' +
-                ", plec='" + plec + '\'' +
-                ", hurtownia=" + hurtownia +
-                ", magazyn=" + magazyn +
-                ", adres=" + adres +
-                '}';
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singleton(new SimpleGrantedAuthority(role));
     }
 
-    public Long getNr_pracownika() {
-        return nr_pracownika;
+    @Override
+    public String getPassword() {
+        return password;
     }
 
-    public void setNr_pracownika(Long nr_pracownika) {
-        this.nr_pracownika = nr_pracownika;
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    public boolean hasMagazyn() {
+        return magazyn != null;
+    }
+
+    public Long getNrPracownika() {
+        return nrPracownika;
+    }
+
+    public void setNrPracownika(Long nr_pracownika) {
+        this.nrPracownika = nr_pracownika;
     }
 
     public String getImie() {
@@ -95,20 +136,12 @@ public class Pracownik {
         this.nazwisko = nazwisko;
     }
 
-    public Timestamp getData_urodzenia() {
-        return data_urodzenia;
+    public LocalDate getDataUrodzenia() {
+        return dataUrodzenia;
     }
 
-    public void setData_urodzenia(Timestamp data_urodzenia) {
-        this.data_urodzenia = data_urodzenia;
-    }
-
-    public String getPesel() {
-        return pesel;
-    }
-
-    public void setPesel(String pesel) {
-        this.pesel = pesel;
+    public void setDataUrodzenia(LocalDate data_urodzenia) {
+        this.dataUrodzenia = data_urodzenia;
     }
 
     public String getTelefon() {
@@ -119,28 +152,12 @@ public class Pracownik {
         this.telefon = telefon;
     }
 
-    public BigDecimal getWynagrodzenie() {
-        return wynagrodzenie;
-    }
-
-    public void setWynagrodzenie(BigDecimal wynagrodzenie) {
-        this.wynagrodzenie = wynagrodzenie;
-    }
-
     public String getStanowisko() {
         return stanowisko;
     }
 
     public void setStanowisko(String stanowisko) {
         this.stanowisko = stanowisko;
-    }
-
-    public String getPlec() {
-        return plec;
-    }
-
-    public void setPlec(String plec) {
-        this.plec = plec;
     }
 
     public Hurtownia getHurtownia() {
@@ -167,18 +184,62 @@ public class Pracownik {
         this.adres = adres;
     }
 
-    public Pracownik(Long nr_pracownika, String imie, String nazwisko, Timestamp data_urodzenia, String pesel, String telefon, BigDecimal wynagrodzenie, String stanowisko, String plec, Hurtownia hurtownia, Magazyn magazyn, Adres adres) {
-        this.nr_pracownika = nr_pracownika;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public Pracownik(Long nrPracownika, String imie, String nazwisko, LocalDate dataUrodzenia, String telefon, String stanowisko, Hurtownia hurtownia, Magazyn magazyn, Adres adres, Set<Zamowienie> zamowienia, String username, String password, String role) {
+        this.nrPracownika = nrPracownika;
         this.imie = imie;
         this.nazwisko = nazwisko;
-        this.data_urodzenia = data_urodzenia;
-        this.pesel = pesel;
+        this.dataUrodzenia = dataUrodzenia;
         this.telefon = telefon;
-        this.wynagrodzenie = wynagrodzenie;
         this.stanowisko = stanowisko;
-        this.plec = plec;
         this.hurtownia = hurtownia;
         this.magazyn = magazyn;
         this.adres = adres;
+        this.zamowienia = zamowienia;
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
+
+    public Set<Zamowienie> getZamowienia() {
+        return zamowienia;
+    }
+
+    public void setZamowienia(Set<Zamowienie> zamowienia) {
+        this.zamowienia = zamowienia;
+    }
+
+    @Override
+    public String toString() {
+        return "Pracownik{" +
+                "nrPracownika=" + nrPracownika +
+                ", imie='" + imie + '\'' +
+                ", nazwisko='" + nazwisko + '\'' +
+                ", dataUrodzenia=" + dataUrodzenia +
+                ", telefon='" + telefon + '\'' +
+                ", stanowisko='" + stanowisko + '\'' +
+                ", hurtownia=" + hurtownia +
+                ", magazyn=" + magazyn +
+                ", adres=" + adres +
+                ", zamowienia=" + zamowienia +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
+                '}';
     }
 }

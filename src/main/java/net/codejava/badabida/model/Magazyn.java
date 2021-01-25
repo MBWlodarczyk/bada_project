@@ -1,51 +1,72 @@
 package net.codejava.badabida.model;
 
+import org.hibernate.annotations.SortNatural;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
-@Table(name = "Magazyny")
-public class Magazyn {
+@Table(name = "magazyny")
+@SequenceGenerator(name = "nr_magazynu_ai", sequenceName = "nr_magazynu_ai", allocationSize = 0)
+public class Magazyn implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "NR_MAGAZYNU", updatable = false, nullable = false)
-    private Long nr_magazynu;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "nr_magazynu_ai")
+    @Column(updatable = false, nullable = false)
+    private Long nrMagazynu;
 
     @Column(name = "NAZWA")
     private String nazwa;
 
     @Column(name = "DATA_ZALOZENIA")
-    private Timestamp data_zalozenia;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dataZalozenia;
 
     @ManyToOne
-    @MapsId("NR_HURTOWNI")
+    @JoinColumn(name = "nr_hurtowni")
     private Hurtownia hurtownia;
 
-    @ManyToOne
-    @MapsId("NR_ADRESU")
+    @OneToOne
+    @JoinColumn(name = "nr_adresu")
     private Adres adres;
 
+    @OneToMany(mappedBy = "magazyn", cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.LAZY)
+    @SortNatural
+    private Set<MagazynyCzesci> czesci;
+
+
     public Magazyn() {
+    }
+
+    public Magazyn(Long nrMagazynu, String nazwa, LocalDate dataZalozenia, Hurtownia hurtownia, Adres adres, Set<MagazynyCzesci> magazynCzesci) {
+        this.nrMagazynu = nrMagazynu;
+        this.nazwa = nazwa;
+        this.dataZalozenia = dataZalozenia;
+        this.hurtownia = hurtownia;
+        this.adres = adres;
+        this.czesci = magazynCzesci;
     }
 
     @Override
     public String toString() {
         return "Magazyn{" +
-                "nr_magazynu=" + nr_magazynu +
+                "nrMagazynu=" + nrMagazynu +
                 ", nazwa='" + nazwa + '\'' +
-                ", data_zalozenia=" + data_zalozenia +
+                ", dataZalozenia=" + dataZalozenia +
                 ", hurtownia=" + hurtownia +
                 ", adres=" + adres +
                 '}';
     }
 
-    public Long getNr_magazynu() {
-        return nr_magazynu;
+    public Long getNrMagazynu() {
+        return nrMagazynu;
     }
 
-    public void setNr_magazynu(Long nr_magazynu) {
-        this.nr_magazynu = nr_magazynu;
+    public void setNrMagazynu(Long nrMagazynu) {
+        this.nrMagazynu = nrMagazynu;
     }
 
     public String getNazwa() {
@@ -56,12 +77,12 @@ public class Magazyn {
         this.nazwa = nazwa;
     }
 
-    public Timestamp getData_zalozenia() {
-        return data_zalozenia;
+    public LocalDate getDataZalozenia() {
+        return dataZalozenia;
     }
 
-    public void setData_zalozenia(Timestamp data_zalozenia) {
-        this.data_zalozenia = data_zalozenia;
+    public void setDataZalozenia(LocalDate dataZalozenia) {
+        this.dataZalozenia = dataZalozenia;
     }
 
     public Hurtownia getHurtownia() {
@@ -80,11 +101,11 @@ public class Magazyn {
         this.adres = adres;
     }
 
-    public Magazyn(Long nr_magazynu, String nazwa, Timestamp data_zalozenia, Hurtownia hurtownia, Adres adres) {
-        this.nr_magazynu = nr_magazynu;
-        this.nazwa = nazwa;
-        this.data_zalozenia = data_zalozenia;
-        this.hurtownia = hurtownia;
-        this.adres = adres;
+    public Set<MagazynyCzesci> getCzesci() {
+        return czesci;
+    }
+
+    public void setCzesci(Set<MagazynyCzesci> czesci) {
+        this.czesci = czesci;
     }
 }

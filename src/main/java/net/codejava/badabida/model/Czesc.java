@@ -1,16 +1,21 @@
 package net.codejava.badabida.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
-@Table(name = "CZESCI")
-public class Czesc {
+@Table(name = "czesci")
+@SequenceGenerator(name = "nr_czesci_ai", sequenceName = "nr_czesci_ai", allocationSize = 0)
+public class Czesc implements Serializable, Comparable<Czesc> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "NR_CZESCI", updatable = false, nullable = false)
-    private Long nr_czesci;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "nr_czesci_ai")
+    @Column(updatable = false, nullable = false)
+    private Long nrCzesci;
 
     @Column(name = "CENA")
     private BigDecimal cena;
@@ -19,28 +24,36 @@ public class Czesc {
     private String nazwa;
 
     @Column(name = "CZAS_GWARANCJI")
-    private int czas_gwarancji;
+    private int czasGwarancji;
 
     @Column(name = "PRODUCENT")
     private String producent;
 
+    @OneToMany(mappedBy = "czesc", cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<CzesciZamowienia> zamowienia;
+
+    @OneToMany(mappedBy = "czesc", cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Set<MagazynyCzesci> magazyny;
+
     public Czesc() {
     }
 
-    public Czesc(Long nr_czesci, BigDecimal cena, String nazwa, int czas_gwarancji, String producent) {
-        this.nr_czesci = nr_czesci;
+    public Czesc(Long nr_czesci, BigDecimal cena, String nazwa, int czas_gwarancji, String producent, List<CzesciZamowienia> zamowienia, Set<MagazynyCzesci> magazyny) {
+        this.nrCzesci = nr_czesci;
         this.cena = cena;
         this.nazwa = nazwa;
-        this.czas_gwarancji = czas_gwarancji;
+        this.czasGwarancji = czas_gwarancji;
         this.producent = producent;
+        this.zamowienia = zamowienia;
+        this.magazyny = magazyny;
     }
 
-    public Long getNr_czesci() {
-        return nr_czesci;
+    public Long getNrCzesci() {
+        return nrCzesci;
     }
 
-    public void setNr_czesci(Long nr_czesci) {
-        this.nr_czesci = nr_czesci;
+    public void setNrCzesci(Long nr_czesci) {
+        this.nrCzesci = nr_czesci;
     }
 
     public BigDecimal getCena() {
@@ -59,12 +72,12 @@ public class Czesc {
         this.nazwa = nazwa;
     }
 
-    public int getCzas_gwarancji() {
-        return czas_gwarancji;
+    public int getCzasGwarancji() {
+        return czasGwarancji;
     }
 
-    public void setCzas_gwarancji(int czas_gwarancji) {
-        this.czas_gwarancji = czas_gwarancji;
+    public void setCzasGwarancji(int czas_gwarancji) {
+        this.czasGwarancji = czas_gwarancji;
     }
 
     public String getProducent() {
@@ -78,11 +91,49 @@ public class Czesc {
     @Override
     public String toString() {
         return "Czesc{" +
-                "nr_czesci=" + nr_czesci +
+                "nr_czesci=" + nrCzesci +
                 ", cena=" + cena +
                 ", nazwa='" + nazwa + '\'' +
-                ", czas_gwarancji=" + czas_gwarancji +
+                ", czas_gwarancji=" + czasGwarancji +
                 ", producent='" + producent + '\'' +
                 '}';
+    }
+
+    public List<CzesciZamowienia> getZamowienia() {
+        return zamowienia;
+    }
+
+    public void setZamowienia(List<CzesciZamowienia> zamowienia) {
+        this.zamowienia = zamowienia;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Czesc czesc = (Czesc) o;
+        return czasGwarancji == czesc.czasGwarancji &&
+                Objects.equals(nrCzesci, czesc.nrCzesci) &&
+                Objects.equals(cena, czesc.cena) &&
+                Objects.equals(nazwa, czesc.nazwa) &&
+                Objects.equals(producent, czesc.producent);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nrCzesci, cena, nazwa, czasGwarancji, producent);
+    }
+
+    public Set<MagazynyCzesci> getMagazyny() {
+        return magazyny;
+    }
+
+    public void setMagazyny(Set<MagazynyCzesci> magazyny) {
+        this.magazyny = magazyny;
+    }
+
+    @Override
+    public int compareTo(Czesc c) {
+        return nrCzesci.compareTo(c.getNrCzesci());
     }
 }
