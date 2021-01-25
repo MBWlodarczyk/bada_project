@@ -227,6 +227,7 @@ public class AdminController {
         oldPracownik.setNazwisko(newPracownik.getNazwisko());
         oldPracownik.setDataUrodzenia(newPracownik.getDataUrodzenia());
         oldPracownik.setTelefon(newPracownik.getTelefon());
+        oldPracownik.setStanowisko(newPracownik.getStanowisko());
         Adres a = oldPracownik.getAdres();
         a.setKodPoczty(newPracownik.getAdres().getKodPoczty());
         a.setMiasto(newPracownik.getAdres().getMiasto());

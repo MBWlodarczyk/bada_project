@@ -9,7 +9,5 @@ public class BadabidaApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(BadabidaApplication.class, args);
-
-
     }
 }
